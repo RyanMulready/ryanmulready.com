@@ -109,7 +109,7 @@
 /************************/
 
 .timeline-wrapper {
-	position: fixed;
+	position: absolute;
 	top: 0px;
 	bottom: 0px;
 	left: auto;
@@ -329,7 +329,7 @@ section.content-section .timeline-overlay .timeline-mask {
 	}
 
 	.timeline-wrapper {
-		left: -65px;
+		left: -100px;
 	}
 	footer.content-section .timeline-overlay,
 	section.content-section .timeline-overlay,
