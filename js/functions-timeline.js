@@ -24,8 +24,6 @@
 				var currScroll = $(window).scrollTop() > $(document).scrollTop() ? $(window).scrollTop() : $(document).scrollTop(),
 					scrollSplit = currScroll + halfScreen;
 				
-				console.log(currScroll);
-				
 				sections.removeClass('active').each(function() {
 
 					var section = $(this),
