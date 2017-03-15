@@ -942,7 +942,6 @@ hr.unstyle {
 			
 			position: absolute;
 			left: 0;
-			top: -10%;
 			z-index: 1;
 		}
 		.timeline-item::after {

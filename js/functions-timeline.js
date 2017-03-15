@@ -1,25 +1,12 @@
 (function($) {
 
-	// setting height 0 to .timeline-background
-	$('.timeline-wrapper .timeline-background').css('height', 0);
-
 	// Trigger function on DomReady
 	$(document).ready(function() {
 		timelineColorToggle();
 		
-		setTimeout(timelineHeight, 2000);
-		
 		// Trigger window.scroll, this will initiate some of the scripts
 		$(window).scroll();
 	});
-	
-	// Timeline height function
-	function timelineHeight() {
-		
-		// setting timeline height 50%
-		$('.timeline-wrapper .timeline-background').css('height', 50+'%');
-
-	}
 	
 	// Timeline Magic
 	function timelineColorToggle() {
@@ -36,7 +23,9 @@
 
 				var currScroll = $(window).scrollTop() > $(document).scrollTop() ? $(window).scrollTop() : $(document).scrollTop(),
 					scrollSplit = currScroll + halfScreen;
-
+				
+				console.log(currScroll);
+				
 				sections.removeClass('active').each(function() {
 
 					var section = $(this),
