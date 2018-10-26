@@ -2,7 +2,7 @@
 if( isset( $_POST["submit"] ) ) {
 
 	// Email Recepient for Enquiry Form
-	$ToEmail = 'hello@umairrazzaq.com';
+	$ToEmail = 'nope@no.com';
 
 	$EmailSubject = 'Inquiry from ' .$_POST["name"];
 	
