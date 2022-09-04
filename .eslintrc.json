@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "extends": [
+        "@nuxtjs/eslint-config-typescript",
+        "plugin:nuxt/recommended",
+        "airbnb-base",
+        "plugin:prettier/recommended"
+    ],
+
+    "rules": {
+        "prettier/prettier": ["error"]
+    }
+}
