@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "@vue/composition-api": "^1.7.0",
+        "h3": "^0.7.21",
         "nuxt": "3.0.0-rc.9"
     }
 }

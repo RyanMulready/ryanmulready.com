@@ -31,4 +31,7 @@ export default defineNuxtConfig({
         },
     },
     css: ['~/assets/css/tailwind.css'],
+    publicRuntimeConfig: {
+        GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
+    },
 });
