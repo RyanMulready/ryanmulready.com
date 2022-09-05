@@ -1,10 +1,16 @@
 const url = 'https://api.github.com/graphql';
 const token = process.env.GITHUB_API_TOKEN;
 
+interface optInterface {
+    method: string;
+    mode: string;
+    headers: object;
+}
+
 const $fetch = async (
-    query,
-    variables,
-    options = {
+    query: string,
+    variables: object,
+    options: optInterface = {
         method: 'POST',
         mode: 'cors',
         headers: {
