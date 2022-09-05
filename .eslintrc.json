@@ -14,10 +14,21 @@
     "rules": {
         "prettier/prettier": ["error"],
         "import/no-unresolved": "off",
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ]
     },
     "globals": {
         "NodeJS": true,
-        "$fetch": true
+        "$fetch": true,
+        "$github": true
     }
 }

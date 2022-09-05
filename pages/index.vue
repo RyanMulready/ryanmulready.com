@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { useAsyncData } from '#imports';
 
-// hello world component is auto imported
-const title = 'Hello World';
-const { data } = await useAsyncData('/api/hello', () =>
-    $fetch('/api/github', {
-        params: {
-            name: 'world',
-        },
-    }),
+const langs = await useAsyncData('langs', () => $fetch('/api/github/langs'));
+const contribs = await useAsyncData('contribs', () =>
+    $fetch('/api/github/contributions/2022'),
 );
 </script>
 
 <template>
     <div>
-        {{ title }}
-        {{ data }}
+        <h1>2022 Contributions</h1>
+        {{ contribs }}
+        <h1>Language Stats</h1>
+        <pre>
+            {{ langs }}
+        </pre>
     </div>
 </template>

@@ -1,5 +1,3 @@
-import { defineEventHandler } from 'h3';
-
 const url = 'https://api.github.com/graphql';
 const token = process.env.GITHUB_API_TOKEN;
 
@@ -31,23 +29,6 @@ const $fetch = async (
     return body;
 };
 
-export default defineEventHandler(async () => {
-    const data = await $fetch(
-        `
-        query GetUser($login: String!) {
-          user(login: $login) {
-            name
-            avatarUrl
-            bio
-            isHireable
-          }
-        }
-        `,
-        {
-            login: 'RyanMulready',
-        },
-    );
-    return {
-        ...data,
-    };
-});
+export default {
+    $fetch,
+};
