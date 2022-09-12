@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useAsyncData } from '#imports';
+import { useGitHubStore } from '@/stores/github';
+
+const ghStore = useGitHubStore();
+console.log(ghStore);
 
 const langs = await useAsyncData('langs', () => $fetch('/api/github/langs'));
-const contribs = await useAsyncData('contribs', () =>
-    $fetch('/api/github/contributions/2022'),
-);
+const contribs = {};
+await ghStore.fetchContributions();
 </script>
 
 <template>

@@ -10,7 +10,13 @@
         "airbnb-base",
         "plugin:prettier/recommended"
     ],
-
+    "import/resolver": {
+        "alias": {
+            "map": [["@", "./src/"]],
+            "extensions": [".js", ".vue", ".ts", ".json"]
+        },
+        "typescript": {}
+    },
     "rules": {
         "prettier/prettier": ["error"],
         "import/no-unresolved": "off",
@@ -29,10 +35,7 @@
         "import/no-extraneous-dependencies": [
             "error",
             {
-                "devDependencies": [
-                    "**/*config*",
-                    "**/*spec*"
-                ]
+                "devDependencies": ["**/*config*", "**/*spec*"]
             }
         ]
     },

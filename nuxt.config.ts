@@ -34,4 +34,8 @@ export default defineNuxtConfig({
     publicRuntimeConfig: {
         GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
     },
+    modules: [
+        // ...
+        '@pinia/nuxt',
+    ],
 });
