@@ -3,11 +3,15 @@
     "scripts": {
         "build": "nuxt build",
         "dev": "nuxt dev",
-        "generate": "nuxt generate",
-        "preview": "nuxt preview",
+        "lint:scss": "stylelint \"**/*.{scss,vue}\" --ignore-path .gitignore",
+        "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore",
+        "lint:md": "markdownlint .",
+        "lint": "npm run lint:js && npm run lint:scss && npm run lint:md",
+        "test": "vitest",
         "postinstall": "nuxt prepare"
     },
     "devDependencies": {
+        "@nuxt/test-utils-edge": "^3.0.0-rc.10-27716794.ceb61ad",
         "@nuxtjs/eslint-config-typescript": "^11.0.0",
         "eslint": "^8.23.0",
         "eslint-config-airbnb-base": "^15.0.0",
@@ -15,14 +19,22 @@
         "eslint-plugin-import": "^2.26.0",
         "eslint-plugin-nuxt": "^4.0.0",
         "eslint-plugin-prettier": "^4.2.1",
+        "jsdom": "^20.0.0",
+        "markdownlint-cli": "^0.32.2",
+        "postcss-html": "^1.5.0",
         "prettier": "^2.7.1",
         "stylelint": "^14.11.0",
-        "stylelint-config-standard": "^28.0.0",
+        "stylelint-config-prettier": "^9.0.3",
+        "stylelint-config-recommended": "^9.0.0",
+        "stylelint-config-recommended-scss": "^7.0.0",
+        "stylelint-config-recommended-vue": "^1.4.0",
+        "stylelint-prettier": "^2.0.0",
+        "stylelint-scss": "^4.3.0",
         "tailwindcss": "^3.1.8",
-        "typescript": "^4.8.2"
+        "typescript": "^4.8.2",
+        "vitest": "^0.23.2"
     },
     "dependencies": {
-        "@vue/composition-api": "^1.7.0",
         "h3": "^0.7.21",
         "nuxt": "3.0.0-rc.9"
     }
