@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { useAsyncData } from '#imports';
 import { useGitHubStore } from '@/stores/github';
 
 const ghStore = useGitHubStore();
-console.log(ghStore);
 
-const langs = await useAsyncData('langs', () => $fetch('/api/github/langs'));
-const contribs = {};
+await ghStore.fetchLanguages();
 await ghStore.fetchContributions();
+
+const contribs = ghStore.getContributions;
+const langs = ghStore.getLanguages;
 </script>
 
 <template>
     <div>
-        <h1>2022 Contributions</h1>
-        {{ contribs }}
         <h1>Language Stats</h1>
         <pre>
             {{ langs }}
+        </pre>
+        <h1>2022 Contributions</h1>
+        <pre>
+            {{ contribs }}
         </pre>
     </div>
 </template>
