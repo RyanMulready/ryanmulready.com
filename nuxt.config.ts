@@ -2,16 +2,6 @@ import { defineNuxtConfig } from 'nuxt';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-    build: {
-        postcss: {
-            postcssOptions: {
-                plugins: {
-                    tailwindcss: {},
-                    autoprefixer: {},
-                },
-            },
-        },
-    },
     app: {
         head: {
             title: 'RyanMulready v7',
@@ -34,8 +24,5 @@ export default defineNuxtConfig({
     publicRuntimeConfig: {
         GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
     },
-    modules: [
-        // ...
-        '@pinia/nuxt',
-    ],
+    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
 });

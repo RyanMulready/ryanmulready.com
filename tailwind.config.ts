@@ -1,4 +1,6 @@
-module.exports = {
+import { Config } from 'tailwindcss';
+
+export default <Config>{
     content: [
         './components/**/*.vue',
         './layouts/**/*.vue',

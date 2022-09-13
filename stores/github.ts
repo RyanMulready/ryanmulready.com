@@ -31,8 +31,6 @@ export const useGitHubStore = defineStore('ghStore', {
                             {
                                 isPrivate: boolean;
                                 nameWithOwner: string;
-                                // { name: string, color: string }
-
                                 languages: {
                                     edges: {
                                         size: number;
@@ -54,16 +52,15 @@ export const useGitHubStore = defineStore('ghStore', {
     getters: {
         getContributions: (state) => {
             // TODO: Flatten even more
-            const weeks =
+            const { weeks } =
                 state.contributions.data.user.contributionsCollection
-                    .contributionCalendar.weeks;
+                    .contributionCalendar;
             return weeks;
         },
         getLanguages: (state) => {
-            const nodes = state.languages.data.user.repositories.nodes;
+            const { nodes } = state.languages.data.user.repositories;
             const parsedLangs = {};
             nodes.forEach((node) => {
-                console.log(node);
                 const langs = node.languages.edges;
 
                 langs.forEach((lang) => {
@@ -71,7 +68,9 @@ export const useGitHubStore = defineStore('ghStore', {
 
                     if (name && lang.size) {
                         parsedLangs[name] = parsedLangs[name] || 0;
-                        parsedLangs[name] = parsedLangs[name] + lang.size;
+                        parsedLangs[name] = new Intl.NumberFormat(
+                            'en-US',
+                        ).format(parseInt(parsedLangs[name], 10) + lang.size);
                     }
                 });
             });
@@ -88,10 +87,12 @@ export const useGitHubStore = defineStore('ghStore', {
                 console.log(e);
             }
         },
-        async fetchContributions() {
+        async fetchContributions(year: number = new Date().getFullYear()) {
             let contributions = {};
             try {
-                contributions = await $fetch('/api/github/contributions/2022');
+                contributions = await $fetch(
+                    `/api/github/contributions/${year}`,
+                );
                 this.contributions = contributions;
             } catch (e) {
                 console.log(e);

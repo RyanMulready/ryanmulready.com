@@ -10,16 +10,19 @@
         "airbnb-base",
         "plugin:prettier/recommended"
     ],
-    "import/resolver": {
-        "alias": {
-            "map": [["@", "./src/"]],
-            "extensions": [".js", ".vue", ".ts", ".json"]
-        },
-        "typescript": {}
+    "settings": {
+        "import/resolver": {
+            "alias": {
+                "map": [["@", "./src/"]],
+                "extensions": [".js", ".vue", ".ts", ".json"]
+            },
+            "typescript": {}
+        }
     },
     "rules": {
         "prettier/prettier": ["error"],
         "import/no-unresolved": "off",
+        "import/prefer-default-export": "off",
         "@typescript-eslint/no-unused-vars": "off",
         "import/extensions": [
             "error",

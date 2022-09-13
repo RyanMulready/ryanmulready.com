@@ -13,6 +13,7 @@
     "devDependencies": {
         "@nuxt/test-utils-edge": "^3.0.0-rc.10-27716794.ceb61ad",
         "@nuxtjs/eslint-config-typescript": "^11.0.0",
+        "@nuxtjs/tailwindcss": "^5.3.3",
         "eslint": "^8.23.0",
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-prettier": "^8.5.0",
