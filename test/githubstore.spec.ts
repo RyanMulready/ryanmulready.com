@@ -1,4 +1,3 @@
-// TODO : Why does eslint blow up when we import vitest
 import { describe, it, beforeEach, expect } from 'vitest';
 import { useGitHubStore } from '@/stores/github';
 import { setup, $fetch } from '@nuxt/test-utils-edge';
@@ -8,7 +7,7 @@ import { setActivePinia, createPinia } from 'pinia';
 global.$fetch = $fetch;
 
 describe('Github Store', async () => {
-    let github;
+    let githubStore;
 
     // https://v3.nuxtjs.org/getting-started/testing/#setup
     await setup({
@@ -17,14 +16,14 @@ describe('Github Store', async () => {
 
     beforeEach(() => {
         setActivePinia(createPinia());
-        github = useGitHubStore();
+        githubStore = useGitHubStore();
     });
 
     it('has the expected default state', () => {
-        expect(github.languages).toStrictEqual({
+        expect(githubStore.languages).toStrictEqual({
             data: { user: { repositories: { nodes: [] } } },
         });
-        expect(github.contributions).toStrictEqual({
+        expect(githubStore.contributions).toStrictEqual({
             data: {
                 user: {
                     contributionsCollection: {
@@ -39,13 +38,18 @@ describe('Github Store', async () => {
     });
 
     it('returns the expected default getter values', () => {
-        expect(github.getLanguages).toStrictEqual({});
-        expect(github.getContributions).toStrictEqual([]);
+        expect(githubStore.getLanguages).toStrictEqual({});
+        expect(githubStore.getContributions).toStrictEqual([]);
     });
 
     it('modifies the state as expected', async () => {
-        await github.fetchLanguages();
-        await github.fetchContributions();
-        // TODO: What should be checked for here? Data is too variable to be exact
+        await githubStore.fetchLanguages();
+        await githubStore.fetchContributions();
+
+        const languages = githubStore.getLanguages;
+        const contributions = githubStore.getContributions;
+
+        expect(Object.keys(languages).length > 0).toBeTruthy();
+        expect(contributions.length > 0).toBeTruthy();
     });
 });
