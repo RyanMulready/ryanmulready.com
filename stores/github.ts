@@ -84,6 +84,7 @@ export const useGitHubStore = defineStore('ghStore', {
                 languages = await $fetch('/api/github/langs');
                 this.languages = languages;
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.log(e);
             }
         },
@@ -95,6 +96,7 @@ export const useGitHubStore = defineStore('ghStore', {
                 );
                 this.contributions = contributions;
             } catch (e) {
+                // eslint-disable-next-line no-console
                 console.log(e);
             }
         },
