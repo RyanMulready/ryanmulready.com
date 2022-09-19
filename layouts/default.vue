@@ -9,7 +9,8 @@ import { useHead } from '#imports';
 
 useHead({
     bodyAttrs: {
-        class: 'bg-slate-900 text-white',
+        'data-theme': 'dark',
+        class: 'prose min-w-full',
     },
 });
 </script>

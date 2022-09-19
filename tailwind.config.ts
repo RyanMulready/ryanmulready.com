@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import { Config } from 'tailwindcss';
 
 export default <Config>{
@@ -6,8 +7,8 @@ export default <Config>{
         './layouts/**/*.vue',
         './pages/**/*.vue',
     ],
-    theme: {
-        extend: {},
+    daisyui: {
+        themes: ['light', 'dark'],
     },
-    plugins: [],
+    plugins: [require('@tailwindcss/typography'), require('daisyui')],
 };
