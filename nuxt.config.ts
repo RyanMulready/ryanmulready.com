@@ -21,8 +21,12 @@ export default defineNuxtConfig({
         },
     },
     css: ['~/assets/css/tailwind.css'],
-    publicRuntimeConfig: {
+    runtimeConfig: {
         GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
+        GITHUB_GRAPHQL_URL: 'https://api.github.com/graphq',
+        public: {
+            GITHUB_USERNAME: 'RyanMulready',
+        },
     },
     modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
 });

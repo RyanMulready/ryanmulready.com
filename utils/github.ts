@@ -1,23 +1,20 @@
-const url = 'https://api.github.com/graphql';
-const token = process.env.GITHUB_API_TOKEN;
+import { fetchOptInterface, JSONResponse } from '@/types';
+import { useRuntimeConfig } from '#imports';
 
-interface optInterface {
-    method: string;
-    mode: string;
-    headers: object;
-}
+const url = 'https://api.github.com/graphql';
+const config = useRuntimeConfig();
 
 const $fetch = async (
     query: string,
     variables: object,
-    options: optInterface = {
+    options: fetchOptInterface = {
         method: 'POST',
         mode: 'cors',
         headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${config.GITHUB_API_TOKEN}`,
         },
     },
-) => {
+): Promise<JSONResponse> => {
     const res = await fetch(url, {
         ...(<any>options),
         body: JSON.stringify({
@@ -26,11 +23,9 @@ const $fetch = async (
         }),
     });
 
-    if (!res.ok) throw new Error(await res.json());
+    const body: JSONResponse = await res.json();
 
-    const body = await res.json();
-
-    if (body.errors) throw new Error(JSON.stringify(body.errors));
+    if (!res.ok || body.statusMessage) throw new Error(body.statusMessage);
 
     return body;
 };

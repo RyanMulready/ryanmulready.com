@@ -1,17 +1,19 @@
 import { defineEventHandler } from 'h3';
 import github from '@/utils/github';
+import { useRuntimeConfig } from '#imports';
 
 export default defineEventHandler(async (event) => {
     const year = event.context.params?.year || new Date().getFullYear();
+    const config = useRuntimeConfig();
 
-    const start = new Date(`01/01/${year}`).toISOString();
-    const end = new Date(`12/31/${year}`).toISOString();
+    const from = new Date(`01/01/${year}`).toISOString();
+    const to = new Date(`12/31/${year}`).toISOString();
 
     const data = await github.$fetch(
         `
-        query($_login:String!) {
-            user(login: $_login){
-                contributionsCollection(from: "${start}", to: "${end}") {
+        query($username:String!, $from: DateTime!, $to: DateTime!) {
+            user(login: $username){
+                contributionsCollection(from: $from, to: $to) {
                     contributionCalendar {
                         totalContributions
                         weeks {
@@ -25,10 +27,11 @@ export default defineEventHandler(async (event) => {
                     }
                 }
             }
-        }
-        `,
+        }`,
         {
-            _login: 'RyanMulready',
+            username: config.public.GITHUB_USERNAME,
+            from,
+            to,
         },
     );
     return data;

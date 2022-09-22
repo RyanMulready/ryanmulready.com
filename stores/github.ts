@@ -1,4 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
+import { contributionsInterface, languagesInterface } from '@/types';
 
 export const useGitHubStore = defineStore('ghStore', {
     state: () => ({
@@ -7,47 +8,22 @@ export const useGitHubStore = defineStore('ghStore', {
                 user: {
                     contributionsCollection: {
                         contributionCalendar: {
-                            totalContributions: <number>0,
-                            weeks: <
-                                {
-                                    contributionDays: {
-                                        color: string;
-                                        contributionCount: number;
-                                        date: string;
-                                        weekday: number;
-                                    };
-                                }[]
-                            >[],
+                            totalContributions: 0,
+                            weeks: [],
                         },
                     },
                 },
             },
-        },
+        } as contributionsInterface,
         languages: {
             data: {
                 user: {
                     repositories: {
-                        nodes: <
-                            {
-                                isPrivate: boolean;
-                                nameWithOwner: string;
-                                languages: {
-                                    edges: {
-                                        size: number;
-                                        node: {
-                                            name: string;
-                                            color: string;
-                                        };
-                                    }[];
-                                    pageInfo: object;
-                                    totalCount: number;
-                                };
-                            }[]
-                        >[],
+                        nodes: [],
                     },
                 },
             },
-        },
+        } as languagesInterface,
     }),
     getters: {
         getContributions: (state) => {
