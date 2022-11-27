@@ -7,7 +7,8 @@ import { setActivePinia, createPinia } from 'pinia';
 global.$fetch = $fetch;
 
 describe('Github Store', async () => {
-    let githubStore;
+    setActivePinia(createPinia());
+    let githubStore = useGitHubStore();
 
     // https://v3.nuxtjs.org/getting-started/testing/#setup
     await setup({

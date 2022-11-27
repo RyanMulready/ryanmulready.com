@@ -25,8 +25,6 @@ const $fetch = async (
 
     const body: JSONResponse = await res.json();
 
-    console.log(body);
-
     if (!res.ok || body.statusMessage) throw new Error(body.statusMessage);
 
     return body;

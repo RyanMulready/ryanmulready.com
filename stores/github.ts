@@ -35,7 +35,7 @@ export const useGitHubStore = defineStore('ghStore', {
         },
         getLanguages: (state) => {
             const { nodes } = state.languages.data.user.repositories;
-            const parsedLangs = {};
+            const parsedLangs: { [key: string]: string } = {};
             nodes.forEach((node) => {
                 const langs = node.languages.edges;
 
@@ -43,7 +43,7 @@ export const useGitHubStore = defineStore('ghStore', {
                     const name = lang.node?.name;
 
                     if (name && lang.size) {
-                        parsedLangs[name] = parsedLangs[name] || 0;
+                        parsedLangs[name] = parsedLangs[name] || '0';
                         parsedLangs[name] = new Intl.NumberFormat(
                             'en-US',
                         ).format(parseInt(parsedLangs[name], 10) + lang.size);
@@ -55,7 +55,7 @@ export const useGitHubStore = defineStore('ghStore', {
     },
     actions: {
         async fetchLanguages() {
-            let languages = {};
+            let languages: languagesInterface;
             try {
                 languages = await $fetch('/api/github/langs');
                 this.languages = languages;
@@ -65,7 +65,7 @@ export const useGitHubStore = defineStore('ghStore', {
             }
         },
         async fetchContributions(year: number = new Date().getFullYear()) {
-            let contributions = {};
+            let contributions: contributionsInterface;
             try {
                 contributions = await $fetch(
                     `/api/github/contributions/${year}`,
