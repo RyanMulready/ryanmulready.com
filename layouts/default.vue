@@ -9,7 +9,6 @@ import { useHead } from '#imports';
 
 useHead({
     bodyAttrs: {
-        'data-theme': 'dark',
         class: 'prose min-w-full',
     },
 });

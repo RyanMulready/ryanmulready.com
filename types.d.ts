@@ -15,11 +15,15 @@ export interface HTMLInputEvent extends Event {
     target: HTMLInputElement;
 }
 
-type contributionDays = {
+export type contributionDays = {
     color: string;
     contributionCount: number;
     date: string;
     weekday: number;
+};
+
+export type contributionWeeks = {
+    contributionDays: contributionDays[];
 };
 
 export interface contributionResponse {
@@ -28,7 +32,7 @@ export interface contributionResponse {
             contributionsCollection: {
                 contributionCalendar: {
                     totalContributions: number;
-                    weeks: contributionDays[];
+                    weeks: contributionWeeks[];
                 };
             };
         };
@@ -40,7 +44,7 @@ export interface contributionsInterface {
     [key: string]: {
         totalContributions: number;
         // Weeks is an array of weeks in the year
-        weeks: contributionDays[];
+        weeks: contributionWeeks[];
     };
 }
 

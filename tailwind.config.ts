@@ -8,7 +8,29 @@ export default <Config>{
         './pages/**/*.vue',
     ],
     daisyui: {
-        themes: ['light', 'dark'],
+        themes: [
+            {
+                ryanmulready: {
+                    primary: '#BD3039',
+                    secondary: '#FFFFFF',
+                    accent: '#FF5AEF',
+                    neutral: '#181617',
+                    'neutral-content': '#443d3f',
+                    'base-100': '#231F20',
+                    info: '#3ABFF8',
+                    success: '#36D399',
+                    warning: '#FBBD23',
+                    error: '#F87272',
+                },
+            },
+        ],
+    },
+    theme: {
+        fontFamily: {
+            sans: ['Poppins', 'ui-sans-serif', 'system-ui'],
+            mono: ['Inconsolata', 'ui-monospace', 'SFMono-Regular'],
+            body: ['Poppins'],
+        },
     },
     plugins: [require('@tailwindcss/typography'), require('daisyui')],
 };
