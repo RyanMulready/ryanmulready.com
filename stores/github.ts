@@ -1,20 +1,14 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { contributionsInterface, languagesInterface } from '@/types';
+import {
+    contributionsInterface,
+    contributionResponse,
+    languagesInterface,
+} from '@/types';
+import { yearsPast } from '@/utils/dates';
 
 export const useGitHubStore = defineStore('ghStore', {
     state: () => ({
-        contributions: {
-            data: {
-                user: {
-                    contributionsCollection: {
-                        contributionCalendar: {
-                            totalContributions: 0,
-                            weeks: [],
-                        },
-                    },
-                },
-            },
-        } as contributionsInterface,
+        contributions: {} as contributionsInterface,
         languages: {
             data: {
                 user: {
@@ -27,13 +21,10 @@ export const useGitHubStore = defineStore('ghStore', {
     }),
     getters: {
         getContributions: (state) => {
-            // TODO: Flatten even more
-            const { weeks } =
-                state.contributions.data.user.contributionsCollection
-                    .contributionCalendar;
-            return weeks;
+            return state.contributions;
         },
         getLanguages: (state) => {
+            // TODO: Do this transformation prior to saving in store
             const { nodes } = state.languages.data.user.repositories;
             const parsedLangs: { [key: string]: string } = {};
             nodes.forEach((node) => {
@@ -64,12 +55,33 @@ export const useGitHubStore = defineStore('ghStore', {
                 console.log(e);
             }
         },
-        async fetchContributions(year: number = new Date().getFullYear()) {
-            let contributions: contributionsInterface;
-            try {
-                contributions = await $fetch(
+        async fetchContributions() {
+            const years = yearsPast();
+            const yearTransaction = async (year: number) => {
+                const response: contributionResponse = await $fetch(
                     `/api/github/contributions/${year}`,
                 );
+
+                const data: contributionsInterface = {};
+                data[year] =
+                    response.data.user.contributionsCollection.contributionCalendar;
+                return data;
+            };
+
+            // Transform the data into something more parseable
+            // Output is an object with a year as keys
+            let contributions: contributionsInterface;
+            try {
+                const transactions = await Promise.all(
+                    years.map((year) => yearTransaction(year)),
+                );
+                contributions = transactions.reduce((obj, item) => {
+                    const year = Object.keys(item);
+                    return {
+                        ...obj,
+                        [year as any]: item[year as any],
+                    };
+                }, {});
                 this.contributions = contributions;
             } catch (e) {
                 // eslint-disable-next-line no-console

@@ -11,6 +11,10 @@ export interface JSONResponse {
     statusCode?: number;
 }
 
+export interface HTMLInputEvent extends Event {
+    target: HTMLInputElement;
+}
+
 type contributionDays = {
     color: string;
     contributionCount: number;
@@ -18,7 +22,7 @@ type contributionDays = {
     weekday: number;
 };
 
-export interface contributionsInterface {
+export interface contributionResponse {
     data: {
         user: {
             contributionsCollection: {
@@ -28,6 +32,15 @@ export interface contributionsInterface {
                 };
             };
         };
+    };
+}
+
+export interface contributionsInterface {
+    // Key is year as a string
+    [key: string]: {
+        totalContributions: number;
+        // Weeks is an array of weeks in the year
+        weeks: contributionDays[];
     };
 }
 

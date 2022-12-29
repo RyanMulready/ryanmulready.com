@@ -9,8 +9,9 @@ export default defineEventHandler(async (event) => {
     const from = new Date(`01/01/${year}`).toISOString();
     const to = new Date(`12/31/${year}`).toISOString();
 
-    const data = await github.$fetch(
-        `
+    try {
+        const data = await github.$fetch(
+            `
         query($username:String!, $from: DateTime!, $to: DateTime!) {
             user(login: $username){
                 contributionsCollection(from: $from, to: $to) {
@@ -28,11 +29,17 @@ export default defineEventHandler(async (event) => {
                 }
             }
         }`,
-        {
-            username: config.public.GITHUB_USERNAME,
-            from,
-            to,
-        },
-    );
-    return data;
+            {
+                username: config.public.GITHUB_USERNAME,
+                from,
+                to,
+            },
+        );
+        return data;
+    } catch (e) {
+        // TODO: Real Error Handling
+        return {
+            error: 'Request Failed',
+        };
+    }
 });

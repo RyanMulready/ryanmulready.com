@@ -5,8 +5,9 @@ import { useRuntimeConfig } from '#imports';
 export default defineEventHandler(async () => {
     const config = useRuntimeConfig();
 
-    const data = await github.$fetch(
-        `
+    try {
+        const data = await github.$fetch(
+            `
         query($username:String!) {
             user(login: $username) {
                 repositories(first: 100, isFork: false, ownerAffiliations: OWNER, orderBy: {direction: DESC, field: CREATED_AT}) {
@@ -29,7 +30,13 @@ export default defineEventHandler(async () => {
                 }
             }
         }`,
-        { username: config.public.GITHUB_USERNAME },
-    );
-    return data;
+            { username: config.public.GITHUB_USERNAME },
+        );
+        return data;
+    } catch (e) {
+        // TODO: Real Error Handling
+        return {
+            error: 'Request Failed',
+        };
+    }
 });

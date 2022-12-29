@@ -24,23 +24,12 @@ describe('Github Store', async () => {
         expect(githubStore.languages).toStrictEqual({
             data: { user: { repositories: { nodes: [] } } },
         });
-        expect(githubStore.contributions).toStrictEqual({
-            data: {
-                user: {
-                    contributionsCollection: {
-                        contributionCalendar: {
-                            totalContributions: 0,
-                            weeks: [],
-                        },
-                    },
-                },
-            },
-        });
+        expect(githubStore.contributions).toStrictEqual({});
     });
 
     it('returns the expected default getter values', () => {
         expect(githubStore.getLanguages).toStrictEqual({});
-        expect(githubStore.getContributions).toStrictEqual([]);
+        expect(githubStore.getContributions).toStrictEqual({});
     });
 
     it('modifies the state as expected', async () => {
@@ -51,6 +40,6 @@ describe('Github Store', async () => {
         const contributions = githubStore.getContributions;
 
         expect(Object.keys(languages).length > 0).toBeTruthy();
-        expect(contributions.length > 0).toBeTruthy();
+        expect(Object.keys(contributions).length > 0).toBeTruthy();
     });
 });
