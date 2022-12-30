@@ -22,7 +22,7 @@ export default defineNuxtConfig({
     },
     css: ['~/assets/css/tailwind.css'],
     runtimeConfig: {
-        GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
+        API_TOKEN_GITHUB: process.env.API_TOKEN_GITHUB,
         GITHUB_GRAPHQL_URL: 'https://api.github.com/graphq',
         public: {
             GITHUB_USERNAME: 'RyanMulready',

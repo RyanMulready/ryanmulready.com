@@ -24,23 +24,28 @@ export const useGitHubStore = defineStore('ghStore', {
         },
         getLanguages: (state) => {
             // TODO: Do this transformation prior to saving in store
-            const { nodes } = state.languages.data.user.repositories;
-            const parsedLangs: { [key: string]: string } = {};
-            nodes.forEach((node) => {
-                const langs = node.languages.edges;
+            const nodes = state.languages?.data?.user?.repositories?.nodes;
+            if (nodes) {
+                const parsedLangs: { [key: string]: string } = {};
+                nodes.forEach((node) => {
+                    const langs = node.languages.edges;
 
-                langs.forEach((lang) => {
-                    const name = lang.node?.name;
+                    langs.forEach((lang) => {
+                        const name = lang.node?.name;
 
-                    if (name && lang.size) {
-                        parsedLangs[name] = parsedLangs[name] || '0';
-                        parsedLangs[name] = new Intl.NumberFormat(
-                            'en-US',
-                        ).format(parseInt(parsedLangs[name], 10) + lang.size);
-                    }
+                        if (name && lang.size) {
+                            parsedLangs[name] = parsedLangs[name] || '0';
+                            parsedLangs[name] = new Intl.NumberFormat(
+                                'en-US',
+                            ).format(
+                                parseInt(parsedLangs[name], 10) + lang.size,
+                            );
+                        }
+                    });
                 });
-            });
-            return parsedLangs;
+                return parsedLangs;
+            }
+            return {};
         },
     },
     actions: {
