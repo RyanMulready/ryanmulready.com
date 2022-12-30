@@ -44,4 +44,6 @@ jobs:
               run: npm run lint
 
             - name: Run tests 🧪
+              env:
+                  API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
               run: npm run test
