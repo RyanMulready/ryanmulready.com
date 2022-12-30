@@ -7,6 +7,7 @@ import { yearsPast } from '@/utils/dates';
 // init our pinia store
 const ghStore = useGitHubStore();
 
+// Has data from 2012->; 2018-> most significant
 const years = yearsPast(4);
 
 // TODO: Come up with an origonal method to calculate color scale
@@ -56,6 +57,7 @@ function displayMonth(week: contributionWeeks) {
     return '';
 }
 
+// Keeps track of what years are current in the viewport
 const visibleYears = ref<string[]>([]);
 function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
     const { year } = entry.target.dataset;
@@ -69,6 +71,8 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {
+    // Loop over possible years and request data
+    // Current year should be available first but isn't always
     years.forEach(async (year) => {
         await ghStore.fetchContributions(year);
     });
@@ -77,6 +81,7 @@ onMounted(async () => {
 
 <template>
     <div class="mt-5">
+        <!-- HEADER START -->
         <div class="header-block sticky bg-base-100 pb-2">
             <div
                 class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
@@ -99,6 +104,9 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
+        <!-- HEADER END -->
+
+        <!-- GRID START -->
         <div class="years-block overflow-hidden">
             <div
                 v-for="year in years"
@@ -138,12 +146,16 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
+        <!-- GRID END -->
+
+        <!-- FOOTER START -->
         <div class="footer-block sticky bg-base-100 pt-3 pb-5">
             <div
                 class="grid grid-cols-2 bg-neutral rounded-lg px-5 py-3 mx-5 font-mono">
                 Footer
             </div>
         </div>
+        <!-- FOOTER END -->
     </div>
 </template>
 <style scoped lang="scss">

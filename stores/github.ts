@@ -60,12 +60,16 @@ export const useGitHubStore = defineStore('ghStore', {
                     `/api/github/contributions/${year}`,
                 );
 
-                this.contributions[year] = {
-                    totalContributions:
-                        response.data.user.contributionsCollection
-                            .contributionCalendar.totalContributions,
-                    weeks: response.data.user.contributionsCollection.contributionCalendar.weeks.reverse(),
-                };
+                if (response.data.user.contributionsCollection) {
+                    this.contributions[year] = {
+                        totalContributions:
+                            response.data.user.contributionsCollection
+                                .contributionCalendar.totalContributions,
+                        weeks: response.data.user.contributionsCollection.contributionCalendar.weeks.reverse(),
+                    };
+                } else {
+                    throw new Error('Unexpected response shape');
+                }
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.log(e);
