@@ -34,7 +34,7 @@ describe('Github Store', async () => {
 
     it('modifies the state as expected', async () => {
         await githubStore.fetchLanguages();
-        await githubStore.fetchContributions();
+        await githubStore.fetchContributions(2022);
 
         const languages = githubStore.getLanguages;
         const contributions = githubStore.getContributions;

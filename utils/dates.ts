@@ -1,6 +1,5 @@
 // Returns Last 5 Years in an array desc order
-export const yearsPast = () => {
-    const years = 4; // number of years prior to this year
+export const yearsPast = (years: number) => {
     const now = new Date();
     const thisYear = now.getFullYear();
 

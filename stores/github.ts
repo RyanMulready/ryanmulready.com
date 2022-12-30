@@ -4,7 +4,6 @@ import {
     contributionResponse,
     languagesInterface,
 } from '@/types';
-import { yearsPast } from '@/utils/dates';
 
 export const useGitHubStore = defineStore('ghStore', {
     state: () => ({
@@ -55,34 +54,18 @@ export const useGitHubStore = defineStore('ghStore', {
                 console.log(e);
             }
         },
-        async fetchContributions() {
-            const years = yearsPast();
-            const yearTransaction = async (year: number) => {
+        async fetchContributions(year: number) {
+            try {
                 const response: contributionResponse = await $fetch(
                     `/api/github/contributions/${year}`,
                 );
 
-                const data: contributionsInterface = {};
-                data[year] =
-                    response.data.user.contributionsCollection.contributionCalendar;
-                return data;
-            };
-
-            // Transform the data into something more parseable
-            // Output is an object with a year as keys
-            let contributions: contributionsInterface;
-            try {
-                const transactions = await Promise.all(
-                    years.map((year) => yearTransaction(year)),
-                );
-                contributions = transactions.reduce((obj, item) => {
-                    const year = Object.keys(item);
-                    return {
-                        ...obj,
-                        [year as any]: item[year as any],
-                    };
-                }, {});
-                this.contributions = contributions;
+                this.contributions[year] = {
+                    totalContributions:
+                        response.data.user.contributionsCollection
+                            .contributionCalendar.totalContributions,
+                    weeks: response.data.user.contributionsCollection.contributionCalendar.weeks.reverse(),
+                };
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.log(e);

@@ -1,24 +1,15 @@
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useGitHubStore } from '@/stores/github';
-import { contributionWeeks, contributionDays } from '@/types';
+import { contributionWeeks, HTMLInputEvent } from '@/types';
+import { yearsPast } from '@/utils/dates';
 
 // init our pinia store
 const ghStore = useGitHubStore();
 
-// Get all years returned by github
-const years = computed(() =>
-    // Sort years in descending order
-    // Order can not be assured due to nature of Promise.all
-    Object.keys(ghStore.getContributions)?.sort()?.reverse(),
-);
+const years = yearsPast(4);
 
-// Reverse weeks to order desc; a bit cleaner than inline
-function sortWeeks(weeksArray: contributionWeeks[]) {
-    return weeksArray || [];
-}
-
-// TODO: Come up with an origonal method to calculating color scale
+// TODO: Come up with an origonal method to calculate color scale
 const colorMapping = {
     '#ebedf0': '#1f1a1c',
     '#9be9a8': 'rgba(189, 48, 57, 0.25)',
@@ -30,32 +21,64 @@ const colorMapping = {
 // We can't ensure a week always has 7 data points due year start and end
 function normalizeWeek(week: contributionWeeks) {
     return [...new Array(7)].map((empty, index) => {
-        const weekData =
-            week?.contributionDays.find((day) => day.weekday === index) ||
-            ({} as contributionDays);
-        return {
-            // realColor: weekData.color,
-            color: weekData?.color
-                ? colorMapping[weekData.color as keyof object]
-                : colorMapping['#ebedf0'],
-            count: weekData?.contributionCount || 0,
-            date: weekData?.date || '',
-            index,
-        };
+        const dayData = week?.contributionDays.find(
+            (day) => day.weekday === index,
+        );
+        // TODO: Why doesn't just the top condition work for both?
+        if (dayData) {
+            return {
+                // realColor: weekData.color,
+                color: dayData?.color
+                    ? colorMapping[dayData.color as keyof object]
+                    : colorMapping['#ebedf0'],
+                count: dayData?.contributionCount || 0,
+                date: dayData?.date || '',
+                index,
+            };
+        }
+        return { color: colorMapping['#ebedf0'], count: 0, index };
     });
+}
+
+// Returns the month abrv if new
+// TODO: Has bug never shows current month?
+let currentMonth = '';
+function displayMonth(week: contributionWeeks) {
+    const date = normalizeWeek(week).find((day) => day.date)?.date;
+    const parsedDate = new Date(`${date} 00:00`);
+    const month = parsedDate.toLocaleString('default', { month: 'short' });
+
+    if (month !== currentMonth) {
+        currentMonth = month;
+        return month;
+    }
+    return '';
+}
+
+const visibleYears = ref<string[]>([]);
+function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
+    const { year } = entry.target.dataset;
+    if (!isVisible) {
+        visibleYears.value = visibleYears.value.filter((item) => item !== year);
+    } else {
+        visibleYears.value.push(year as string);
+    }
+    visibleYears.value.sort().reverse();
 }
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {
-    await ghStore.fetchContributions();
+    years.forEach(async (year) => {
+        await ghStore.fetchContributions(year);
+    });
 });
 </script>
 
 <template>
-    <div class="m-5">
+    <div class="my-5">
         <div
-            class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 font-mono">
-            <div class="">
+            class="header-block grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono sticky">
+            <div>
                 <h1 class="mb-3 font-weight-normal text-base font-normal">
                     Code Contributions
                 </h1>
@@ -70,44 +93,74 @@ onMounted(async () => {
                 :class="{
                     loading: !years.length,
                 }">
-                {{ years[0] }}
+                {{ visibleYears[0] }}
             </div>
         </div>
-        <div>
+        <div class="years-block">
             <div
                 v-for="year in years"
-                :key="year">
-                <h1>{{ year }}</h1>
-                <div class="grid grid-cols-7 gap-1">
-                    <template
-                        v-for="(week, index) in sortWeeks(
-                            ghStore.getContributions[year].weeks,
-                        )"
-                        :key="`${year}-${index}`">
-                        <div
-                            v-for="day in normalizeWeek(week)"
-                            :key="day.date"
-                            class="rounded-sm text-center"
-                            :style="`background-color: ${day.color}`">
-                            {{ day.count }}
-                        </div>
+                :key="year"
+                class="mb-5">
+                <div
+                    v-observe-visibility="{
+                        callback: visibilityChanged,
+                        intersection: {
+                            threshold: 0.35,
+                        },
+                    }"
+                    :data-year="year"
+                    class="grid grid-cols-9 gap-1 grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
+                    <template v-if="ghStore.getContributions[year]">
+                        <template
+                            v-for="(week, index) in ghStore.getContributions[
+                                year
+                            ].weeks"
+                            :key="`${year}-${index}`">
+                            <div />
+                            <div
+                                v-for="day in normalizeWeek(week)"
+                                :key="day.date"
+                                class="day-block rounded-sm text-center"
+                                :style="`background-color: ${day.color}`" />
+                            <div
+                                class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
+                                {{ displayMonth(week) }}
+                            </div>
+                        </template>
+                    </template>
+                    <template v-else>
+                        <div class="loading" />
                     </template>
                 </div>
             </div>
         </div>
     </div>
 </template>
-<style scoped>
-.gradient-scale {
-    height: 0.25rem;
-    background: linear-gradient(
-        90deg,
-        rgba(189, 48, 57) 0%,
-        rgba(189, 48, 57, 0.75) 25%,
-        rgba(189, 48, 57, 0.5) 50%,
-        rgba(189, 48, 57, 0.25) 75%,
-        #1f1a1c
-    );
+<style scoped lang="scss">
+.header-block {
+    top: 0.5rem;
+    .gradient-scale {
+        height: 0.25rem;
+        background: linear-gradient(
+            90deg,
+            rgba(189, 48, 57) 0%,
+            rgba(189, 48, 57, 0.75) 25%,
+            rgba(189, 48, 57, 0.5) 50%,
+            rgba(189, 48, 57, 0.25) 75%,
+            #1f1a1c
+        );
+    }
+}
+.years-block {
+    margin-bottom: 15rem;
+    .day-block {
+        height: 0.5rem;
+    }
+    .vertical-text {
+        top: 2rem;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+    }
 }
 .loading:after {
     content: '....';
