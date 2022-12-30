@@ -11,7 +11,8 @@ const years = yearsPast(4);
 
 // TODO: Come up with an origonal method to calculate color scale
 const colorMapping = {
-    '#ebedf0': '#1f1a1c',
+    '': 'rgba(31,26,28, 0.4)',
+    '#ebedf0': 'rgba(31,26,28, 0.8)',
     '#9be9a8': 'rgba(189, 48, 57, 0.25)',
     '#40c463': 'rgba(189, 48, 57, 0.5)',
     '#30a14e': 'rgba(189, 48, 57, 0.75)',
@@ -36,7 +37,7 @@ function normalizeWeek(week: contributionWeeks) {
                 index,
             };
         }
-        return { color: colorMapping['#ebedf0'], count: 0, index };
+        return { color: colorMapping[''], count: 0, index };
     });
 }
 
@@ -75,28 +76,30 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="my-5">
-        <div
-            class="header-block grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono sticky">
-            <div>
-                <h1 class="mb-3 font-weight-normal text-base font-normal">
-                    Code Contributions
-                </h1>
-                <div class="gradient-scale rounded-md" />
-                <div class="grid grid-cols-2 leading-4">
-                    <div>more</div>
-                    <div class="text-right">less</div>
+    <div class="mt-5">
+        <div class="header-block sticky bg-base-100 pb-2">
+            <div
+                class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
+                <div>
+                    <h1 class="mb-3 font-weight-normal text-base font-normal">
+                        Code Contributions
+                    </h1>
+                    <div class="gradient-scale rounded-md" />
+                    <div class="grid grid-cols-2 leading-4">
+                        <div>more</div>
+                        <div class="text-right">less</div>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center justify-end text-primary text-3xl"
+                    :class="{
+                        loading: !years.length,
+                    }">
+                    {{ visibleYears[0] }}
                 </div>
             </div>
-            <div
-                class="flex items-center justify-end text-primary text-lg"
-                :class="{
-                    loading: !years.length,
-                }">
-                {{ visibleYears[0] }}
-            </div>
         </div>
-        <div class="years-block">
+        <div class="years-block overflow-hidden">
             <div
                 v-for="year in years"
                 :key="year"
@@ -105,11 +108,11 @@ onMounted(async () => {
                     v-observe-visibility="{
                         callback: visibilityChanged,
                         intersection: {
-                            threshold: 0.35,
+                            threshold: 0.6,
                         },
                     }"
                     :data-year="year"
-                    class="grid grid-cols-9 gap-1 grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
+                    class="grid grid-cols-9 gap-[.15rem] grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
                     <template v-if="ghStore.getContributions[year]">
                         <template
                             v-for="(week, index) in ghStore.getContributions[
@@ -129,16 +132,23 @@ onMounted(async () => {
                         </template>
                     </template>
                     <template v-else>
-                        <div class="loading" />
+                        <div
+                            class="loading-block loading m-auto text-primary text-center" />
                     </template>
                 </div>
+            </div>
+        </div>
+        <div class="footer-block sticky bg-base-100 pt-3 pb-5">
+            <div
+                class="grid grid-cols-2 bg-neutral rounded-lg px-5 py-3 mx-5 font-mono">
+                Footer
             </div>
         </div>
     </div>
 </template>
 <style scoped lang="scss">
 .header-block {
-    top: 0.5rem;
+    top: 0;
     .gradient-scale {
         height: 0.25rem;
         background: linear-gradient(
@@ -147,20 +157,27 @@ onMounted(async () => {
             rgba(189, 48, 57, 0.75) 25%,
             rgba(189, 48, 57, 0.5) 50%,
             rgba(189, 48, 57, 0.25) 75%,
-            #1f1a1c
+            rgba(31, 26, 28, 0.8)
         );
     }
 }
 .years-block {
+    min-height: 100vh;
     margin-bottom: 15rem;
     .day-block {
         height: 0.5rem;
     }
     .vertical-text {
         top: 2rem;
-        writing-mode: vertical-rl;
+        writing-mode: sideways-lr;
         text-orientation: mixed;
     }
+    .loading-block {
+        grid-column: 1 / span 9;
+    }
+}
+.footer-block {
+    bottom: 0;
 }
 .loading:after {
     content: '....';
