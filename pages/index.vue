@@ -8,7 +8,7 @@ import { yearsPast } from '@/utils/dates';
 const ghStore = useGitHubStore();
 
 // Has data from 2012->; 2018-> most significant
-const years = yearsPast(4);
+const years = yearsPast(5);
 
 // TODO: Come up with an origonal method to calculate color scale
 const colorMapping = {
@@ -80,9 +80,9 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="mt-5">
+    <div>
         <!-- HEADER START -->
-        <div class="header-block sticky bg-base-100 pb-2">
+        <div class="header-block sticky bg-base-100 py-2">
             <div
                 class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
                 <div>
@@ -127,16 +127,16 @@ onMounted(async () => {
                                 year
                             ].weeks"
                             :key="`${year}-${index}`">
-                            <div />
+                            <div
+                                class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
+                                {{ displayMonth(week) }}
+                            </div>
                             <div
                                 v-for="day in normalizeWeek(week)"
                                 :key="day.date"
                                 class="day-block rounded-sm text-center"
                                 :style="`background-color: ${day.color}`" />
-                            <div
-                                class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
-                                {{ displayMonth(week) }}
-                            </div>
+                            <div />
                         </template>
                     </template>
                     <template v-else>
@@ -161,6 +161,7 @@ onMounted(async () => {
 <style scoped lang="scss">
 .header-block {
     top: 0;
+    z-index: 2;
     .gradient-scale {
         height: 0.25rem;
         background: linear-gradient(
