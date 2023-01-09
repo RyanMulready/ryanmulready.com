@@ -27,7 +27,7 @@
         "markdownlint-cli": "^0.32.2",
         "playwright": "^1.25.2",
         "postcss-html": "^1.5.0",
-        "prettier": "^2.7.1",
+        "prettier": "^2.8.2",
         "stylelint": "^14.11.0",
         "stylelint-config-prettier": "^9.0.3",
         "stylelint-config-recommended": "^9.0.0",
