@@ -8,11 +8,15 @@ import { yearsPast } from '@/utils/dates';
 const ghStore = useGitHubStore();
 
 // Has data from 2012->; 2018-> most significant
-const years = yearsPast(5);
+// Has data from 2012->; 2018-> most significant
+const startYear = new Date('01/01/2018 00:00');
+const endYear = new Date();
+const yearsSince = Math.abs(startYear.getFullYear() - endYear.getFullYear());
+const years = yearsPast(yearsSince);
 
 // TODO: Come up with an origonal method to calculate color scale
 const colorMapping = {
-    '': 'rgba(31,26,28, 0.4)',
+    '': 'transparent',
     '#ebedf0': 'rgba(31,26,28, 0.8)',
     '#9be9a8': 'rgba(189, 48, 57, 0.25)',
     '#40c463': 'rgba(189, 48, 57, 0.5)',
@@ -111,39 +115,38 @@ onMounted(async () => {
             <div
                 v-for="year in years"
                 :key="year"
-                class="mb-5">
-                <div
-                    v-observe-visibility="{
-                        callback: visibilityChanged,
-                        intersection: {
-                            threshold: 0.6,
-                        },
-                    }"
-                    :data-year="year"
-                    class="grid grid-cols-9 gap-[.15rem] grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
-                    <template v-if="ghStore.getContributions[year]">
-                        <template
-                            v-for="(week, index) in ghStore.getContributions[
-                                year
-                            ].weeks"
-                            :key="`${year}-${index}`">
-                            <div
-                                class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
-                                {{ displayMonth(week) }}
-                            </div>
-                            <div
-                                v-for="day in normalizeWeek(week)"
-                                :key="day.date"
-                                class="day-block rounded-sm text-center"
-                                :style="`background-color: ${day.color}`" />
-                            <div />
-                        </template>
-                    </template>
-                    <template v-else>
+                v-observe-visibility="{
+                    callback: visibilityChanged,
+                    intersection: {
+                        threshold: 0.6,
+                    },
+                }"
+                :data-year="year"
+                :class="{
+                    mergeYear: new Date(`12/31/${year} 00:00`).getDay() !== 6,
+                }">
+                <template v-if="ghStore.getContributions[year]">
+                    <div
+                        v-for="(week, index) in ghStore.getContributions[year]
+                            .weeks"
+                        :key="`${year}-${index}`"
+                        class="week-block grid grid-cols-9 gap-[.15rem] mb-[.15rem] grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
                         <div
-                            class="loading-block loading m-auto text-primary text-center" />
-                    </template>
-                </div>
+                            class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
+                            {{ displayMonth(week) }}
+                        </div>
+                        <div
+                            v-for="day in normalizeWeek(week)"
+                            :key="day.date"
+                            class="day-block rounded-sm text-center"
+                            :style="`background-color: ${day.color}`" />
+                        <div />
+                    </div>
+                </template>
+                <template v-else>
+                    <div
+                        class="loading-block loading m-auto text-primary text-center" />
+                </template>
             </div>
         </div>
         <!-- GRID END -->
@@ -177,6 +180,9 @@ onMounted(async () => {
 .years-block {
     min-height: 100vh;
     margin-bottom: 15rem;
+    .mergeYear {
+        margin-top: -0.6rem;
+    }
     .day-block {
         height: 0.5rem;
     }
