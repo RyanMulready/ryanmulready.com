@@ -13,6 +13,7 @@ export default defineEventHandler(async (event) => {
     const url = 'https://www.googleapis.com/auth/calendar.readonly';
     const config = useRuntimeConfig();
 
+    console.log(process.env.GOOGLE_PRIVATE_KEY);
     const GOOGLE_PRIVATE_KEY = JSON.parse(
         process.env.GOOGLE_PRIVATE_KEY || '',
     )?.privateKey;
