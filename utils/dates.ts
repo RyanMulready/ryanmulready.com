@@ -5,3 +5,19 @@ export const yearsPast = (years: number) => {
 
     return [thisYear, ...Array(years)].map((_, i) => thisYear - i);
 };
+
+export const yearObject = (to: Date, from: Date) => {
+    const events: any = {};
+    let currentDate = to;
+
+    while (currentDate >= from) {
+        events[currentDate.toLocaleDateString().toString()] = {
+            totalDuration: 0,
+            events: [],
+        };
+        const newDate = currentDate.setDate(currentDate.getDate() - 1);
+        currentDate = new Date(newDate);
+    }
+
+    return events;
+};
