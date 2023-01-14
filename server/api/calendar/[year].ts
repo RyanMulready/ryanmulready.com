@@ -13,11 +13,14 @@ export default defineEventHandler(async (event) => {
     const url = 'https://www.googleapis.com/auth/calendar.readonly';
     const config = useRuntimeConfig();
 
+    const GOOGLE_PRIVATE_KEY = JSON.parse(
+        process.env.GOOGLE_PRIVATE_KEY || '',
+    )?.privateKey;
     const auth = new google.auth.JWT(
         process.env.GOOGLE_CLIENT_EMAIL,
         undefined,
         // TODO: Why cant this replace be done in nuxt.config.ts?
-        process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        GOOGLE_PRIVATE_KEY,
         url,
     );
 

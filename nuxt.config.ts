@@ -21,6 +21,7 @@ export default defineNuxtConfig({
         },
     },
     css: ['~/assets/css/tailwind.css'],
+
     runtimeConfig: {
         API_TOKEN_GITHUB: process.env.API_TOKEN_GITHUB,
         GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
