@@ -56,13 +56,13 @@ export const useGitHubStore = defineStore('ghStore', {
             }
         },
         async fetchContributions(year: number) {
+            let contributions: eventInterface;
             try {
-                // TODO: any type
-                const response: any = await $fetch(
+                contributions = await $fetch(
                     `/api/github/contributions/${year}`,
                 );
 
-                this.contributions[year] = response;
+                this.contributions[year] = contributions;
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.log(e);

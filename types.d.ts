@@ -2,7 +2,7 @@ export type eventInterface = {
     count: number;
     duration: number;
     date: string;
-    weekDay: number;
+    weekDay: Nullable<number>;
 };
 export interface fetchOptInterface {
     method: string;

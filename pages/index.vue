@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useGitHubStore } from '@/stores/github';
-import { HTMLInputEvent } from '@/types';
+import { HTMLInputEvent, eventInterface } from '@/types';
 import { yearsPast } from '@/utils/dates';
 
 // init our pinia store
@@ -14,7 +14,7 @@ const endYear = new Date();
 const yearsSince = Math.abs(startYear.getFullYear() - endYear.getFullYear());
 const years = yearsPast(yearsSince);
 
-function colorScale(dayData: any) {
+function colorScale(dayData: eventInterface) {
     const colors = [
         'rgba(31,26,28, 0.8)',
         'rgba(189, 48, 57, 0.25)',
@@ -48,9 +48,16 @@ function colorScale(dayData: any) {
 
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
-function normalizeWeek(week: any) {
+function normalizeWeek(week: eventInterface[]) {
     return [...new Array(7)].map((empty, index) => {
-        const dayData = week?.find((day: any) => day.weekDay === index) || {};
+        const dayData = week?.find(
+            (day: eventInterface) => day.weekDay === index,
+        ) || {
+            date: '',
+            duration: 0,
+            count: 0,
+            weekDay: null,
+        };
         return {
             ...dayData,
             color: colorScale(dayData),
@@ -61,8 +68,8 @@ function normalizeWeek(week: any) {
 // Returns the month abrv if new
 // TODO: Has bug never shows current month?
 let currentMonth = '';
-function displayMonth(week: any) {
-    const date = week.find((day: any) => day.date)?.date;
+function displayMonth(week: eventInterface[]) {
+    const date = week.find((day: eventInterface) => day.date)?.date;
     const parsedDate = new Date(`${date} 00:00`);
     const month = parsedDate.toLocaleString('default', { month: 'short' });
 
