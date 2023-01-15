@@ -1,19 +1,26 @@
 import { defineEventHandler } from 'h3';
-import { yearObject } from '@/utils/dates';
+import { yearSchema } from '@/utils/dates';
 import github from '@/utils/github';
 import { useRuntimeConfig } from '#imports';
 
 export default defineEventHandler(async (event) => {
     const year = event.context.params?.year || new Date().getFullYear();
+    const today = new Date();
     const config = useRuntimeConfig();
 
     const from = new Date(`01/01/${year}`);
     const fromString = from.toISOString();
-    const to = new Date(`12/31/${year}`);
+
+    let to = new Date(`12/31/${year}`);
+    if (year === today.getFullYear().toString()) {
+        to = new Date(
+            today.setDate(today.getDate() + ((6 + (7 - today.getDay())) % 7)),
+        );
+    }
     const toString = to.toISOString();
 
     try {
-        const events = yearObject(to, from);
+        const events = yearSchema(to, from);
         const res = await github.$fetch(
             `
         query($username:String!, $fromString: DateTime!, $toString: DateTime!) {
@@ -46,7 +53,7 @@ export default defineEventHandler(async (event) => {
                 const start = new Date(`${day.date} 00:00`);
                 const weekIndex = start.getWeek();
                 const eventDate = start.toLocaleDateString().toString();
-                const existingIndex = events[weekIndex].findIndex(
+                const existingIndex = events[weekIndex]?.findIndex(
                     (eventItem) => eventItem.date === eventDate,
                 );
 

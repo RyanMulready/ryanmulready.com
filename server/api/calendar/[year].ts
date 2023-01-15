@@ -4,14 +4,21 @@ import { GaxiosResponse } from 'gaxios';
 
 import { defineEventHandler } from 'h3';
 import { useRuntimeConfig } from '#imports';
-import { yearObject } from '@/utils/dates';
+import { yearSchema } from '@/utils/dates';
 
 export default defineEventHandler(async (event) => {
-    const year = event.context.params?.year || new Date().getFullYear();
-    const from = new Date(`01/01/${year}`);
-    const to = new Date(`12/31/${year}`);
     const url = 'https://www.googleapis.com/auth/calendar.readonly';
     const config = useRuntimeConfig();
+    const year = event.context.params?.year || new Date().getFullYear();
+    const today = new Date();
+
+    const from = new Date(`01/01/${year}`);
+    let to = new Date(`12/31/${year}`);
+    if (year === today.getFullYear().toString()) {
+        to = new Date(
+            today.setDate(today.getDate() + ((6 + (7 - today.getDay())) % 7)),
+        );
+    }
 
     // TODO: Why can't this hppen in nuxt.config?
     const GOOGLE_PRIVATE_KEY = JSON.parse(
@@ -31,7 +38,7 @@ export default defineEventHandler(async (event) => {
     });
 
     let calendarEvents: calendar_v3.Schema$Event[] = [];
-    const events = yearObject(to, from);
+    const events = yearSchema(to, from);
     let moreResults = true;
     let pageToken;
     do {

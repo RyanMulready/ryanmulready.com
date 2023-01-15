@@ -23,7 +23,7 @@ Date.prototype.getWeek = function getWeek() {
     );
 };
 
-export const yearObject = (to: Date, from: Date) => {
+export const yearSchema = (to: Date, from: Date) => {
     const events: eventInterface[][] = [];
     let currentDate = from;
 

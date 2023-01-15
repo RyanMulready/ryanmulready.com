@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useGitHubStore } from '@/stores/github';
-import { contributionWeeks, HTMLInputEvent } from '@/types';
+import { HTMLInputEvent } from '@/types';
 import { yearsPast } from '@/utils/dates';
 
 // init our pinia store
@@ -14,43 +14,55 @@ const endYear = new Date();
 const yearsSince = Math.abs(startYear.getFullYear() - endYear.getFullYear());
 const years = yearsPast(yearsSince);
 
-// TODO: Come up with an origonal method to calculate color scale
-const colorMapping = {
-    '': 'transparent',
-    '#ebedf0': 'rgba(31,26,28, 0.8)',
-    '#9be9a8': 'rgba(189, 48, 57, 0.25)',
-    '#40c463': 'rgba(189, 48, 57, 0.5)',
-    '#30a14e': 'rgba(189, 48, 57, 0.75)',
-    '#216e39': 'rgba(189, 48, 57)',
-};
+function colorScale(dayData: any) {
+    const colors = [
+        'rgba(31,26,28, 0.8)',
+        'rgba(189, 48, 57, 0.25)',
+        'rgba(189, 48, 57, 0.5)',
+        'rgba(189, 48, 57, 0.75)',
+        'rgba(189, 48, 57)',
+    ];
+
+    // TODO: Optimize this nonsense
+    if (!dayData.duration) {
+        if (dayData.count >= 1 && dayData.count <= 7) {
+            return colors[1];
+        }
+        if (dayData.count >= 8 && dayData.count <= 15) {
+            return colors[1];
+        }
+        if (dayData.count >= 22 && dayData.count <= 29) {
+            return colors[2];
+        }
+        if (dayData.count >= 30 && dayData.count <= 37) {
+            return colors[3];
+        }
+        if (dayData.count >= 38) {
+            return colors[4];
+        }
+        return colors[0];
+    }
+    // TODO: Duration range
+    return colors[0];
+}
+
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
-function normalizeWeek(week: contributionWeeks) {
+function normalizeWeek(week: any) {
     return [...new Array(7)].map((empty, index) => {
-        const dayData = week?.contributionDays.find(
-            (day) => day.weekday === index,
-        );
-        // TODO: Why doesn't just the top condition work for both?
-        if (dayData) {
-            return {
-                // realColor: weekData.color,
-                color: dayData?.color
-                    ? colorMapping[dayData.color as keyof object]
-                    : colorMapping['#ebedf0'],
-                count: dayData?.contributionCount || 0,
-                date: dayData?.date || '',
-                index,
-            };
-        }
-        return { color: colorMapping[''], count: 0, index };
+        const dayData = week?.find((day: any) => day.weekDay === index) || {};
+        return {
+            ...dayData,
+            color: colorScale(dayData),
+        };
     });
 }
 
 // Returns the month abrv if new
 // TODO: Has bug never shows current month?
 let currentMonth = '';
-function displayMonth(week: contributionWeeks) {
-    const date = normalizeWeek(week).find((day) => day.date)?.date;
+function displayMonth(week: any) {
+    const date = week.find((day: any) => day.date)?.date;
     const parsedDate = new Date(`${date} 00:00`);
     const month = parsedDate.toLocaleString('default', { month: 'short' });
 
@@ -123,13 +135,17 @@ onMounted(async () => {
                 }"
                 :data-year="year"
                 :class="{
-                    mergeYear: new Date(`12/31/${year} 00:00`).getDay() !== 6,
+                    mergeYear:
+                        year !== endYear.getFullYear() &&
+                        new Date(`12/31/${year} 00:00`).getDay() !== 6,
                 }">
                 <template v-if="ghStore.getContributions[year]">
                     <div
-                        v-for="(week, index) in ghStore.getContributions[year]
-                            .weeks"
-                        :key="`${year}-${index}`"
+                        v-for="(week, weekIndex) in ghStore.getContributions[
+                            year
+                        ]"
+                        :key="`${year}-${weekIndex}`"
+                        :data-week="weekIndex"
                         class="week-block grid grid-cols-9 gap-[.15rem] mb-[.15rem] grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
                         <div
                             class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
