@@ -62,19 +62,37 @@ export default defineEventHandler(async (event) => {
 
     // Normalize calendarEvents to be grouped by date
     calendarEvents.forEach((calEvent: calendar_v3.Schema$Event) => {
-        const start = new Date(
-            `${calEvent.start?.dateTime || calEvent.start?.date}`,
-        );
-        const end = new Date(`${calEvent.end?.dateTime || calEvent.end?.date}`);
+        const start = new Date(`${calEvent.start?.dateTime}`);
+        const end = new Date(`${calEvent.end?.dateTime}`);
+
+        // All day events or events spanning multiple days are ignored
+        if (
+            !calEvent.start?.dateTime ||
+            !calEvent.end?.dateTime ||
+            start.getDay() !== end.getDay()
+        ) {
+            return;
+        }
+
+        // Anything with holiday in the title is safe to ignore
+        if (calEvent.summary?.toLowerCase().includes('holiday')) {
+            return;
+        }
+
         const duration = end.getTime() - start.getTime();
-        const weekIndex = start.getWeek();
         const eventDate = start.toLocaleDateString().toString();
-        const existingIndex = events[weekIndex].findIndex(
-            (eventItem) => eventItem.date === eventDate,
-        );
-        const existingData = events[weekIndex][existingIndex];
+        const weekIndex = start.getWeek();
+
+        // Future meetings should be ignored
+        if (!events[weekIndex]) {
+            return;
+        }
 
         try {
+            const existingIndex = events[weekIndex].findIndex(
+                (eventItem) => eventItem.date === eventDate,
+            );
+            const existingData = events[weekIndex][existingIndex];
             events[weekIndex][existingIndex] = {
                 ...events[weekIndex][existingIndex],
                 duration: (existingData?.duration || 0) + duration,

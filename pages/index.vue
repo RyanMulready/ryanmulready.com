@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useGitHubStore } from '@/stores/github';
+import { useCalendarStore } from '@/stores/calendar';
+import { colorScale } from '@/utils/colors';
 import { HTMLInputEvent, eventInterface } from '@/types';
 import { yearsPast } from '@/utils/dates';
 
 // init our pinia store
 const ghStore = useGitHubStore();
+const calStore = useCalendarStore();
 
 // Has data from 2012->; 2018-> most significant
 // Has data from 2012->; 2018-> most significant
@@ -13,38 +16,6 @@ const startYear = new Date('01/01/2018 00:00');
 const endYear = new Date();
 const yearsSince = Math.abs(startYear.getFullYear() - endYear.getFullYear());
 const years = yearsPast(yearsSince);
-
-function colorScale(dayData: eventInterface) {
-    const colors = [
-        'rgba(31,26,28, 0.8)',
-        'rgba(189, 48, 57, 0.25)',
-        'rgba(189, 48, 57, 0.5)',
-        'rgba(189, 48, 57, 0.75)',
-        'rgba(189, 48, 57)',
-    ];
-
-    // TODO: Optimize this nonsense
-    if (!dayData.duration) {
-        if (dayData.count >= 1 && dayData.count <= 7) {
-            return colors[1];
-        }
-        if (dayData.count >= 8 && dayData.count <= 15) {
-            return colors[1];
-        }
-        if (dayData.count >= 22 && dayData.count <= 29) {
-            return colors[2];
-        }
-        if (dayData.count >= 30 && dayData.count <= 37) {
-            return colors[3];
-        }
-        if (dayData.count >= 38) {
-            return colors[4];
-        }
-        return colors[0];
-    }
-    // TODO: Duration range
-    return colors[0];
-}
 
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
@@ -92,12 +63,22 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
     visibleYears.value.sort().reverse();
 }
 
+const eventType = ref<string>('contributions');
+const events = computed(() => {
+    return eventType.value === 'contributions'
+        ? ghStore.getContributions
+        : calStore.getMeetings;
+});
+
 // load page first then trigger fetch to fill data
 onMounted(async () => {
     // Loop over possible years and request data
     // Current year should be available first but isn't always
     years.forEach(async (year) => {
         await ghStore.fetchContributions(year);
+    });
+    years.forEach(async (year) => {
+        await calStore.fetchMeetings(year);
     });
 });
 </script>
@@ -107,7 +88,7 @@ onMounted(async () => {
         <!-- HEADER START -->
         <div class="header-block sticky bg-base-100 py-2">
             <div
-                class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
+                class="grid grid-cols-3 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
                 <div>
                     <h1 class="mb-3 font-weight-normal text-base font-normal">
                         Code Contributions
@@ -116,6 +97,31 @@ onMounted(async () => {
                     <div class="grid grid-cols-2 leading-4">
                         <div>more</div>
                         <div class="text-right">less</div>
+                    </div>
+                </div>
+                <div class="pl-3">
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <span class="label-text">Contributions</span>
+                            <input
+                                v-model="eventType"
+                                type="radio"
+                                name="event-type"
+                                value="contributions"
+                                class="radio radio-primary"
+                                checked />
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label class="label cursor-pointer">
+                            <span class="label-text">Meetings</span>
+                            <input
+                                v-model="eventType"
+                                type="radio"
+                                value="meetings"
+                                name="event-type"
+                                class="radio radio-primary" />
+                        </label>
                     </div>
                 </div>
                 <div
@@ -146,11 +152,9 @@ onMounted(async () => {
                         year !== endYear.getFullYear() &&
                         new Date(`12/31/${year} 00:00`).getDay() !== 6,
                 }">
-                <template v-if="ghStore.getContributions[year]">
+                <template v-if="events[year]">
                     <div
-                        v-for="(week, weekIndex) in ghStore.getContributions[
-                            year
-                        ]"
+                        v-for="(week, weekIndex) in events[year]"
                         :key="`${year}-${weekIndex}`"
                         :data-week="weekIndex"
                         class="week-block grid grid-cols-9 gap-[.15rem] mb-[.15rem] grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
