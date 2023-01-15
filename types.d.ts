@@ -1,11 +1,25 @@
+export type eventInterface = {
+    count: number;
+    duration: number;
+    date: string;
+    weekDay: number;
+};
 export interface fetchOptInterface {
     method: string;
     mode: string;
     headers: object;
 }
 
-export interface JSONResponse {
-    data?: object;
+export interface GithubResponse {
+    data?: {
+        user?: {
+            contributionsCollection?: {
+                contributionCalendar: {
+                    weeks: contributionWeeks[];
+                };
+            };
+        };
+    };
     message?: string;
     statusMessage?: string;
     statusCode?: number;
@@ -74,4 +88,10 @@ export interface languagesInterface {
             };
         };
     };
+}
+
+declare global {
+    interface Date {
+        getWeek: () => number;
+    }
 }

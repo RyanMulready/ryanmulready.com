@@ -1,4 +1,4 @@
-import { fetchOptInterface, JSONResponse } from '@/types';
+import { fetchOptInterface, GithubResponse } from '@/types';
 import { useRuntimeConfig } from '#imports';
 
 const url = 'https://api.github.com/graphql';
@@ -14,7 +14,7 @@ const $fetch = async (
             Authorization: `Bearer ${config.API_TOKEN_GITHUB}`,
         },
     },
-): Promise<JSONResponse> => {
+): Promise<GithubResponse> => {
     const res = await fetch(url, {
         ...(<any>options),
         body: JSON.stringify({
@@ -23,7 +23,7 @@ const $fetch = async (
         }),
     });
 
-    const body: JSONResponse = await res.json();
+    const body: GithubResponse = await res.json();
 
     if (!res.ok || body.statusMessage) throw new Error(body.statusMessage);
 

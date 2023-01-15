@@ -1,13 +1,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import {
-    contributionsInterface,
-    contributionResponse,
-    languagesInterface,
-} from '@/types';
+import { eventInterface, languagesInterface } from '@/types';
 
 export const useGitHubStore = defineStore('ghStore', {
     state: () => ({
-        contributions: {} as contributionsInterface,
+        contributions: [] as eventInterface[],
         languages: {
             data: {
                 user: {
@@ -61,20 +57,12 @@ export const useGitHubStore = defineStore('ghStore', {
         },
         async fetchContributions(year: number) {
             try {
-                const response: contributionResponse = await $fetch(
+                // TODO: any type
+                const response: any = await $fetch(
                     `/api/github/contributions/${year}`,
                 );
 
-                if (response.data.user.contributionsCollection) {
-                    this.contributions[year] = {
-                        totalContributions:
-                            response.data.user.contributionsCollection
-                                .contributionCalendar.totalContributions,
-                        weeks: response.data.user.contributionsCollection.contributionCalendar.weeks.reverse(),
-                    };
-                } else {
-                    throw new Error('Unexpected response shape');
-                }
+                this.contributions[year] = response;
             } catch (e) {
                 // eslint-disable-next-line no-console
                 console.log(e);

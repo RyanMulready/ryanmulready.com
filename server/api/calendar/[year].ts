@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     const url = 'https://www.googleapis.com/auth/calendar.readonly';
     const config = useRuntimeConfig();
 
-    console.log(process.env.GOOGLE_PRIVATE_KEY);
+    // TODO: Why can't this hppen in nuxt.config?
     const GOOGLE_PRIVATE_KEY = JSON.parse(
         process.env.GOOGLE_PRIVATE_KEY || '',
     )?.privateKey;
@@ -60,17 +60,18 @@ export default defineEventHandler(async (event) => {
         );
         const end = new Date(`${calEvent.end?.dateTime || calEvent.end?.date}`);
         const duration = end.getTime() - start.getTime();
-        const eventItem = start.toLocaleDateString().toString();
+        const weekIndex = start.getWeek();
+        const eventDate = start.toLocaleDateString().toString();
+        const existingIndex = events[weekIndex].findIndex(
+            (eventItem) => eventItem.date === eventDate,
+        );
+        const existingData = events[weekIndex][existingIndex];
+
         try {
-            events[eventItem] = {
-                totalDuration: events[eventItem].totalDuration + duration,
-                events: [
-                    ...events[eventItem].events,
-                    {
-                        start,
-                        duration,
-                    },
-                ],
+            events[weekIndex][existingIndex] = {
+                ...events[weekIndex][existingIndex],
+                duration: (existingData?.duration || 0) + duration,
+                count: (existingData?.count || 0) + 1,
             };
         } catch (e) {
             // eslint-disable-next-line no-console
@@ -78,5 +79,5 @@ export default defineEventHandler(async (event) => {
         }
     });
 
-    return events;
+    return events.reverse();
 });
