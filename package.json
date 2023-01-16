@@ -48,7 +48,7 @@
         "googleapis": "^110.0.0",
         "h3": "^1.0.2",
         "nuxt": "^3.0.0",
-        "pinia": "^2.0.28",
+        "pinia": "^2.0.29",
         "vue": "^3.2.45",
         "vue-observe-visibility": "^2.0.0-alpha.1"
     }
