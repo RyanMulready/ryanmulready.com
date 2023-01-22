@@ -11,7 +11,7 @@
         "postinstall": "nuxt prepare"
     },
     "devDependencies": {
-        "@nuxt/test-utils-edge": "^3.0.1-rc.0-27887744.586df1a",
+        "@nuxt/test-utils-edge": "^3.0.1-rc.0-27902229.912eafb",
         "@nuxtjs/eslint-config-typescript": "^12.0.0",
         "@nuxtjs/tailwindcss": "^6.2.0",
         "@tailwindcss/typography": "^0.5.9",
