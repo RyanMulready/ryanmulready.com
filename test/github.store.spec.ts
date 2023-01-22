@@ -24,12 +24,12 @@ describe('Github Store', async () => {
         expect(githubStore.languages).toStrictEqual({
             data: { user: { repositories: { nodes: [] } } },
         });
-        expect(githubStore.contributions).toStrictEqual({});
+        expect(githubStore.contributions).toStrictEqual([]);
     });
 
     it('returns the expected default getter values', () => {
-        expect(githubStore.getLanguages).toStrictEqual({});
-        expect(githubStore.getContributions).toStrictEqual({});
+        expect(githubStore.getLanguages).toStrictEqual([]);
+        expect(githubStore.getContributions).toStrictEqual([]);
     });
 
     it('modifies the state as expected', async () => {

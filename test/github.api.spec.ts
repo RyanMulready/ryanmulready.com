@@ -22,6 +22,6 @@ describe('Github API', async () => {
             contributions = await $fetch('/api/github/contributions/2021');
         } catch (e) {}
 
-        expect(contributions.data).toBeTruthy();
+        expect(contributions).toBeTruthy();
     });
 });
