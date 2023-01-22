@@ -13,7 +13,6 @@ export function colorScale(dayData: eventInterface) {
         : dayData.count;
 
     if (!value) return colors[0];
-    if (value <= 7) return colors[1];
     if (value <= 15) return colors[1];
     if (value <= 29) return colors[2];
     if (value <= 37) return colors[3];

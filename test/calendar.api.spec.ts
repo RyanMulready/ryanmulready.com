@@ -10,7 +10,7 @@ describe('Calendar API', async () => {
     it('returns a 200 and data', async () => {
         let events;
         try {
-            events = await $fetch('/api/calendar/2021');
+            events = await $fetch('/api/calendar/2024');
         } catch (e) {}
 
         expect(events).toBeTruthy();

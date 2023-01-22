@@ -24,19 +24,21 @@ Date.prototype.getWeek = function getWeek() {
 };
 
 export const yearSchema = (to: Date, from: Date) => {
-    const events: eventInterface[][] = new Array(53).fill([]);
-    const currentDate = from;
+    const events: eventInterface[][] = [];
+    let currentDate = from;
 
     while (currentDate <= to) {
         const weekIndex = currentDate.getWeek();
         const currentDateString = currentDate.toLocaleDateString();
+        events[weekIndex] = events[weekIndex] || [];
         events[weekIndex].push({
             date: currentDateString,
             weekDay: currentDate.getDay(),
             count: 0,
             duration: 0,
         });
-        currentDate.setDate(currentDate.getDate() + 1);
+        const newDate = currentDate.setDate(currentDate.getDate() + 1);
+        currentDate = new Date(newDate);
     }
 
     return events;

@@ -17,7 +17,7 @@ describe('colorScale', () => {
         );
     });
 
-    it('should return the second color for a value of 1-7', () => {
+    it('should return the second color for a value of 1-15', () => {
         expect(colorScale({ ...event, count: 3 })).toEqual(
             'rgba(189, 48, 57, 0.25)',
         );
@@ -26,11 +26,11 @@ describe('colorScale', () => {
         );
     });
 
-    it('should return the third color for a value of 8-15', () => {
-        expect(colorScale({ ...event, count: 12 })).toEqual(
+    it('should return the third color for a value of 16-29', () => {
+        expect(colorScale({ ...event, count: 16 })).toEqual(
             'rgba(189, 48, 57, 0.5)',
         );
-        expect(colorScale({ ...event, duration: 1000 * 60 * 60 * 6 })).toEqual(
+        expect(colorScale({ ...event, duration: 1000 * 60 * 60 * 21 })).toEqual(
             'rgba(189, 48, 57, 0.5)',
         );
     });

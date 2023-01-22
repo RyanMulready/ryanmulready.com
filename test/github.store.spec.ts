@@ -28,7 +28,7 @@ describe('Github Store', async () => {
     });
 
     it('returns the expected default getter values', () => {
-        expect(githubStore.getLanguages).toStrictEqual([]);
+        expect(githubStore.getLanguages).toStrictEqual({});
         expect(githubStore.getContributions).toStrictEqual([]);
     });
 
