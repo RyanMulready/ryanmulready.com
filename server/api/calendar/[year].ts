@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
         );
     }
 
-    // TODO: Why can't this hppen in nuxt.config?
+    // TODO: Why can't this happen in nuxt.config?
     const GOOGLE_PRIVATE_KEY = JSON.parse(
         process.env.GOOGLE_PRIVATE_KEY || '',
     )?.privateKey;

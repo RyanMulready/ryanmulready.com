@@ -34,7 +34,6 @@ export default defineEventHandler(async () => {
         );
         return data;
     } catch (e) {
-        // TODO: Real Error Handling
         return {
             error: 'Request Failed',
         };

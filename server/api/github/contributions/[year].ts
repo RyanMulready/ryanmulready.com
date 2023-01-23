@@ -72,7 +72,6 @@ export default defineEventHandler(async (event) => {
     } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e);
-        // TODO: Real Error Handling
         return {
             error: 'Request Failed',
         };

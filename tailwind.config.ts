@@ -8,6 +8,7 @@ export default <Config>{
         './pages/**/*.vue',
     ],
     daisyui: {
+        logs: false,
         themes: [
             {
                 ryanmulready: {

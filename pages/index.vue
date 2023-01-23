@@ -100,28 +100,53 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="pl-3">
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                            <span class="label-text">Contributions</span>
-                            <input
-                                v-model="eventType"
-                                type="radio"
-                                name="event-type"
-                                value="contributions"
-                                class="radio radio-primary"
-                                checked />
-                        </label>
-                    </div>
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                            <span class="label-text">Meetings</span>
-                            <input
-                                v-model="eventType"
-                                type="radio"
-                                value="meetings"
-                                name="event-type"
-                                class="radio radio-primary" />
-                        </label>
+                    <!-- The button to open modal -->
+                    <label
+                        for="my-modal-6"
+                        class="btn btn-primary btn-xs">
+                        Filters
+                    </label>
+
+                    <!-- Put this part before </body> tag -->
+                    <input
+                        id="my-modal-6"
+                        type="checkbox"
+                        class="modal-toggle" />
+                    <div class="modal modal-bottom sm:modal-middle">
+                        <div class="modal-box">
+                            <div class="form-control">
+                                <label class="label cursor-pointer">
+                                    <span class="label-text">
+                                        Contributions
+                                    </span>
+                                    <input
+                                        v-model="eventType"
+                                        type="radio"
+                                        name="event-type"
+                                        value="contributions"
+                                        class="radio radio-primary"
+                                        checked />
+                                </label>
+                            </div>
+                            <div class="form-control">
+                                <label class="label cursor-pointer">
+                                    <span class="label-text">Meetings</span>
+                                    <input
+                                        v-model="eventType"
+                                        type="radio"
+                                        value="meetings"
+                                        name="event-type"
+                                        class="radio radio-primary" />
+                                </label>
+                            </div>
+                            <div class="modal-action">
+                                <label
+                                    for="my-modal-6"
+                                    class="btn">
+                                    Close
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div
