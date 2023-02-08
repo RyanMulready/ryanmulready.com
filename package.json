@@ -43,7 +43,7 @@
     },
     "dependencies": {
         "@pinia/nuxt": "^0.4.6",
-        "daisyui": "^2.47.0",
+        "daisyui": "^2.50.0",
         "gaxios": "^5.0.2",
         "googleapis": "^110.0.0",
         "h3": "^1.2.1",
