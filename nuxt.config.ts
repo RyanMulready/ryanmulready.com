@@ -20,7 +20,10 @@ export default defineNuxtConfig({
             link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         },
     },
-    css: ['~/assets/css/tailwind.css'],
+    css: [
+        '~/assets/css/tailwind.css',
+        '@fortawesome/fontawesome-svg-core/styles.css',
+    ],
 
     runtimeConfig: {
         API_TOKEN_GITHUB: process.env.API_TOKEN_GITHUB,
@@ -31,6 +34,21 @@ export default defineNuxtConfig({
             GOOGLE_CALENDAR_ID: 'ryan@energysage.com',
         },
     },
-    modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
-    plugins: ['@/plugins/observe-visibility'],
+    build: {
+        // https://github.com/FortAwesome/vue-fontawesome/issues/393
+        transpile: ['@fortawesome/vue-fontawesome'],
+    },
+    modules: [
+        '@nuxtjs/tailwindcss',
+        '@pinia/nuxt',
+        '@nuxt/image-edge',
+        '@nuxtjs/i18n',
+    ],
+    plugins: ['@/plugins/observe-visibility', '@/plugins/font-awesome'],
+    i18n: {
+        lazy: true,
+        langDir: 'lang',
+        defaultLocale: 'en',
+        locales: [{ code: 'en', file: 'en-US.json' }],
+    },
 });
