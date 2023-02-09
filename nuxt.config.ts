@@ -43,12 +43,19 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
+        '@nuxtjs/google-fonts',
     ],
     plugins: ['@/plugins/observe-visibility', '@/plugins/font-awesome'],
     i18n: {
         lazy: true,
         langDir: 'lang',
         defaultLocale: 'en',
-        locales: [{ code: 'en', file: 'en-US.json' }],
+        locales: [{ code: 'en', file: 'en.json' }],
+    },
+    googleFonts: {
+        families: {
+            Inconsolata: true,
+            Poppins: true,
+        },
     },
 });

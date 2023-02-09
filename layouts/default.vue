@@ -9,7 +9,7 @@ import { useHead } from '#imports';
 
 useHead({
     bodyAttrs: {
-        class: 'prose min-w-full',
+        class: 'prose min-w-full overflow-hidden',
     },
 });
 </script>

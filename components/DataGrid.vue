@@ -26,12 +26,14 @@
                         class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
                         {{ displayMonth(week) }}
                     </div>
-                    <div
-                        v-for="day in normalizeWeek(week)"
-                        :key="day.date"
-                        class="day-block rounded-sm text-center"
-                        :style="`background-color: ${day.color}`" />
-                    <div />
+                    <transition-group>
+                        <div
+                            v-for="day in normalizeWeek(week)"
+                            :key="day.date"
+                            class="day-block rounded-sm text-center"
+                            :style="`background-color: ${day.color}`" />
+                        <div />
+                    </transition-group>
                 </div>
             </template>
             <template v-else>

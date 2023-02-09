@@ -1,7 +1,9 @@
 <template>
     <div>
         <Header :visible-year="visibleYears[0]" />
-        <Overlay />
+        <Overlay
+            :loading="loading"
+            :ready="ready" />
         <DataGrid
             :events="events"
             :years="years"
@@ -21,6 +23,8 @@ import { yearsPast } from '@/utils/dates';
 const ghStore = useGitHubStore();
 const calStore = useCalendarStore();
 const visibleYears = ref([]);
+const loading = ref(true);
+const ready = ref(false);
 
 // Has data from 2012->; 2018-> most significant
 // Has data from 2012->; 2018-> most significant
@@ -38,13 +42,24 @@ const events = computed(() => {
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {
+    const loadingDelay = 3000;
     // Loop over possible years and request data
     // Current year should be available first but isn't always
     years.forEach(async (year) => {
         await ghStore.fetchContributions(year);
+
+        // TODO: Where's the right hook?
+        setTimeout(() => {
+            ready.value = true;
+        }, loadingDelay);
     });
     years.forEach(async (year) => {
         await calStore.fetchMeetings(year);
     });
+
+    // TODO: Where's the right hook?
+    setTimeout(() => {
+        loading.value = false;
+    }, loadingDelay);
 });
 </script>

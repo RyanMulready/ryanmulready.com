@@ -20,5 +20,7 @@
     },
     "css.validate": false,
     "scss.validate": false,
-    "stylelint.validate": ["css", "less", "postcss", "scss", "sass", "vue"]
+    "stylelint.validate": ["css", "less", "postcss", "scss", "sass", "vue"],
+    "i18n-ally.localesPaths": ["lang"],
+    "i18n-ally.keystyle": "nested"
 }
