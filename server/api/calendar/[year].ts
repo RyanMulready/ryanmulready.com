@@ -100,7 +100,7 @@ export default defineEventHandler(async (event) => {
             };
         } catch (e) {
             // eslint-disable-next-line no-console
-            console.log('Error adding event: ', calEvent, e);
+            console.log('Error adding calendar event: ', calEvent, e);
         }
     });
 

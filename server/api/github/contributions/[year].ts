@@ -56,15 +56,22 @@ export default defineEventHandler(async (event) => {
                 const existingIndex = events[weekIndex]?.findIndex(
                     (eventItem) => eventItem.date === eventDate,
                 );
-
                 try {
-                    events[weekIndex][existingIndex] = {
-                        ...events[weekIndex][existingIndex],
-                        count: day.contributionCount,
-                    };
+                    if (existingIndex && weekIndex) {
+                        events[weekIndex][existingIndex] = {
+                            ...events[weekIndex][existingIndex],
+                            count: day.contributionCount,
+                        };
+                    }
                 } catch (e) {
                     // eslint-disable-next-line no-console
-                    console.log('Error adding event: ', day, e);
+                    console.log(
+                        'Error adding contribution event: ',
+                        day,
+                        weekIndex,
+                        existingIndex,
+                        e,
+                    );
                 }
             });
         });
