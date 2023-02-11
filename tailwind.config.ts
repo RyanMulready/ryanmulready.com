@@ -17,7 +17,7 @@ export default <Config>{
                     accent: '#FF5AEF',
                     neutral: '#181617',
                     'neutral-content': '#443d3f',
-                    'base-100': '#231F20',
+                    'base-100': '#292425',
                     info: '#3ABFF8',
                     success: '#36D399',
                     warning: '#FBBD23',

@@ -14,6 +14,7 @@
 </template>
 
 <script setup lang="ts">
+import { gsap } from 'gsap';
 import { onMounted, ref, computed } from 'vue';
 import { useGitHubStore } from '@/stores/github';
 import { useCalendarStore } from '@/stores/calendar';
@@ -30,8 +31,7 @@ const ready = ref(false);
 // Has data from 2012->; 2018-> most significant
 const startYear = new Date('01/01/2018 00:00');
 const endYear = new Date();
-const yearsSince = Math.abs(startYear.getFullYear() - endYear.getFullYear());
-const years = yearsPast(yearsSince);
+const years = yearsPast(startYear, endYear);
 
 const eventType = ref<string>('contributions');
 const events = computed(() => {
@@ -42,24 +42,29 @@ const events = computed(() => {
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {
-    const loadingDelay = 3000;
+    const loadingTimeline = gsap.timeline({ paused: true });
     // Loop over possible years and request data
     // Current year should be available first but isn't always
-    years.forEach(async (year) => {
-        await ghStore.fetchContributions(year);
-
-        // TODO: Where's the right hook?
-        setTimeout(() => {
-            ready.value = true;
-        }, loadingDelay);
+    await Promise.all(
+        years.map(async (year) => {
+            await ghStore.fetchContributions(year);
+        }),
+    );
+    const dayBlocks = document.querySelectorAll('.data-block');
+    gsap.to(dayBlocks, {
+        opacity: 1,
+        stagger: 0.0045,
+        duration: 1,
     });
-    years.forEach(async (year) => {
-        await calStore.fetchMeetings(year);
-    });
+    loadingTimeline.play();
+    ready.value = true;
+    await Promise.all(
+        years.map(async (year) => {
+            await calStore.fetchMeetings(year);
+        }),
+    );
 
-    // TODO: Where's the right hook?
-    setTimeout(() => {
-        loading.value = false;
-    }, loadingDelay);
+    // All data is finished loading
+    loading.value = false;
 });
 </script>

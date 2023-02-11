@@ -4,6 +4,9 @@ import { defineNuxtConfig } from 'nuxt/config';
 export default defineNuxtConfig({
     app: {
         head: {
+            htmlAttrs: {
+                lang: 'en',
+            },
             title: 'RyanMulready v7',
             titleTemplate: '%s - RyanMulready v7',
             meta: [

@@ -1,8 +1,8 @@
 <template>
     <!-- GRID START -->
-    <div class="years-block overflow-hidden">
+    <div class="years-block pt-4">
         <div
-            v-for="(year, index) in years"
+            v-for="(year, yearIndex) in years"
             :key="year"
             v-observe-visibility="{
                 callback: visibilityChanged,
@@ -13,7 +13,7 @@
             :data-year="year"
             :class="{
                 mergeYear:
-                    index !== years.length - 1 &&
+                    yearIndex !== years.length - 1 &&
                     new Date(`12/31/${year} 00:00`).getDay() !== 6,
             }">
             <template v-if="events[year]">
@@ -21,19 +21,25 @@
                     v-for="(week, weekIndex) in events[year]"
                     :key="`${year}-${weekIndex}`"
                     :data-week="weekIndex"
-                    class="week-block grid gap-[.15rem] mb-[.15rem] grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
+                    class="week-block grid mb-1.5 grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
                     <div
                         class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
-                        {{ displayMonth(week) }}
+                        <span
+                            :class="{
+                                hidden: yearIndex === 0 && weekIndex === 0,
+                            }">
+                            {{ displayMonth(week) }}
+                        </span>
                     </div>
-                    <transition-group>
-                        <div
-                            v-for="day in normalizeWeek(week)"
-                            :key="day.date"
-                            class="day-block rounded-sm text-center"
-                            :style="`background-color: ${day.color}`" />
-                        <div />
-                    </transition-group>
+                    <div
+                        v-for="(day, dayIndex) in normalizeWeek(week)"
+                        :key="day.date"
+                        :data-index="dayIndex"
+                        transition="fade"
+                        stagger="1000"
+                        class="data-block day-block text-center"
+                        :style="`background-color: ${day.color}`" />
+                    <div />
                 </div>
             </template>
             <template v-else>
@@ -113,7 +119,7 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 .years-block {
     min-height: 100vh;
     margin-bottom: 15rem;
@@ -121,10 +127,14 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
         margin-top: -0.6rem;
     }
     .day-block {
-        height: 0.5rem;
+        height: 0.65rem;
+    }
+
+    .data-block {
+        opacity: 0;
     }
     .vertical-text {
-        top: 2rem;
+        top: 1.5rem;
         writing-mode: sideways-lr;
         text-orientation: mixed;
     }
