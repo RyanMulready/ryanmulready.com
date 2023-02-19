@@ -1,14 +1,11 @@
 import { eventInterface } from '@/types';
 
-// Returns Last 5 Years in an array desc order
-export const yearsPast = (startYear: Date, endYear: Date) => {
-    const now = new Date();
-    const yearsSince = Math.abs(
-        startYear.getFullYear() - endYear.getFullYear(),
-    );
-    const thisYear = now.getFullYear();
+// Returns an array of years between two dates
+export const yearsPast = (startYear: Date, endYear: Date): number[] => {
+    const start = startYear.getFullYear();
+    const end = endYear.getFullYear();
 
-    return [thisYear, ...Array(yearsSince)].map((_, i) => thisYear - i);
+    return Array.from({ length: end - start + 1 }, (_, i) => end - i);
 };
 
 // eslint-disable-next-line no-extend-native

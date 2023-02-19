@@ -32,30 +32,27 @@ describe('getWeek', () => {
         expect(week).toEqual(2);
     });
 });
-
 describe('yearsPast', () => {
-    it('should return an array of the specified length', () => {
-        expect(yearsPast(0).length).toBe(1);
-        expect(yearsPast(1).length).toBe(2);
-        expect(yearsPast(5).length).toBe(6);
+    it('should return an array of years between start year and current year', () => {
+        const startYear = new Date('2010-01-01');
+        const endYear = new Date('2015-01-01');
+
+        const result = yearsPast(startYear, endYear);
+
+        expect(result).toHaveLength(
+            endYear.getFullYear() - startYear.getFullYear() + 1,
+        );
+        expect(result[0]).toEqual(endYear.getFullYear());
+        expect(result[result.length - 1]).toEqual(startYear.getFullYear());
     });
 
-    it('should start with the current year', () => {
-        const currentYear = new Date().getFullYear();
-        expect(yearsPast(5)[0]).toBe(currentYear);
-    });
+    it('should return an single year if start year is after end year', () => {
+        const startYear = new Date('01-01-2010');
+        const endYear = new Date('01-01-2010');
 
-    it('should end with the current year minus the number of years specified', () => {
-        const currentYear = new Date().getFullYear();
-        expect(yearsPast(5)[5]).toBe(currentYear - 5);
-    });
+        const result = yearsPast(startYear, endYear);
 
-    it('should return a decreasing list of years', () => {
-        const currentYear = new Date().getFullYear();
-        const result = yearsPast(5);
-        for (let i = 1; i < result.length; i += 1) {
-            expect(result[i]).toBe(currentYear - i);
-        }
+        expect(result).toEqual([2010]);
     });
 });
 

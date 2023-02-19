@@ -7,7 +7,7 @@
             v-observe-visibility="{
                 callback: visibilityChanged,
                 intersection: {
-                    threshold: 0.6,
+                    threshold: 0.4,
                 },
             }"
             :data-year="year"

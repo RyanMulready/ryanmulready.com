@@ -28,7 +28,6 @@ const loading = ref(true);
 const ready = ref(false);
 
 // Has data from 2012->; 2018-> most significant
-// Has data from 2012->; 2018-> most significant
 const startYear = new Date('01/01/2018 00:00');
 const endYear = new Date();
 const years = yearsPast(startYear, endYear);
