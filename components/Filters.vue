@@ -1,20 +1,123 @@
 <template>
     <div>
         <input
-            id="my-modal-6"
+            id="modal-filters"
             type="checkbox"
             class="modal-toggle" />
-        <div class="modal modal-bottom sm:modal-middle">
-            <div class="modal-box">
-                Modal!
-                <div class="modal-action">
+        <label
+            for="modal-filters"
+            class="modal modal-bottom sm:modal-middle cursor-pointer">
+            <label
+                class="modal-box relative"
+                for="">
+                <label
+                    for="modal-filters"
+                    class="p-3 absolute right-2 top-2 text-accent font-bold cursor-pointer">
+                    ✕
+                </label>
+                <h2 class="text-white mb-5">Here's what you can adjust</h2>
+
+                <div class="flex items-center gap-4 mb-5 mr-2">
                     <label
-                        for="my-modal-6"
-                        class="btn">
-                        Close
+                        class="block text-base-200 w-1/5"
+                        for="view">
+                        View
                     </label>
+
+                    <select
+                        class="select select-accent bg-neutral w-4/5 ml-12"
+                        name="view">
+                        <option
+                            value="trail"
+                            selected>
+                            Trail
+                        </option>
+                        <option value="columns">Columns</option>
+                    </select>
                 </div>
-            </div>
-        </div>
+                <div class="flex items-center gap-4 mb-5">
+                    <label
+                        class="block text-base-200 w-1/5"
+                        for="view">
+                        Years
+                    </label>
+                    <div class="w-4/5">
+                        <input
+                            v-if="reversedYears.length"
+                            v-model="selectedYears"
+                            type="range"
+                            :max="reversedYears[reversedYears.length - 1]"
+                            :min="reversedYears[0]"
+                            class="range range-accent"
+                            step="1" />
+                        <div class="w-full flex justify-between text-xs">
+                            <span
+                                v-for="year in reversedYears"
+                                :key="year"
+                                class="text-center">
+                                {{ year }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-base-200 border-b border-neutral">
+                    Highlights
+                </h3>
+                <div class="grid grid-cols-3">
+                    <div class="form-control">
+                        <label
+                            class="cursor-pointer label flex-wrap justify-center">
+                            <span
+                                class="label-text w-full text-center mb-2 text-meetings">
+                                meetings
+                            </span>
+                            <input
+                                type="checkbox"
+                                class="toggle toggle-accent" />
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label
+                            class="cursor-pointer label flex-wrap justify-center">
+                            <span
+                                class="label-text w-full text-center mb-2 text-streaks">
+                                streaks
+                            </span>
+                            <input
+                                type="checkbox"
+                                class="toggle toggle-accent" />
+                        </label>
+                    </div>
+                    <div class="form-control">
+                        <label
+                            class="cursor-pointer label flex-wrap justify-center">
+                            <span
+                                class="label-text w-full text-center mb-2 text-best">
+                                best
+                            </span>
+                            <input
+                                type="checkbox"
+                                class="toggle toggle-accent" />
+                        </label>
+                    </div>
+                </div>
+            </label>
+        </label>
     </div>
 </template>
+<script lang="ts" setup>
+import { PropType, ref, computed } from 'vue';
+
+const props = defineProps({
+    years: {
+        type: Array as PropType<Array<number>>,
+        required: false,
+        default: () => [],
+    },
+});
+
+const reversedYears = computed(() => [...props.years].reverse());
+
+const selectedYears = ref(reversedYears.value[reversedYears.value.length - 1]);
+</script>

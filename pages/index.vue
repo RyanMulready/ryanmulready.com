@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Header :visible-year="visibleYears[0]" />
+        <Header
+            :visible-year="visibleYears[0]"
+            :years="years" />
         <Overlay
             :loading="loading"
             :ready="ready" />
