@@ -1,6 +1,6 @@
 import { eventInterface } from '@/types';
 
-export function colorScale(dayData: eventInterface) {
+export function commitsColorScale(dayData: eventInterface) {
     const colors = [
         'rgba(31,26,28, 0.8)',
         'rgba(189, 48, 57, 0.25)',
@@ -8,9 +8,7 @@ export function colorScale(dayData: eventInterface) {
         'rgba(189, 48, 57, 0.75)',
         'rgba(189, 48, 57)',
     ];
-    const value = dayData.duration
-        ? Math.floor(dayData.duration / 1000 / 60 / 60)
-        : dayData.count;
+    const value = dayData.commits;
 
     if (!value) return colors[0];
     if (value <= 15) return colors[1];

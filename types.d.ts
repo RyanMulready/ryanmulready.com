@@ -1,8 +1,12 @@
 export type eventInterface = {
-    count: number;
-    duration: number;
+    commits?: number;
+    meetings?: number;
+    duration?: number;
     date: string;
     weekDay: Nullable<number>;
+};
+export type yearsInterface = {
+    [key: string]: eventInterface;
 };
 export interface fetchOptInterface {
     method: string;

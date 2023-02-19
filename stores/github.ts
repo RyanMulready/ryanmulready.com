@@ -1,9 +1,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { eventInterface, languagesInterface } from '@/types';
+import { yearsInterface, eventInterface, languagesInterface } from '@/types';
 
 export const useGitHubStore = defineStore('ghStore', {
     state: () => ({
-        contributions: [] as eventInterface[],
+        contributions: {} as yearsInterface,
         languages: {
             data: {
                 user: {

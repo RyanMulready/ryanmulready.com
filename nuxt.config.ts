@@ -47,6 +47,7 @@ export default defineNuxtConfig({
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
         '@nuxtjs/google-fonts',
+        // '@nuxt/devtools',
     ],
     plugins: ['@/plugins/observe-visibility', '@/plugins/font-awesome'],
     i18n: {

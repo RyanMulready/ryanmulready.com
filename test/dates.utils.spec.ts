@@ -84,8 +84,6 @@ describe('yearSchema', () => {
             expect.objectContaining({
                 date: '1/1/2021',
                 weekDay: 5,
-                count: 0,
-                duration: 0,
             }),
         );
     });

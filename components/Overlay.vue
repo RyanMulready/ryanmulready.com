@@ -4,8 +4,8 @@
             v-if="!ready || visible"
             class="fixed top-0 left-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-black bg-opacity-50 flex flex-col items-center justify-center"
             :class="{
-                'cursor-pointer': !loading,
-                'cursor-not-allowed': loading,
+                'cursor-pointer': ready,
+                'cursor-not-allowed': !ready,
             }"
             @click="dismiss">
             <nuxt-img

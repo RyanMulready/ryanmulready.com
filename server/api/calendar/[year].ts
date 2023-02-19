@@ -88,19 +88,27 @@ export default defineEventHandler(async (event) => {
             return;
         }
 
+        const existingIndex = events[weekIndex].findIndex(
+            (eventItem) => eventItem.date === eventDate,
+        );
         try {
-            const existingIndex = events[weekIndex].findIndex(
-                (eventItem) => eventItem.date === eventDate,
-            );
-            const existingData = events[weekIndex][existingIndex];
-            events[weekIndex][existingIndex] = {
-                ...events[weekIndex][existingIndex],
-                duration: (existingData?.duration || 0) + duration,
-                count: (existingData?.count || 0) + 1,
-            };
+            if (existingIndex && weekIndex) {
+                const existingData = events[weekIndex][existingIndex];
+                events[weekIndex][existingIndex] = {
+                    ...events[weekIndex][existingIndex],
+                    duration: (existingData?.duration || 0) + duration,
+                    meetings: (existingData?.meetings || 0) + 1,
+                };
+            }
         } catch (e) {
             // eslint-disable-next-line no-console
-            console.log('Error adding calendar event: ', calEvent, e);
+            console.log(
+                'Error adding contribution event: ',
+                calEvent,
+                weekIndex,
+                existingIndex,
+                e,
+            );
         }
     });
 

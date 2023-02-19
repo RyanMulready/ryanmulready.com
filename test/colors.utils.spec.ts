@@ -1,54 +1,37 @@
 import { describe, it, expect } from 'vitest';
-import { colorScale } from '@/utils/colors';
+import { commitsColorScale } from '@/utils/colors';
 
-describe('colorScale', () => {
+describe('commitsColorScale', () => {
     const event = {
         count: 0,
         duration: 0,
         date: new Date().toUTCString(),
         weekDay: 0,
     };
-    it('should return the first color for a value of 0', () => {
-        expect(colorScale({ ...event, count: 0 })).toEqual(
-            'rgba(31,26,28, 0.8)',
-        );
-        expect(colorScale({ ...event, duration: 0 })).toEqual(
-            'rgba(31,26,28, 0.8)',
-        );
+    it('returns first color if no commits data is provided', () => {
+        expect(commitsColorScale({ ...event })).toEqual('rgba(31,26,28, 0.8)');
     });
 
-    it('should return the second color for a value of 1-15', () => {
-        expect(colorScale({ ...event, count: 3 })).toEqual(
-            'rgba(189, 48, 57, 0.25)',
-        );
-        expect(colorScale({ ...event, duration: 1000 * 60 * 60 * 2 })).toEqual(
+    it('returns second color if less than or equal to 15 commits', () => {
+        expect(commitsColorScale({ ...event, commits: 15 })).toEqual(
             'rgba(189, 48, 57, 0.25)',
         );
     });
 
-    it('should return the third color for a value of 16-29', () => {
-        expect(colorScale({ ...event, count: 16 })).toEqual(
-            'rgba(189, 48, 57, 0.5)',
-        );
-        expect(colorScale({ ...event, duration: 1000 * 60 * 60 * 21 })).toEqual(
+    it('returns third color if less than or equal to 29 commits', () => {
+        expect(commitsColorScale({ ...event, commits: 29 })).toEqual(
             'rgba(189, 48, 57, 0.5)',
         );
     });
 
-    it('should return the fourth color for a value of 30-37', () => {
-        expect(colorScale({ ...event, count: 35 })).toEqual(
-            'rgba(189, 48, 57, 0.75)',
-        );
-        expect(colorScale({ ...event, duration: 1000 * 60 * 60 * 31 })).toEqual(
+    it('returns fourth color if less than or equal to 37 commits', () => {
+        expect(commitsColorScale({ ...event, commits: 37 })).toEqual(
             'rgba(189, 48, 57, 0.75)',
         );
     });
 
-    it('should return the fifth color for a value greater than 37', () => {
-        expect(colorScale({ ...event, count: 40 })).toEqual(
-            'rgba(189, 48, 57)',
-        );
-        expect(colorScale({ ...event, duration: 1000 * 60 * 60 * 38 })).toEqual(
+    it('returns fifth color if more than 37 commits', () => {
+        expect(commitsColorScale({ ...event, commits: 50 })).toEqual(
             'rgba(189, 48, 57)',
         );
     });

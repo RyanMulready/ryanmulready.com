@@ -60,7 +60,7 @@ export default defineEventHandler(async (event) => {
                     if (existingIndex && weekIndex) {
                         events[weekIndex][existingIndex] = {
                             ...events[weekIndex][existingIndex],
-                            count: day.contributionCount,
+                            commits: day.contributionCount,
                         };
                     }
                 } catch (e) {

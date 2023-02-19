@@ -19,6 +19,7 @@ import { onMounted, ref, computed } from 'vue';
 import { useGitHubStore } from '@/stores/github';
 import { useCalendarStore } from '@/stores/calendar';
 import { yearsPast } from '@/utils/dates';
+import merge from 'lodash.merge';
 
 // init our pinia store
 const ghStore = useGitHubStore();
@@ -32,12 +33,10 @@ const startYear = new Date('01/01/2018 00:00');
 const endYear = new Date();
 const years = yearsPast(startYear, endYear);
 
-const eventType = ref<string>('contributions');
-const events = computed(() => {
-    return eventType.value === 'contributions'
-        ? ghStore.getContributions
-        : calStore.getMeetings;
-});
+// const eventType = ref<string>('contributions');
+const events = computed(() =>
+    merge(ghStore.getContributions, calStore.getMeetings),
+);
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {

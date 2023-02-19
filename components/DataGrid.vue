@@ -52,14 +52,14 @@
 </template>
 <script lang="ts" setup>
 import { ref, PropType } from 'vue';
-import { colorScale } from '@/utils/colors';
+import { commitsColorScale } from '@/utils/colors';
 import { HTMLInputEvent, eventInterface } from '@/types';
 
 defineProps({
     events: {
-        type: Array,
+        type: Object,
         required: false,
-        default: () => [],
+        default: () => {},
     },
     years: {
         type: Array as PropType<Array<number>>,
@@ -79,12 +79,13 @@ function normalizeWeek(week: eventInterface[]) {
         ) || {
             date: '',
             duration: 0,
-            count: 0,
+            commits: 0,
+            meetings: 0,
             weekDay: null,
         };
         return {
             ...dayData,
-            color: colorScale(dayData),
+            color: commitsColorScale(dayData),
         };
     });
 }

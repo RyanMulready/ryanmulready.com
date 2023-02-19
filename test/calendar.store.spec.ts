@@ -21,11 +21,11 @@ describe('Calendar Store', async () => {
     });
 
     it('has the expected default state', () => {
-        expect(calStore.meetings).toStrictEqual([]);
+        expect(calStore.meetings).toStrictEqual({});
     });
 
     it('returns the expected default getter values', () => {
-        expect(calStore.getMeetings).toStrictEqual([]);
+        expect(calStore.getMeetings).toStrictEqual({});
     });
 
     // TODO: Mock API

@@ -1,9 +1,9 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { eventInterface } from '@/types';
+import { eventInterface, yearsInterface } from '@/types';
 
 export const useCalendarStore = defineStore('calStore', {
     state: () => ({
-        meetings: [] as eventInterface[],
+        meetings: {} as yearsInterface,
     }),
     getters: {
         getMeetings: (state) => {

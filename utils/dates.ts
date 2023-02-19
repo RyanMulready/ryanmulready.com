@@ -34,8 +34,6 @@ export const yearSchema = (to: Date, from: Date) => {
         events[weekIndex].push({
             date: currentDateString,
             weekDay: currentDate.getDay(),
-            count: 0,
-            duration: 0,
         });
         const newDate = currentDate.setDate(currentDate.getDate() + 1);
         currentDate = new Date(newDate);
