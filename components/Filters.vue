@@ -25,6 +25,7 @@
                     </label>
 
                     <select
+                        v-model="filtersStore.filters.view"
                         class="select select-accent bg-neutral w-4/5 ml-12"
                         name="view">
                         <option
@@ -44,7 +45,7 @@
                     <div class="w-4/5">
                         <input
                             v-if="reversedYears.length"
-                            v-model="selectedYears"
+                            v-model="filtersStore.filters.lastYear"
                             type="range"
                             :max="reversedYears[reversedYears.length - 1]"
                             :min="reversedYears[0]"
@@ -73,6 +74,7 @@
                                 meetings
                             </span>
                             <input
+                                v-model="filtersStore.filters.meetings"
                                 type="checkbox"
                                 class="toggle toggle-accent" />
                         </label>
@@ -85,6 +87,7 @@
                                 streaks
                             </span>
                             <input
+                                v-model="filtersStore.filters.streaks"
                                 type="checkbox"
                                 class="toggle toggle-accent" />
                         </label>
@@ -97,6 +100,7 @@
                                 best
                             </span>
                             <input
+                                v-model="filtersStore.filters.best"
                                 type="checkbox"
                                 class="toggle toggle-accent" />
                         </label>
@@ -107,7 +111,8 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { PropType, ref, computed } from 'vue';
+import { PropType, computed } from 'vue';
+import { useFiltersStore } from '@/stores/filters';
 
 const props = defineProps({
     years: {
@@ -117,7 +122,8 @@ const props = defineProps({
     },
 });
 
+// init our pinia store
+const filtersStore = useFiltersStore();
+// Reverse the years for range display
 const reversedYears = computed(() => [...props.years].reverse());
-
-const selectedYears = ref(reversedYears.value[reversedYears.value.length - 1]);
 </script>
