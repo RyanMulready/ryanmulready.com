@@ -39,7 +39,7 @@
                         :data-day="JSON.stringify(day)"
                         stagger="1000"
                         class="data-block day-block flex align-center justify-center"
-                        :style="`background-color: ${day.color}`">
+                        :style="`background-color: ${dayBackground(day)}`">
                         <div
                             class="meeting-dot bg-meetings"
                             :class="{
@@ -62,16 +62,16 @@
 </template>
 <script lang="ts" setup>
 import { ref, PropType } from 'vue';
-import { commitsColorScale } from '@/utils/colors';
-import { meetingsSizeScale } from '@/utils/sizes';
 import {
     HTMLInputEvent,
     yearsInterface,
     eventInterface,
     filtersInterface,
 } from '@/types';
+import { commitsColorScale } from '@/utils/colors';
+import { meetingsSizeScale } from '@/utils/sizes';
 
-defineProps({
+const props = defineProps({
     events: {
         type: Object as PropType<yearsInterface>,
         required: false,
@@ -139,6 +139,12 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
 
     emit('visibleYears', visibleYears.value);
 }
+
+const dayBackground = (day: eventInterface) =>
+    // TODO: Import the color value or use classes instead
+    props.filters.best && day.isBestCommit
+        ? 'rgba(194, 128, 255, 1)'
+        : day.color;
 </script>
 
 <style lang="scss" scoped>
@@ -149,11 +155,8 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
         margin-top: -0.6rem;
     }
     .day-block {
+        transition: background-color 0.3s linear;
         height: 0.65rem;
-    }
-
-    .data-block {
-        opacity: 0;
     }
     .vertical-text {
         top: 1.5rem;

@@ -2,6 +2,8 @@ export type eventInterface = {
     commits?: number;
     meetings?: number;
     duration?: number;
+    color?: string;
+    isBestCommit?: boolean;
     date: string;
     weekDay: Nullable<number>;
 };
@@ -41,7 +43,7 @@ export interface HTMLInputEvent extends Event {
     target: HTMLInputElement;
 }
 
-export type contributionDays = {
+export type contributionDay = {
     color: string;
     contributionCount: number;
     date: string;
@@ -49,7 +51,7 @@ export type contributionDays = {
 };
 
 export type contributionWeeks = {
-    contributionDays: contributionDays[];
+    contributionDays: contributionDay[];
 };
 
 export interface contributionResponse {
