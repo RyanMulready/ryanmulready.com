@@ -18,7 +18,7 @@
             }">
             <template v-if="events[year]">
                 <div
-                    v-for="(week, weekIndex) in events[year]"
+                    v-for="(week, value, weekIndex) in events[year]"
                     :key="`${year}-${weekIndex}`"
                     :data-week="weekIndex"
                     class="week-block grid mb-1.5 grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
@@ -36,9 +36,19 @@
                         :key="day.date"
                         :data-index="dayIndex"
                         transition="fade"
+                        :data-day="JSON.stringify(day)"
                         stagger="1000"
-                        class="data-block day-block text-center"
-                        :style="`background-color: ${day.color}`" />
+                        class="data-block day-block flex align-center justify-center"
+                        :style="`background-color: ${day.color}`">
+                        <div
+                            class="meeting-dot bg-meetings"
+                            :class="{
+                                visible: filters.meetings,
+                            }"
+                            :data-hours="JSON.stringify(meetingsSizeScale(day))"
+                            :style="`scale:
+                        ${meetingsSizeScale(day).size}`" />
+                    </div>
                     <div />
                 </div>
             </template>
@@ -53,11 +63,17 @@
 <script lang="ts" setup>
 import { ref, PropType } from 'vue';
 import { commitsColorScale } from '@/utils/colors';
-import { HTMLInputEvent, eventInterface } from '@/types';
+import { meetingsSizeScale } from '@/utils/sizes';
+import {
+    HTMLInputEvent,
+    yearsInterface,
+    eventInterface,
+    filtersInterface,
+} from '@/types';
 
 defineProps({
     events: {
-        type: Object,
+        type: Object as PropType<yearsInterface>,
         required: false,
         default: () => {},
     },
@@ -65,6 +81,11 @@ defineProps({
         type: Array as PropType<Array<number>>,
         required: false,
         default: () => [],
+    },
+    filters: {
+        type: Object as PropType<filtersInterface>,
+        required: false,
+        default: () => {},
     },
 });
 
@@ -141,6 +162,19 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
     }
     .loading-block {
         grid-column: 1 / span 9;
+    }
+
+    .meeting-dot {
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        display: inline-block;
+
+        &.visible {
+            opacity: 1;
+        }
     }
 }
 </style>

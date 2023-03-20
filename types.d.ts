@@ -14,6 +14,14 @@ export interface fetchOptInterface {
     headers: object;
 }
 
+export interface filtersInterface {
+    view: string;
+    lastYear: number;
+    meetings: boolean;
+    streaks: boolean;
+    best: boolean;
+}
+
 export interface GithubResponse {
     data?: {
         user?: {

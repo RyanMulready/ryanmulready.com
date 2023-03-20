@@ -1,12 +1,5 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-
-export interface filtersInterface {
-    view: 'trail' | 'columns';
-    lastYear: number;
-    meetings: boolean;
-    streaks: boolean;
-    best: boolean;
-}
+import { filtersInterface } from '@/types';
 
 export const useFiltersStore = defineStore('filtersStore', {
     state: () => ({

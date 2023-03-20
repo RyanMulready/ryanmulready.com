@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     },
     css: [
         '~/assets/css/tailwind.css',
+        '~/assets/css/transitions.css',
         '@fortawesome/fontawesome-svg-core/styles.css',
     ],
 

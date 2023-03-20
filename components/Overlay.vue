@@ -67,16 +67,6 @@ const dismiss = () => {
 </script>
 
 <style scoped lang="scss">
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
-}
-
 .logo.loading {
     animation: pulse 0.6s ease-in infinite alternate;
 }

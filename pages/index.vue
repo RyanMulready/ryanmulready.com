@@ -9,6 +9,7 @@
         <DataGrid
             :events="events"
             :years="years"
+            :filters="filtersStore.filters"
             @visible-years="visibleYears = $event" />
 
         <Footer />
@@ -20,12 +21,14 @@ import { gsap } from 'gsap';
 import { onMounted, ref, computed } from 'vue';
 import { useGitHubStore } from '@/stores/github';
 import { useCalendarStore } from '@/stores/calendar';
+import { useFiltersStore } from '@/stores/filters';
 import { yearsPast } from '@/utils/dates';
 import merge from 'lodash.merge';
 
 // init our pinia store
 const ghStore = useGitHubStore();
 const calStore = useCalendarStore();
+const filtersStore = useFiltersStore();
 const visibleYears = ref([]);
 const loading = ref(true);
 const ready = ref(false);
