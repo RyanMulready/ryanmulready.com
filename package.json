@@ -11,7 +11,7 @@
         "postinstall": "nuxt prepare"
     },
     "devDependencies": {
-        "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
+        "@nuxt/image-edge": "^1.0.0-28059208.2abef1b",
         "@nuxt/test-utils-edge": "^3.0.1-rc.0-27909581.f711046",
         "@nuxtjs/eslint-config-typescript": "^12.0.0",
         "@nuxtjs/google-fonts": "^3.0.0-1",
