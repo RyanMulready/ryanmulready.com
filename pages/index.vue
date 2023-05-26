@@ -1,16 +1,16 @@
 <template>
     <div>
         <Header
-            :visible-year="visibleYears[0]"
-            :years="years" />
+            :visible-year="visibleYear"
+            :years="possibleYears" />
         <Overlay
             :loading="loading"
             :ready="ready" />
         <DataGrid
             :events="events"
-            :years="years"
+            :years="currentYears"
             :filters="filtersStore.filters"
-            @visible-years="visibleYears = $event" />
+            @update-visible-years="updateVisibleYears" />
 
         <Footer />
     </div>
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { gsap } from 'gsap';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, watch } from 'vue';
 import { useGitHubStore } from '@/stores/github';
 import { useCalendarStore } from '@/stores/calendar';
 import { useFiltersStore } from '@/stores/filters';
@@ -29,16 +29,35 @@ import merge from 'lodash.merge';
 const ghStore = useGitHubStore();
 const calStore = useCalendarStore();
 const filtersStore = useFiltersStore();
-const visibleYears = ref([]);
 const loading = ref(true);
 const ready = ref(false);
 
 // Has data from 2012->; 2018-> most significant
 const startYear = new Date('01/01/2018 00:00');
-const endYear = new Date();
-const years = yearsPast(startYear, endYear);
+const lastPossibleYear = new Date();
+const currentEndYear = computed(
+    () => new Date(`01/01/${filtersStore.filters.lastYear} 00:00`),
+);
+const possibleYears = yearsPast(startYear, lastPossibleYear);
+const currentYears = computed(() => yearsPast(startYear, currentEndYear.value));
+const visibleYear = ref(possibleYears[0]);
 
-// const eventType = ref<string>('contributions');
+const updateVisibleYears = (years: Array<number>) => {
+    if (years.length > 0 && currentYears.value.includes(years[0])) {
+        [visibleYear.value] = years;
+    } else if (currentYears.value.length > 0) {
+        [visibleYear.value] = currentYears.value;
+    }
+};
+watch(
+    () => filtersStore.filters.lastYear,
+    (newYear, oldYear) => {
+        if (newYear !== oldYear) {
+            updateVisibleYears([newYear]);
+        }
+    },
+);
+
 const events = computed(() =>
     merge(ghStore.getContributions, calStore.getMeetings),
 );
@@ -49,7 +68,7 @@ onMounted(async () => {
     // Loop over possible years and request data
     // Current year should be available first but isn't always
     await Promise.all(
-        years.map(async (year) => {
+        currentYears.value.map(async (year) => {
             await ghStore.fetchContributions(year);
         }),
     );
@@ -62,7 +81,7 @@ onMounted(async () => {
     loadingTimeline.play();
     ready.value = true;
     await Promise.all(
-        years.map(async (year) => {
+        currentYears.value.map(async (year) => {
             await calStore.fetchMeetings(year);
         }),
     );

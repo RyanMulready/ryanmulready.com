@@ -89,7 +89,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['visibleYears']);
+const emit = defineEmits(['updateVisibleYears']);
 
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
@@ -127,24 +127,29 @@ function displayMonth(week: eventInterface[]) {
 }
 
 // Keeps track of what years are current in the viewport
-const visibleYears = ref<string[]>([]);
+const visibleYears = ref<number[]>([]);
 function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
-    const { year } = entry.target.dataset;
+    const { year: rawYear } = entry.target.dataset;
+    const year = Number(rawYear);
+
     if (!isVisible) {
         visibleYears.value = visibleYears.value.filter((item) => item !== year);
     } else {
-        visibleYears.value.push(year as string);
+        visibleYears.value.push(year);
     }
     visibleYears.value.sort().reverse();
 
-    emit('visibleYears', visibleYears.value);
+    emit('updateVisibleYears', visibleYears.value);
 }
 
-const dayBackground = (day: eventInterface) =>
-    // TODO: Import the color value or use classes instead
-    props.filters.best && day.isBestCommit
+const dayBackground = (day: eventInterface) => {
+    if (props.filters.streaks && day.isLongestStreak) {
+        return 'rgba(255, 255, 255, 1)';
+    }
+    return props.filters.best && day.isBestCommit
         ? 'rgba(194, 128, 255, 1)'
         : day.color;
+};
 </script>
 
 <style lang="scss" scoped>

@@ -3,6 +3,7 @@ export type eventInterface = {
     meetings?: number;
     duration?: number;
     color?: string;
+    isLongestStreak?: boolean;
     isBestCommit?: boolean;
     date: string;
     weekDay: Nullable<number>;
