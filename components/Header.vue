@@ -1,6 +1,6 @@
 <template>
     <!-- HEADER START -->
-    <div class="header-block sticky bg-base-100 py-2">
+    <div class="header-block sticky bg-base-100 pt-3">
         <div
             class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
             <div class="max-w-sm">
@@ -17,15 +17,21 @@
                 {{ visibleYear }}
             </div>
         </div>
-        <div class="filter-block px-5">
-            <label
-                for="modal-filters"
-                class="cursor-pointer">
-                <font-awesome-icon
-                    class="text-accent"
-                    icon="fa-solid fa-filter"
-                    size="lg" />
-            </label>
+        <div class="filter-block pt-2 px-4">
+            <div class="flex justify-center items-center">
+                <div
+                    class="rounded-tl-lg rounded-tr-lg bg-neutral px-4 pt-3 pb-2">
+                    <label
+                        for="modal-filters"
+                        class="cursor-pointer">
+                        <font-awesome-icon
+                            class="text-neutral-content hover:text-accent transition-colors duration-200"
+                            icon="fa-solid fa-sliders"
+                            size="lg" />
+                    </label>
+                </div>
+            </div>
+            <div class="filter-block-footer w-100 h-2 bg-neutral rounded-lg" />
             <Filters :years="years" />
         </div>
     </div>

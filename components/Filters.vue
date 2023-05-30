@@ -65,7 +65,7 @@
                 <h3 class="text-base-200 border-b border-neutral">
                     Highlights
                 </h3>
-                <div class="grid grid-cols-3">
+                <div class="grid grid-cols-2">
                     <div class="form-control">
                         <label
                             class="cursor-pointer label flex-wrap justify-center">
@@ -75,19 +75,6 @@
                             </span>
                             <input
                                 v-model="filtersStore.filters.meetings"
-                                type="checkbox"
-                                class="toggle toggle-accent" />
-                        </label>
-                    </div>
-                    <div class="form-control">
-                        <label
-                            class="cursor-pointer label flex-wrap justify-center">
-                            <span
-                                class="label-text w-full text-center mb-2 text-streaks">
-                                streaks
-                            </span>
-                            <input
-                                v-model="filtersStore.filters.streaks"
                                 type="checkbox"
                                 class="toggle toggle-accent" />
                         </label>

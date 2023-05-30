@@ -143,9 +143,6 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
 }
 
 const dayBackground = (day: eventInterface) => {
-    if (props.filters.streaks && day.isLongestStreak) {
-        return 'rgba(255, 255, 255, 1)';
-    }
     return props.filters.best && day.isBestCommit
         ? 'rgba(194, 128, 255, 1)'
         : day.color;
