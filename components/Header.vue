@@ -17,7 +17,7 @@
                 {{ visibleYear }}
             </div>
         </div>
-        <div class="filter-block pt-2 px-4">
+        <div class="filter-block pt-2 mx-5">
             <div class="flex justify-center items-center">
                 <div
                     class="rounded-tl-lg rounded-tr-lg bg-neutral px-4 pt-3 pb-2">
@@ -31,7 +31,7 @@
                     </label>
                 </div>
             </div>
-            <div class="filter-block-footer w-100 h-2 bg-neutral rounded-lg" />
+            <div class="filter-block-footer w-full h-2 bg-neutral rounded-lg" />
             <Filters :years="years" />
         </div>
     </div>

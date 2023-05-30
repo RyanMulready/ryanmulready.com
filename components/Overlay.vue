@@ -42,7 +42,7 @@
     </transition>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     loading: {
@@ -64,6 +64,15 @@ const dismiss = () => {
         document.body.classList.remove('overflow-hidden');
     }
 };
+// When loading is finished dismiss the overlay
+watch(
+    () => props.loading,
+    (newLoading) => {
+        if (!newLoading) {
+            dismiss();
+        }
+    },
+);
 </script>
 
 <style scoped lang="scss">

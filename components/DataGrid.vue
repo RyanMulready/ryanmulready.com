@@ -18,15 +18,21 @@
             }">
             <template v-if="events[year]">
                 <div
-                    v-for="(week, value, weekIndex) in events[year]"
+                    v-for="(week, weekIndex) in events[year]"
                     :key="`${year}-${weekIndex}`"
                     :data-week="weekIndex"
-                    class="week-block grid mb-1.5 grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]">
+                    class="week-block grid mb-1.5 grid-cols-[20px_1fr_1fr_1fr_1fr_1fr_1fr_1fr_20px]"
+                    :class="{
+                        hovered: hoveredWeekIndex === `${year}-${weekIndex}`,
+                    }"
+                    @mouseover="delayShowContent(`${year}-${weekIndex}`)"
+                    @mouseleave="delayHideContent">
                     <div
                         class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
                         <span
                             :class="{
-                                hidden: yearIndex === 0 && weekIndex === 0,
+                                hidden:
+                                    yearIndex === 0 && Number(weekIndex) === 0,
                             }">
                             {{ displayMonth(week) }}
                         </span>
@@ -38,9 +44,10 @@
                         transition="fade"
                         :data-day="JSON.stringify(day)"
                         stagger="1000"
-                        class="data-block day-block flex align-center justify-center"
+                        class="data-block day-block flex align-center justify-center items-center"
                         :style="`background-color: ${dayBackground(day)}`">
                         <div
+                            v-if="hoveredWeekIndex !== `${year}-${weekIndex}`"
                             class="meeting-dot bg-meetings"
                             :class="{
                                 visible: filters.meetings,
@@ -48,6 +55,29 @@
                             :data-hours="JSON.stringify(meetingsSizeScale(day))"
                             :style="`scale:
                         ${meetingsSizeScale(day).size}`" />
+                        <div
+                            v-if="hoveredWeekIndex === `${year}-${weekIndex}`"
+                            class="flex flex-col h-full w-full text-center text-neutral-content">
+                            <div
+                                class="date-header bg-base-100 text-sm pb-2 pt-1">
+                                {{ dateFormatter.format(new Date(day.date)) }}
+                            </div>
+                            <div
+                                class="commit-block flex flex-col justify-center items-center flex-grow">
+                                <div class="text-content text-center">
+                                    <div class="text-3xl">
+                                        {{ day.commits }}
+                                    </div>
+                                    <div
+                                        v-if="filters.meetings"
+                                        class="text-xs text-meetings w-full">
+                                        {{
+                                            millisecondsFormatter(day.duration)
+                                        }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div />
                 </div>
@@ -90,6 +120,34 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['updateVisibleYears']);
+const hoveredWeekIndex = ref('');
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+});
+const millisecondsFormatter = (ms: number | undefined) => {
+    if (!ms) return '0h';
+    return `${Math.ceil(ms / 1000 / 60 / 60)}h`;
+};
+
+let delayHideTimeout: ReturnType<typeof setTimeout>;
+const delayHideContent = () => {
+    clearTimeout(delayHideTimeout);
+
+    delayHideTimeout = setTimeout(() => {
+        hoveredWeekIndex.value = '';
+    }, 500);
+};
+
+let delayShowTimeout: ReturnType<typeof setTimeout>;
+const delayShowContent = (index: string) => {
+    clearTimeout(delayShowTimeout);
+    clearTimeout(delayHideTimeout);
+
+    delayShowTimeout = setTimeout(() => {
+        hoveredWeekIndex.value = index;
+    }, 500);
+};
 
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
@@ -156,10 +214,18 @@ const dayBackground = (day: eventInterface) => {
     .mergeYear {
         margin-top: -0.6rem;
     }
-    .day-block {
-        transition: background-color 0.3s linear;
-        height: 0.65rem;
+    .week-block {
+        .day-block {
+            transition: height 0.5s ease, background-color 0.3s linear;
+            height: 1rem;
+        }
+        &.hovered {
+            .day-block {
+                height: 6rem;
+            }
+        }
     }
+
     .vertical-text {
         top: 1.5rem;
         writing-mode: sideways-lr;
@@ -180,6 +246,10 @@ const dayBackground = (day: eventInterface) => {
         &.visible {
             opacity: 1;
         }
+    }
+
+    .commit-block {
+        color: rgba(31, 26, 28, 0.8);
     }
 }
 </style>
