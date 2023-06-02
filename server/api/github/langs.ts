@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3';
+import { defineEventHandler, createError } from 'h3';
 import github from '@/utils/github';
 import { useRuntimeConfig } from '#imports';
 
@@ -34,8 +34,10 @@ export default defineEventHandler(async () => {
         );
         return data;
     } catch (e) {
-        return {
-            error: 'Request Failed',
-        };
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Request Failed',
+            statusText: JSON.stringify(e),
+        });
     }
 });

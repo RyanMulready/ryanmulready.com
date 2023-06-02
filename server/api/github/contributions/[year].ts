@@ -1,4 +1,4 @@
-import { defineEventHandler } from 'h3';
+import { defineEventHandler, createError } from 'h3';
 import { yearSchema } from '@/utils/dates';
 import github from '@/utils/github';
 import { useRuntimeConfig } from '#imports';
@@ -102,8 +102,10 @@ export default defineEventHandler(async (event) => {
     } catch (e) {
         // eslint-disable-next-line no-console
         console.log(e);
-        return {
-            error: 'Request Failed',
-        };
+        throw createError({
+            statusCode: 500,
+            statusMessage: 'Request Failed',
+            statusText: JSON.stringify(e),
+        });
     }
 });

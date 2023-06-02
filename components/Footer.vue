@@ -12,11 +12,16 @@
                     height="25px" />
             </p>
             <div class="flex flex-col justify-center items-end pr-5">
-                <font-awesome-icon
-                    class="text-white"
-                    icon="fa-regular fa-envelope"
-                    size="lg" />
+                <label
+                    for="modal-contact"
+                    class="cursor-pointer">
+                    <font-awesome-icon
+                        class="text-white"
+                        icon="fa-regular fa-envelope"
+                        size="lg" />
+                </label>
             </div>
+            <Contact />
         </div>
     </div>
     <!-- FOOTER END -->

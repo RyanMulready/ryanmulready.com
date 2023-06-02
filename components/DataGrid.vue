@@ -26,7 +26,8 @@
                         hovered: hoveredWeekIndex === `${year}-${weekIndex}`,
                     }"
                     @mouseover="delayShowContent(`${year}-${weekIndex}`)"
-                    @mouseleave="delayHideContent">
+                    @mouseout="clearShowTimer"
+                    @click="hoveredWeekIndex = `${year}-${weekIndex}`">
                     <div
                         class="day-block relative vertical-text font-mono uppercase flex items-center justify-center">
                         <span
@@ -63,7 +64,7 @@
                                 {{ dateFormatter.format(new Date(day.date)) }}
                             </div>
                             <div
-                                class="commit-block flex flex-col justify-center items-center flex-grow">
+                                class="commit-block flex flex-col justify-center items-center flex-grow text-base-200">
                                 <div class="text-content text-center">
                                     <div class="text-3xl">
                                         {{ day.commits }}
@@ -130,19 +131,10 @@ const millisecondsFormatter = (ms: number | undefined) => {
     return `${Math.ceil(ms / 1000 / 60 / 60)}h`;
 };
 
-let delayHideTimeout: ReturnType<typeof setTimeout>;
-const delayHideContent = () => {
-    clearTimeout(delayHideTimeout);
-
-    delayHideTimeout = setTimeout(() => {
-        hoveredWeekIndex.value = '';
-    }, 500);
-};
-
 let delayShowTimeout: ReturnType<typeof setTimeout>;
+const clearShowTimer = () => clearTimeout(delayShowTimeout);
 const delayShowContent = (index: string) => {
-    clearTimeout(delayShowTimeout);
-    clearTimeout(delayHideTimeout);
+    clearShowTimer();
 
     delayShowTimeout = setTimeout(() => {
         hoveredWeekIndex.value = index;
@@ -246,10 +238,6 @@ const dayBackground = (day: eventInterface) => {
         &.visible {
             opacity: 1;
         }
-    }
-
-    .commit-block {
-        color: rgba(31, 26, 28, 0.8);
     }
 }
 </style>

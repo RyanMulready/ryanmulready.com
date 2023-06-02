@@ -2,7 +2,7 @@
 import { google, calendar_v3 } from 'googleapis';
 import { GaxiosResponse } from 'gaxios';
 
-import { defineEventHandler } from 'h3';
+import { defineEventHandler, createError } from 'h3';
 import { useRuntimeConfig } from '#imports';
 import { yearSchema } from '@/utils/dates';
 
@@ -109,6 +109,11 @@ export default defineEventHandler(async (event) => {
                 existingIndex,
                 e,
             );
+            throw createError({
+                statusCode: 500,
+                statusMessage: 'Error adding contribution event',
+                statusText: JSON.stringify(e),
+            });
         }
     });
 
