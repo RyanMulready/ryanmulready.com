@@ -54,7 +54,7 @@
         "@sendgrid/mail": "^7.7.0",
         "daisyui": "^2.51.6",
         "gaxios": "^5.0.2",
-        "googleapis": "^111.0.0",
+        "googleapis": "^118.0.0",
         "gsap": "^3.11.4",
         "h3": "^1.2.1",
         "lodash.merge": "^4.6.2",
