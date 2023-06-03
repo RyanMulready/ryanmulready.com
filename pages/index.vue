@@ -6,7 +6,14 @@
         <Overlay
             :loading="loading"
             :ready="ready" />
+        <Calendar
+            v-if="filtersStore.filters.view == 'calendar'"
+            :events="events"
+            :years="currentYears"
+            :filters="filtersStore.filters"
+            @update-visible-years="updateVisibleYears" />
         <DataGrid
+            v-if="filtersStore.filters.view == 'trail'"
             :events="events"
             :years="currentYears"
             :filters="filtersStore.filters"

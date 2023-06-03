@@ -26,14 +26,14 @@
 
                     <select
                         v-model="filtersStore.filters.view"
-                        class="select select-accent bg-neutral w-4/5 ml-12"
+                        class="select select-accent bg-neutral w-4/5 md:ml-12 ml-5"
                         name="view">
                         <option
                             value="trail"
                             selected>
                             Trail
                         </option>
-                        <option value="columns">Columns</option>
+                        <option value="calendar">Calendar</option>
                     </select>
                 </div>
                 <div class="flex items-center gap-4 mb-5">

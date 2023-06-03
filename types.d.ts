@@ -1,4 +1,5 @@
 export type eventInterface = {
+    flatMap: any;
     commits?: number;
     meetings?: number;
     duration?: number;

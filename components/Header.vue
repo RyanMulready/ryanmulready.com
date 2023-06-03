@@ -5,7 +5,7 @@
             class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
             <div class="max-w-sm">
                 <h1 class="mb-3 font-weight-normal text-base-200 font-normal">
-                    GitHub Contributions
+                    Contributions
                 </h1>
                 <div class="gradient-scale rounded-md" />
                 <div class="grid grid-cols-2 leading-4 text-base-200">

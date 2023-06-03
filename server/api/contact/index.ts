@@ -3,7 +3,7 @@ import { defineEventHandler, readBody, createError } from 'h3';
 import sgMail from '@sendgrid/mail';
 
 export default defineEventHandler(async (event) => {
-    if (event.req.method !== 'POST') {
+    if (event.node.req.method !== 'POST') {
         throw createError({
             statusCode: 405,
             statusMessage: 'Method not allowed',

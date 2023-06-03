@@ -8,7 +8,7 @@ export function commitsColorScale(dayData: eventInterface) {
         'rgba(189, 48, 57, 0.75)',
         'rgba(189, 48, 57)',
     ];
-    const value = dayData.commits;
+    const value = dayData?.commits;
 
     if (!value) return colors[0];
     if (value <= 15) return colors[1];

@@ -46,16 +46,16 @@
                         :data-day="JSON.stringify(day)"
                         stagger="1000"
                         class="data-block day-block flex align-center justify-center items-center"
-                        :style="`background-color: ${dayBackground(day)}`">
+                        :style="`background-color: ${dayBackground(day as eventInterface)}`">
                         <div
                             v-if="hoveredWeekIndex !== `${year}-${weekIndex}`"
                             class="meeting-dot bg-meetings"
                             :class="{
                                 visible: filters.meetings,
                             }"
-                            :data-hours="JSON.stringify(meetingsSizeScale(day))"
+                            :data-hours="JSON.stringify(meetingsSizeScale(day as eventInterface))"
                             :style="`scale:
-                        ${meetingsSizeScale(day).size}`" />
+                        ${meetingsSizeScale(day as eventInterface).size}`" />
                         <div
                             v-if="hoveredWeekIndex === `${year}-${weekIndex}`"
                             class="flex flex-col h-full w-full text-center text-neutral-content">
@@ -156,7 +156,7 @@ function normalizeWeek(week: eventInterface[]) {
         };
         return {
             ...dayData,
-            color: commitsColorScale(dayData),
+            color: commitsColorScale(dayData as eventInterface),
         };
     });
 }
