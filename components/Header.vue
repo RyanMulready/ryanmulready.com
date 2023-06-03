@@ -1,14 +1,14 @@
 <template>
     <!-- HEADER START -->
-    <div class="header-block sticky bg-base-100 pt-3">
+    <div class="header-block sticky bg-base-100 pt-3 top-0 z-40">
         <div
-            class="grid grid-cols-2 bg-neutral text-neutral-content rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
+            class="grid grid-cols-2 bg-neutral rounded-lg px-5 py-3 mb-2 mx-5 font-mono">
             <div class="max-w-sm">
-                <h1 class="mb-3 font-weight-normal text-base-200 font-normal">
+                <h1 class="mb-3 font-weight-normal font-normal">
                     Contributions
                 </h1>
                 <div class="gradient-scale rounded-md" />
-                <div class="grid grid-cols-2 leading-4 text-base-200">
+                <div class="grid grid-cols-2 leading-4">
                     <div>more</div>
                     <div class="text-right">less</div>
                 </div>
@@ -25,7 +25,7 @@
                         for="modal-filters"
                         class="cursor-pointer">
                         <font-awesome-icon
-                            class="text-neutral-content hover:text-accent transition-colors duration-200"
+                            class="hover:text-accent transition-colors duration-200"
                             icon="fa-solid fa-sliders"
                             size="lg" />
                     </label>
@@ -57,8 +57,6 @@ defineProps({
 
 <style scoped lang="scss">
 .header-block {
-    top: 0;
-    z-index: 2;
     .gradient-scale {
         height: 0.25rem;
         background: linear-gradient(

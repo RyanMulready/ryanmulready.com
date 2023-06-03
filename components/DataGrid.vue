@@ -58,13 +58,13 @@
                         ${meetingsSizeScale(day as eventInterface).size}`" />
                         <div
                             v-if="hoveredWeekIndex === `${year}-${weekIndex}`"
-                            class="flex flex-col h-full w-full text-center text-neutral-content">
+                            class="flex flex-col h-full w-full text-center">
                             <div
                                 class="date-header bg-base-100 text-sm pb-2 pt-1">
                                 {{ dateFormatter.format(new Date(day.date)) }}
                             </div>
                             <div
-                                class="commit-block flex flex-col justify-center items-center flex-grow text-base-200">
+                                class="commit-block flex flex-col justify-center items-center flex-grow">
                                 <div class="text-content text-center">
                                     <div class="text-3xl">
                                         {{ day.commits }}

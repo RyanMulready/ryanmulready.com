@@ -2,6 +2,7 @@
     <div>
         <input
             id="modal-contact"
+            autocomplete="off"
             name="modal-contact"
             type="checkbox"
             class="modal-toggle"
@@ -25,7 +26,7 @@
                         @submit="onSubmit">
                         <div class="mb-6">
                             <label
-                                class="text-white mb-2 block text-md"
+                                class="text-white mb-2 block text-md text-left"
                                 for="name">
                                 Name
                             </label>
@@ -49,7 +50,7 @@
 
                         <div class="mb-6">
                             <label
-                                class="text-white mb-2 block"
+                                class="text-white mb-2 block text-left"
                                 for="email">
                                 Email
                             </label>
@@ -73,7 +74,7 @@
 
                         <div class="mb-6">
                             <label
-                                class="text-white mb-2 block"
+                                class="text-white mb-2 block text-left"
                                 for="comment">
                                 Message
                             </label>

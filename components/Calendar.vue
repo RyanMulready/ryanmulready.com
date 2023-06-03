@@ -2,7 +2,7 @@
     <!-- GRID START -->
     <div class="years-block px-5">
         <div
-            class="day-headers grid grid-cols-7 gap-1 pt-1 pb-2 mb-4 sticky bg-neutral">
+            class="day-headers grid grid-cols-7 gap-1 pt-1 pb-2 mb-4 sticky bg-neutral z-10">
             <div
                 v-for="(header, headerIndex) in dayHeaders"
                 :key="header"
@@ -55,7 +55,7 @@
                                         hoveredMonthIndex ===
                                             `${year}-${monthIndex}`
                                     "
-                                    class="absolute top-0 right-0 text-xs px-2 text-neutral-content">
+                                    class="absolute top-0 right-0 text-xs px-2 text-white">
                                     {{ day }}
                                 </div>
                                 <div
@@ -253,7 +253,6 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
 }
 
 .day-headers {
-    z-index: 100;
     top: 160px;
 }
 

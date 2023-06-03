@@ -3,6 +3,7 @@
         <input
             id="modal-filters"
             type="checkbox"
+            autocomplete="off"
             class="modal-toggle" />
         <label
             for="modal-filters"
@@ -19,7 +20,7 @@
 
                 <div class="flex items-center gap-4 mb-5 mr-2">
                     <label
-                        class="block text-base-200 w-1/5"
+                        class="block w-1/5"
                         for="view">
                         View
                     </label>
@@ -38,7 +39,7 @@
                 </div>
                 <div class="flex items-center gap-4 mb-5">
                     <label
-                        class="block text-base-200 w-1/5"
+                        class="block w-1/5"
                         for="view">
                         Years
                     </label>
@@ -62,9 +63,7 @@
                     </div>
                 </div>
 
-                <h3 class="text-base-200 border-b border-neutral">
-                    Highlights
-                </h3>
+                <h3 class="border-b border-base-200">Highlights</h3>
                 <div class="grid grid-cols-2">
                     <div class="form-control">
                         <label
