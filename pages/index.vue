@@ -1,8 +1,6 @@
 <template>
     <div>
-        <Header
-            :visible-year="visibleYear"
-            :years="possibleYears" />
+        <Header :visible-year="visibleYear" />
         <Overlay
             :loading="loading"
             :ready="ready" />
@@ -19,6 +17,9 @@
             :filters="filtersStore.filters"
             @update-visible-years="updateVisibleYears" />
 
+        <Filters :years="possibleYears" />
+        <About />
+        <Contact />
         <Footer />
     </div>
 </template>

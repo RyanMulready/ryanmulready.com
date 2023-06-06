@@ -74,8 +74,19 @@ export default defineEventHandler(async (event) => {
             return;
         }
 
-        // Anything with holiday in the title is safe to ignore
-        if (calEvent.summary?.toLowerCase().includes('holiday')) {
+        // Meetings that don't count towards our duration
+        const ignoreTerms = [
+            'holiday',
+            'meeting-free',
+            'early friday',
+            'lunch',
+        ];
+
+        if (
+            ignoreTerms.some((term) =>
+                calEvent.summary?.toLowerCase().includes(term),
+            )
+        ) {
             return;
         }
 

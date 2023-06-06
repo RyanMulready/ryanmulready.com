@@ -18,12 +18,10 @@
                     ✕
                 </label>
 
-                <h1 class="text-white mb-5 text-2xl">
-                    Check out my qualifications!
-                </h1>
+                <h1 class="text-white mb-5 text-2xl">Hi, I'm Ryan!</h1>
 
                 <h2 class="text-white text-xl">
-                    Ryan is
+                    I am
                     <span
                         ref="jobTitle"
                         class="job-title"
@@ -50,12 +48,13 @@ import { ref, watch } from 'vue';
 const jobTitles = [
     'a Staff Software Engineer',
     'an Engineering Manager',
-    'a Guild Leader',
     'a Team Leader',
+    'a Guild Leader',
 ];
 const jobTitleIndex = ref(0);
 const currentJobTitle = ref('');
-const typeInterval: ReturnType<typeof setInterval> | null = null;
+let typeInterval: ReturnType<typeof setTimeout> | null = null;
+let delayModalTimeout: ReturnType<typeof setTimeout> | null = null;
 
 function typeJobTitle() {
     let jobTitle = jobTitles[jobTitleIndex.value];
@@ -87,7 +86,7 @@ function typeJobTitle() {
             isDeleting = true;
             delay = 2000; // Delay before moving to the next job title
         }
-        setTimeout(typeNextCharacter, delay);
+        typeInterval = setTimeout(typeNextCharacter, delay);
     }
 
     typeNextCharacter();
@@ -97,14 +96,13 @@ const showModal = ref(false);
 
 // Watch for changes in showModal and start/stop the typing animation accordingly
 watch(showModal, (newVal) => {
+    currentJobTitle.value = ''; // Reset the job title
+    clearTimeout(typeInterval!);
+    clearTimeout(delayModalTimeout!);
     if (newVal) {
-        currentJobTitle.value = ''; // Reset the job title
-        clearTimeout(typeInterval!);
-        setTimeout(() => {
+        delayModalTimeout = setTimeout(() => {
             typeJobTitle();
         }, 500);
-    } else {
-        clearInterval(typeInterval!);
     }
 });
 </script>

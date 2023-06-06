@@ -16,7 +16,21 @@
                     class="p-3 absolute right-2 top-2 text-accent font-bold cursor-pointer">
                     ✕
                 </label>
-                <h2 class="text-white mb-5">Here's what you can adjust</h2>
+                <h1 class="text-white mb-5 text-2xl">What is this data?</h1>
+                <p class="text-sm mb-3 indent">
+                    You're looking at a unique snapshot of my professional life,
+                    captured through the lens of my GitHub contributions and
+                    daily meeting hours. Each data point here tells a story,
+                    painting a picture of my work habits. Over time, you can
+                    spot patterns showing the relationship between the hours
+                    spent in meetings and the commits made on GitHub. It's an
+                    intriguing exploration of teamwork and individual
+                    productivity.
+                    <br class="mb-3" />
+                    Enjoy your exploration!
+                </p>
+
+                <h2 class="text-white mb-5">Here's what you can adjust:</h2>
 
                 <div class="flex items-center gap-4 mb-5 mr-2">
                     <label
@@ -113,3 +127,8 @@ const filtersStore = useFiltersStore();
 // Reverse the years for range display
 const reversedYears = computed(() => [...props.years].reverse());
 </script>
+<style lang="scss" scoped>
+.indent {
+    text-indent: 1em;
+}
+</style>

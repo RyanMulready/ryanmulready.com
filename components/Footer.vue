@@ -25,8 +25,6 @@
                         size="lg" />
                 </label>
             </div>
-            <About />
-            <Contact />
         </div>
     </div>
     <!-- FOOTER END -->
