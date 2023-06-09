@@ -4,7 +4,7 @@
 [![Deployed with Vercel](https://img.shields.io/badge/Deployed%20with-Vercel-blueviolet)](https://vercel.com)
 [![License: GNU](https://img.shields.io/badge/License-GNU-yellow.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Welcome to the repository of John Doe's personal website, a unique snapshot of his professional life, captured through the lens of his GitHub contributions and daily meeting hours. This Nuxt.js powered website provides an intriguing exploration of John's teamwork and individual productivity, showcasing his work habits, patterns, and the relationship between the hours spent in meetings and the commits made on GitHub.
+Welcome to the repository of my personal website, a unique snapshot of his professional life, captured through the lens of his GitHub contributions and daily meeting hours. This Nuxt.js powered website provides an intriguing exploration of Ryan's teamwork and individual productivity, showcasing his work habits, patterns, and the relationship between the hours spent in meetings and the commits made on GitHub.
 
 You can explore the website [here](https://ryanmulready.com).
 
@@ -60,4 +60,4 @@ You can learn more about Vercel deployments [here](https://vercel.com/docs).
 
 ## License
 
-This project is licensed under the terms of the [GNU General Public License v3.0](<https://www.gnu.org>
+This project is licensed under the terms of the [GNU General Public License v3.0](https://www.gnu.org)
