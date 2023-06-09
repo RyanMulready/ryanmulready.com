@@ -51,7 +51,11 @@ export default defineNuxtConfig({
         '@nuxtjs/google-fonts',
         // '@nuxt/devtools',
     ],
-    plugins: ['@/plugins/observe-visibility', '@/plugins/font-awesome'],
+    plugins: [
+        { src: '@/plugins/vercel', mode: 'client' },
+        '@/plugins/observe-visibility',
+        '@/plugins/font-awesome',
+    ],
     i18n: {
         lazy: true,
         langDir: 'lang',
