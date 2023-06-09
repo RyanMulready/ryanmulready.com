@@ -1,0 +1,26 @@
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.fixAll.stylelint": true,
+        "source.fixAll.markdownlint": true
+    },
+    "eslint.validate": [
+        "mdx",
+        "javascript",
+        "vue",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "eslint.alwaysShowStatus": true,
+    "eslint.options": {
+        "extensions": [".html", ".js", ".vue", ".jsx", ".ts", ".mdx", ".json"]
+    },
+    "css.validate": false,
+    "scss.validate": false,
+    "stylelint.validate": ["css", "less", "postcss", "scss", "sass", "vue"],
+    "i18n-ally.localesPaths": ["lang"],
+    "i18n-ally.keystyle": "nested"
+}
