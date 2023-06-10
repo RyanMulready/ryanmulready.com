@@ -1,9 +1,14 @@
+export type colorIntefrace = {
+    bg: string;
+    text: string;
+};
+
 export type eventInterface = {
     flatMap?: any;
     commits?: number;
     meetings?: number;
     duration?: number;
-    color?: string;
+    color?: colorIntefrace;
     isBestCommit?: boolean;
     date: string;
     weekDay: Nullable<number>;

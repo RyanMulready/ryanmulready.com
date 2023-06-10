@@ -39,14 +39,18 @@
                         </span>
                     </div>
                     <div
-                        v-for="(day, dayIndex) in normalizeWeek(week)"
+                        v-for="(day, dayIndex) in normalizeWeek(
+                            yearIndex,
+                            week,
+                        )"
                         :key="day.date"
                         :data-index="dayIndex"
                         transition="fade"
                         :data-day="JSON.stringify(day)"
                         stagger="1000"
                         class="data-block day-block flex align-center justify-center items-center"
-                        :style="`background-color: ${dayBackground(day as eventInterface)}`">
+                        :style="dayStyle(day)">
+                        <!-- MEETING DOT -->
                         <div
                             v-if="hoveredWeekIndex !== `${year}-${weekIndex}`"
                             class="meeting-dot bg-meetings"
@@ -56,14 +60,30 @@
                             :data-hours="JSON.stringify(meetingsSizeScale(day as eventInterface))"
                             :style="`scale:
                         ${meetingsSizeScale(day as eventInterface).size}`" />
+                        <!-- HOVER ELEMENTS -->
                         <div
                             v-if="hoveredWeekIndex === `${year}-${weekIndex}`"
                             class="flex flex-col h-full w-full text-center">
                             <div
-                                class="date-header bg-base-100 text-sm pb-2 pt-1">
-                                {{ dateFormatter.format(new Date(day.date)) }}
+                                class="date-header bg-base-100 text-sm pb-2 pt-1 text-base-300">
+                                <template v-if="day.date">
+                                    <div class="hidden md:inline-block">
+                                        {{
+                                            monthNameFormatter.format(
+                                                new Date(day.date),
+                                            )
+                                        }}
+                                    </div>
+                                    {{
+                                        ordinalSuffixOf(
+                                            new Date(day.date).getDate(),
+                                        )
+                                    }}
+                                </template>
+                                <template v-else>&nbsp;</template>
                             </div>
                             <div
+                                v-if="day.date"
                                 class="commit-block flex flex-col justify-center items-center flex-grow">
                                 <div class="text-content text-center">
                                     <div class="text-3xl">
@@ -101,6 +121,7 @@ import {
 } from '@/types';
 import { commitsColorScale } from '@/utils/colors';
 import { meetingsSizeScale } from '@/utils/sizes';
+import { ordinalSuffixOf } from '@/utils/dates';
 
 const props = defineProps({
     events: {
@@ -122,9 +143,8 @@ const props = defineProps({
 
 const emit = defineEmits(['updateVisibleYears']);
 const hoveredWeekIndex = ref('');
-const dateFormatter = new Intl.DateTimeFormat('en-US', {
+const monthNameFormatter = new Intl.DateTimeFormat('en-US', {
     month: 'short',
-    day: 'numeric',
 });
 const millisecondsFormatter = (ms: number | undefined) => {
     if (!ms) return '0h';
@@ -143,7 +163,7 @@ const delayShowContent = (index: string) => {
 
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
-function normalizeWeek(week: eventInterface[]) {
+function normalizeWeek(yearIndex: number, week: eventInterface[]) {
     return [...new Array(7)].map((empty, index) => {
         const dayData = week?.find(
             (day: eventInterface) => day.weekDay === index,
@@ -156,7 +176,7 @@ function normalizeWeek(week: eventInterface[]) {
         };
         return {
             ...dayData,
-            color: commitsColorScale(dayData as eventInterface),
+            color: commitsColorScale(dayData, yearIndex % 2 !== 0),
         };
     });
 }
@@ -166,8 +186,7 @@ function normalizeWeek(week: eventInterface[]) {
 let currentMonth = '';
 function displayMonth(week: eventInterface[]) {
     const date = week.find((day: eventInterface) => day.date)?.date;
-    const parsedDate = new Date(`${date} 00:00`);
-    const month = parsedDate.toLocaleString('default', { month: 'short' });
+    const month = monthNameFormatter.format(new Date(`${date} 00:00`));
 
     if (month !== currentMonth) {
         currentMonth = month;
@@ -192,17 +211,22 @@ function visibilityChanged(isVisible: boolean, entry: HTMLInputEvent) {
     emit('updateVisibleYears', visibleYears.value);
 }
 
-const dayBackground = (day: eventInterface) => {
-    return props.filters.best && day.isBestCommit
-        ? 'rgba(194, 128, 255, 1)'
-        : day.color;
+const dayStyle = (day: eventInterface) => {
+    const bgColor =
+        props.filters.best && day.isBestCommit
+            ? 'rgba(194, 128, 255, 1)'
+            : day.color?.bg;
+    const textColor =
+        props.filters.best && day.isBestCommit
+            ? 'rgba(0, 0, 0, 1)'
+            : day.color?.text;
+    return `background-color: ${bgColor}; color: ${textColor}`;
 };
 </script>
 
 <style lang="scss" scoped>
 .years-block {
     min-height: 100vh;
-    margin-bottom: 15rem;
     .mergeYear {
         margin-top: -0.6rem;
     }

@@ -41,3 +41,26 @@ export const yearSchema = (to: Date, from: Date) => {
 
     return events;
 };
+
+export function ordinalSuffixOf(i: number): string {
+    // Determine the units and tens places of the number.
+    const units = i % 10;
+    const tens = i % 100;
+
+    // Check for the special cases of 11, 12 and 13.
+    if (tens >= 11 && tens <= 13) {
+        return `${i}th`;
+    }
+
+    // Use 'st', 'nd', 'rd' or 'th' depending on the units place of the number.
+    switch (units) {
+        case 1:
+            return `${i}st`;
+        case 2:
+            return `${i}nd`;
+        case 3:
+            return `${i}rd`;
+        default:
+            return `${i}th`;
+    }
+}

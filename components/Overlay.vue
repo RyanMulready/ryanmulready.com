@@ -16,26 +16,29 @@
                 src="images/logo.svg"
                 width="180px"
                 height="180px" />
-            <div
-                class="fixed bottom-0 left-0 w-full z-50 h-40 overflow-hidden bg-black grid grid-cols-[1fr_50px]">
-                <div class="flex flex-col justify-center pl-5">
-                    <div class="text-xl text-secondary">
-                        {{
-                            $t('loadingTitle', {
-                                name: 'Ryan Mulready',
-                                title: $t('companyPosition'),
-                            })
-                        }}
+            <div class="fixed bottom-0 left-0 w-full z-50 h-40 overflow-hidden">
+                <div class="container mx-auto flex h-full">
+                    <div class="flex flex-col justify-center pl-5">
+                        <div class="text-xl text-secondary">
+                            {{
+                                $t('loadingTitle', {
+                                    name: 'Ryan Mulready',
+                                    title: $t('companyPosition'),
+                                })
+                            }}
+                        </div>
+                        <div class="text-xl text-primary">
+                            <span class="text-white">@</span
+                            >{{ $t('companyName') }}
+                        </div>
                     </div>
-                    <div class="text-xl text-primary">
-                        <span class="text-white">@</span>{{ $t('companyName') }}
+                    <div
+                        class="flex flex-col flex-grow items-end justify-center pr-8">
+                        <font-awesome-icon
+                            class="text-accent"
+                            icon="fa-solid fa-right-to-bracket"
+                            size="xl" />
                     </div>
-                </div>
-                <div class="flex flex-col justify-center items-end pr-5">
-                    <font-awesome-icon
-                        class="text-accent"
-                        icon="fa-solid fa-right-to-bracket"
-                        size="lg" />
                 </div>
             </div>
         </div>
@@ -57,10 +60,13 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits(['dismissed']);
+
 const visible = ref(true);
 const dismiss = () => {
     if (props.ready) {
         visible.value = false;
+        emit('dismissed');
         document.body.classList.remove('overflow-hidden');
     }
 };
