@@ -15,19 +15,25 @@
                 <label
                     for="modal-about"
                     class="p-3 absolute right-2 top-2 text-accent font-bold cursor-pointer">
-                    ✕
+                    {{ $t('modalDismiss') }}
                 </label>
 
-                <h1 class="text-white mb-5 text-2xl">Hi, I'm Ryan!</h1>
+                <h1 class="text-white mb-5 text-2xl">
+                    {{ $t('hiIam', { name: 'Ryan' }) }}
+                </h1>
 
                 <h2 class="text-white text-xl">
-                    I am
+                    {{ $t('iAm') }}
                     <span
                         ref="jobTitle"
                         class="job-title"
                         >{{ currentJobTitle }}</span
                     >
-                    <span class="cursor-blink">|</span>
+                    <span class="cursor-blink">
+                        <!-- eslint-disable -->
+                        |
+                        <!-- eslint-enable -->
+                    </span>
                 </h2>
                 <a
                     href="https://via.placeholder.com/400"
@@ -43,13 +49,16 @@
 </template>
 
 <script lang="ts" setup>
+import { useI18n } from '#imports';
 import { ref, watch } from 'vue';
 
+const { t } = useI18n();
+
 const jobTitles = [
-    'a Staff Software Engineer',
-    'an Engineering Manager',
-    'a Team Leader',
-    'a Guild Leader',
+    t('jobTitles.staffSoftwareEngineer'),
+    t('jobTitles.engineeringManager'),
+    t('jobTitles.teamLeader'),
+    t('jobTitles.guildLeader'),
 ];
 const jobTitleIndex = ref(0);
 const currentJobTitle = ref('');

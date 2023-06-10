@@ -2,18 +2,6 @@
     <!-- GRID START -->
     <div class="years-block px-5">
         <div
-            class="day-headers grid grid-cols-7 gap-1 pt-1 pb-2 mb-4 sticky bg-neutral z-10">
-            <div
-                v-for="(header, headerIndex) in dayHeaders"
-                :key="header"
-                class="p-2 text-center font-bold border-base-200"
-                :class="{
-                    'border-l': headerIndex !== 0,
-                }">
-                {{ header }}
-            </div>
-        </div>
-        <div
             v-for="year in years"
             :key="year"
             v-observe-visibility="{
@@ -42,11 +30,9 @@
                         v-for="day in generateDayBlocks(year, month)"
                         :key="day">
                         <div
-                            :style="{
-                                backgroundColor: dayBackground(
-                                    getDayData(year, month, day),
-                                ),
-                            }"
+                            :style="
+                                dayStyle(getDayData(year, month, day), year)
+                            "
                             class="day-block p-2 flex items-center justify-center transition-all duration-300 ease-in-out hover:h-full flex-wrap relative">
                             <template v-if="hasData(year, month, day)">
                                 <div
@@ -56,7 +42,7 @@
                                             `${year}-${monthIndex}`
                                     "
                                     class="absolute top-0 right-0 text-xs px-2 text-white">
-                                    {{ day }}
+                                    {{ ordinalSuffixOf(day) }}
                                 </div>
                                 <div
                                     v-if="
@@ -106,9 +92,15 @@
 
 <script lang="ts" setup>
 import { PropType, computed, ref } from 'vue';
-import { yearsInterface, filtersInterface, HTMLInputEvent } from '@/types';
+import {
+    yearsInterface,
+    filtersInterface,
+    HTMLInputEvent,
+    eventInterface,
+} from '@/types';
 import { commitsColorScale } from '@/utils/colors';
 import { meetingsSizeScale } from '@/utils/sizes';
+import { ordinalSuffixOf } from '@/utils/dates';
 
 const props = defineProps({
     events: {
@@ -129,7 +121,6 @@ const props = defineProps({
 });
 const emit = defineEmits(['updateVisibleYears']);
 
-const dayHeaders = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 const visibleYears = ref<number[]>([]);
 const hoveredMonthIndex = ref('');
 
@@ -149,10 +140,17 @@ function daysInMonth(year: number, month: number) {
     return days;
 }
 
-const dayBackground = (day: any) => {
-    return props.filters.best && day?.isBestCommit
-        ? 'rgba(194, 128, 255, 1)'
-        : commitsColorScale(day);
+const dayStyle = (day: eventInterface, year: number) => {
+    const color = commitsColorScale(day, year % 2 === 0);
+    const bgColor =
+        props.filters.best && day.isBestCommit
+            ? 'rgba(194, 128, 255, 1)'
+            : color?.bg;
+    const textColor =
+        props.filters.best && day.isBestCommit
+            ? 'rgba(0, 0, 0, 1)'
+            : color?.text;
+    return `background-color: ${bgColor}; color: ${textColor}`;
 };
 const millisecondsFormatter = (ms: number | undefined) => {
     if (!ms) return '0h';

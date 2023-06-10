@@ -7,6 +7,10 @@ export default <Config>{
         './layouts/**/*.vue',
         './pages/**/*.vue',
     ],
+    // See custom plugin below
+    corePlugins: {
+        container: false,
+    },
     daisyui: {
         logs: false,
         themes: [
@@ -20,6 +24,7 @@ export default <Config>{
                     'neutral-content': '#443d3f',
                     'base-100': '#292425',
                     'base-200': '#797979',
+                    'base-300': '#D9CED0',
                     info: '#3ABFF8',
                     success: '#36D399',
                     warning: '#FBBD23',
@@ -46,5 +51,29 @@ export default <Config>{
             },
         },
     },
-    plugins: [require('@tailwindcss/typography'), require('daisyui')],
+    plugins: [
+        require('@tailwindcss/typography'),
+        require('daisyui'),
+        // We want to keep our max width around 1200 instead of tailwinds default of 1500
+        function customContainer({
+            addComponents,
+        }: {
+            addComponents: Function;
+        }) {
+            addComponents({
+                '.container': {
+                    maxWidth: '100%',
+                    '@screen sm': {
+                        maxWidth: '640px',
+                    },
+                    '@screen md': {
+                        maxWidth: '768px',
+                    },
+                    '@screen lg': {
+                        maxWidth: '1280px',
+                    },
+                },
+            });
+        },
+    ],
 };

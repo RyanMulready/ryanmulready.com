@@ -1,9 +1,12 @@
 <template>
     <div>
-        <Header :visible-year="visibleYear" />
+        <Header
+            :visible="dismissed"
+            :visible-year="visibleYear" />
         <Overlay
             :loading="loading"
-            :ready="ready" />
+            :ready="ready"
+            @dismissed="dismissed = true" />
         <Calendar
             v-if="filtersStore.filters.view == 'calendar'"
             :events="events"
@@ -20,7 +23,7 @@
         <Filters :years="possibleYears" />
         <About />
         <Contact />
-        <Footer />
+        <Footer :visible="dismissed" />
     </div>
 </template>
 
@@ -39,6 +42,7 @@ const calStore = useCalendarStore();
 const filtersStore = useFiltersStore();
 const loading = ref(true);
 const ready = ref(false);
+const dismissed = ref(false);
 
 // Has data from 2012->; 2018-> most significant
 const startYear = new Date('01/01/2018 00:00');

@@ -14,29 +14,26 @@
                 <label
                     for="modal-filters"
                     class="p-3 absolute right-2 top-2 text-accent font-bold cursor-pointer">
-                    ✕
+                    {{ $t('modalDismiss') }}
                 </label>
-                <h1 class="text-white mb-5 text-2xl">What is this data?</h1>
-                <p class="text-sm mb-3 indent">
-                    You're looking at a unique snapshot of my professional life,
-                    captured through the lens of my GitHub contributions and
-                    daily meeting hours. Each data point here tells a story,
-                    painting a picture of my work habits. Over time, you can
-                    spot patterns showing the relationship between the hours
-                    spent in meetings and the commits made on GitHub. It's an
-                    intriguing exploration of teamwork and individual
-                    productivity.
+                <h1 class="text-white mb-5 text-2xl">
+                    {{ $t('dataHeader') }}
+                </h1>
+                <p class="text-sm mb-7 indent">
+                    {{ $t('dataP') }}
                     <br class="mb-3" />
-                    Enjoy your exploration!
+                    {{ $t('dataFooter') }}
                 </p>
 
-                <h2 class="text-white mb-5">Here's what you can adjust:</h2>
+                <h2 class="text-white mb-5">
+                    {{ $t('adjustHeader') }}
+                </h2>
 
-                <div class="flex items-center gap-4 mb-5 mr-2">
+                <div class="flex items-center gap-4 mb-7 mr-2">
                     <label
                         class="block w-1/5"
                         for="view">
-                        View
+                        {{ $t('view') }}
                     </label>
 
                     <select
@@ -46,16 +43,16 @@
                         <option
                             value="trail"
                             selected>
-                            Trail
+                            {{ $t('trail') }}
                         </option>
-                        <option value="calendar">Calendar</option>
+                        <option value="calendar">{{ $t('calendar') }}</option>
                     </select>
                 </div>
-                <div class="flex items-center gap-4 mb-5">
+                <div class="flex items-center gap-4 mb-10">
                     <label
                         class="block w-1/5"
                         for="view">
-                        Years
+                        {{ $t('years') }}
                     </label>
                     <div class="w-4/5">
                         <input
@@ -77,14 +74,16 @@
                     </div>
                 </div>
 
-                <h3 class="border-b border-base-200">Highlights</h3>
+                <h3 class="border-b border-base-200 mb-5">
+                    {{ $t('highlights') }}
+                </h3>
                 <div class="grid grid-cols-2">
                     <div class="form-control">
                         <label
                             class="cursor-pointer label flex-wrap justify-center">
                             <span
                                 class="label-text w-full text-center mb-2 text-meetings">
-                                meetings
+                                {{ $t('meetings') }}
                             </span>
                             <input
                                 v-model="filtersStore.filters.meetings"
@@ -97,7 +96,7 @@
                             class="cursor-pointer label flex-wrap justify-center">
                             <span
                                 class="label-text w-full text-center mb-2 text-best">
-                                best
+                                {{ $t('best') }}
                             </span>
                             <input
                                 v-model="filtersStore.filters.best"

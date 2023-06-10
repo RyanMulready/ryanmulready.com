@@ -7,8 +7,8 @@ export default defineNuxtConfig({
             htmlAttrs: {
                 lang: 'en',
             },
-            title: 'RyanMulready v7',
-            titleTemplate: '%s - RyanMulready v7',
+            title: 'RyanMulready',
+            titleTemplate: '%s - v7',
             meta: [
                 {
                     name: 'viewport',
@@ -17,10 +17,10 @@ export default defineNuxtConfig({
                 {
                     hid: 'description',
                     name: 'description',
-                    content: '',
+                    content:
+                        'Multifaceted, analytical, and innovative Staff Software Engineer with a primary focus on frontend. Over twelve years professional experience with many more as a freelance developer. Extensive knowledge in all phases of the product development cycle including leading and managing a team. Seeking a staff level position at a company with interesting problems to solve.',
                 },
             ],
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         },
     },
     css: [
@@ -49,6 +49,7 @@ export default defineNuxtConfig({
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
         '@nuxtjs/google-fonts',
+        '@kevinmarrec/nuxt-pwa',
         // '@nuxt/devtools',
     ],
     plugins: [
@@ -59,8 +60,9 @@ export default defineNuxtConfig({
     i18n: {
         lazy: true,
         langDir: 'lang',
-        defaultLocale: 'en',
         locales: [{ code: 'en', file: 'en.json' }],
+        defaultLocale: 'en',
+        vueI18n: './i18n.config.ts',
     },
     googleFonts: {
         families: {

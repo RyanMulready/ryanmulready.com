@@ -15,10 +15,10 @@
                 <label
                     for="modal-contact"
                     class="p-3 absolute right-2 top-2 text-accent font-bold cursor-pointer">
-                    ✕
+                    {{ $t('modalDismiss') }}
                 </label>
 
-                <h1 class="text-white mb-5 text-2xl">Contact Me</h1>
+                <h1 class="text-white mb-5 text-2xl">{{ $t('contactMe') }}</h1>
 
                 <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
                     <Form
@@ -28,7 +28,7 @@
                             <label
                                 class="text-white mb-2 block text-md text-left"
                                 for="name">
-                                Name
+                                {{ $t('name') }}
                             </label>
                             <Field
                                 id="name"
@@ -52,7 +52,7 @@
                             <label
                                 class="text-white mb-2 block text-left"
                                 for="email">
-                                Email
+                                {{ $t('email') }}
                             </label>
                             <Field
                                 id="email"
@@ -76,7 +76,7 @@
                             <label
                                 class="text-white mb-2 block text-left"
                                 for="comment">
-                                Message
+                                {{ $t('message') }}
                             </label>
                             <Field
                                 id="comment"
@@ -106,7 +106,7 @@
                                 class="w-full px-4 py-2 rounded text-white bg-accent hover:bg-base-200 transition-colors"
                                 :disabled="submitting"
                                 type="submit">
-                                Send
+                                {{ $t('send') }}
                             </button>
                         </div>
                         <div
