@@ -7,32 +7,58 @@ describe('commitsColorScale', () => {
         duration: 0,
         date: new Date().toUTCString(),
         weekDay: 0,
+        commits: 0,
     };
-    it('returns first color if no commits data is provided', () => {
-        expect(commitsColorScale({ ...event })).toEqual('rgba(31,26,28, 0.8)');
+
+    it('returns object with appropriate background and text colors for low number of commits', () => {
+        expect(commitsColorScale({ ...event, commits: 3 })).toEqual({
+            bg: 'rgba(189, 48, 57, 0.25)',
+            text: 'rgba(255, 255, 255, 1)',
+        });
+        expect(commitsColorScale({ ...event, commits: 15 })).toEqual({
+            bg: 'rgba(189, 48, 57, 0.5)',
+            text: 'rgba(255, 255, 255, 1)',
+        });
+        expect(commitsColorScale({ ...event, commits: 25 })).toEqual({
+            bg: 'rgba(189, 48, 57, 0.75)',
+            text: 'rgba(255, 255, 255, 1)',
+        });
     });
 
-    it('returns second color if less than or equal to 15 commits', () => {
-        expect(commitsColorScale({ ...event, commits: 15 })).toEqual(
-            'rgba(189, 48, 57, 0.25)',
-        );
+    it('returns object with appropriate background and text colors for high number of commits', () => {
+        expect(commitsColorScale({ ...event, commits: 50 })).toEqual({
+            bg: 'rgba(189, 48, 57)',
+            text: 'rgba(255, 255, 255, 1)',
+        });
+        expect(commitsColorScale({ ...event, commits: 90 })).toEqual({
+            bg: 'rgba(189, 48, 57)',
+            text: 'rgba(255, 255, 255, 1)',
+        });
     });
 
-    it('returns third color if less than or equal to 29 commits', () => {
-        expect(commitsColorScale({ ...event, commits: 29 })).toEqual(
-            'rgba(189, 48, 57, 0.5)',
-        );
+    it('returns object with appropriate background and text colors for low number of commits in dark mode', () => {
+        expect(commitsColorScale({ ...event, commits: 3 }, true)).toEqual({
+            bg: 'rgba(255, 255, 255, 0.25)',
+            text: 'rgba(0, 0, 0, 1)',
+        });
+        expect(commitsColorScale({ ...event, commits: 15 }, true)).toEqual({
+            bg: 'rgba(255, 255, 255, 0.5)',
+            text: 'rgba(0, 0, 0, 1)',
+        });
+        expect(commitsColorScale({ ...event, commits: 25 }, true)).toEqual({
+            bg: 'rgba(255, 255, 255, 0.75)',
+            text: 'rgba(0, 0, 0, 1)',
+        });
     });
 
-    it('returns fourth color if less than or equal to 37 commits', () => {
-        expect(commitsColorScale({ ...event, commits: 37 })).toEqual(
-            'rgba(189, 48, 57, 0.75)',
-        );
-    });
-
-    it('returns fifth color if more than 37 commits', () => {
-        expect(commitsColorScale({ ...event, commits: 50 })).toEqual(
-            'rgba(189, 48, 57)',
-        );
+    it('returns object with appropriate background and text colors for high number of commits in dark mode', () => {
+        expect(commitsColorScale({ ...event, commits: 50 }, true)).toEqual({
+            bg: 'rgba(255, 255, 255, 1)',
+            text: 'rgba(0, 0, 0, 1)',
+        });
+        expect(commitsColorScale({ ...event, commits: 90 }, true)).toEqual({
+            bg: 'rgba(255, 255, 255, 1)',
+            text: 'rgba(0, 0, 0, 1)',
+        });
     });
 });

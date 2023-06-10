@@ -23,13 +23,20 @@ export function commitsColorScale(dayData: eventInterface, dark = false) {
     }
 
     const value = dayData?.commits;
+    // 0 - 4 commits
     let bg = colors[0];
 
     if (value) {
-        if (value <= 5) [, bg] = colors;
-        else if (value <= 15) [, , bg] = colors;
-        else if (value <= 30) [, , , bg] = colors;
-        else [, , , bg] = colors;
+        // 1 - 4 commits
+        if (value <= 5) {
+            [, bg] = colors;
+        } else if (value <= 15) {
+            [, , bg] = colors;
+        } else if (value <= 30) {
+            [, , , bg] = colors;
+        } else {
+            [, , , , bg] = colors;
+        }
     }
 
     // Extract the RGB values
