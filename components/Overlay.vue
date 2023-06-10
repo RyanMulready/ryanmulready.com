@@ -13,7 +13,7 @@
                 :class="{
                     loading,
                 }"
-                src="images/logo.svg"
+                src="icon.svg"
                 width="180px"
                 height="180px" />
             <div class="fixed bottom-0 left-0 w-full z-50 h-40 overflow-hidden">

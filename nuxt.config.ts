@@ -20,7 +20,6 @@ export default defineNuxtConfig({
                     content: '',
                 },
             ],
-            link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
         },
     },
     css: [
@@ -49,6 +48,7 @@ export default defineNuxtConfig({
         '@nuxt/image-edge',
         '@nuxtjs/i18n',
         '@nuxtjs/google-fonts',
+        '@kevinmarrec/nuxt-pwa',
         // '@nuxt/devtools',
     ],
     plugins: [

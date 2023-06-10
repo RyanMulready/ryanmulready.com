@@ -21,7 +21,7 @@
                     {{ $t('ryanMulready') }}
                     <nuxt-img
                         class="inline align-bottom"
-                        src="images/logo.svg"
+                        src="icon.svg"
                         width="25px"
                         height="25px" />
                 </p>
