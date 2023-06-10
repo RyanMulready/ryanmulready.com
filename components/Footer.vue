@@ -18,7 +18,7 @@
             class="grid grid-cols-3 bg-neutral rounded-lg px-6 py-9 mb-5 mx-5 text-2xl font-mono text-white flex-grow">
             <div class="col-span-2">
                 <p>
-                    Ryan Mulready
+                    {{ $t('ryanMulready') }}
                     <nuxt-img
                         class="inline align-bottom"
                         src="images/logo.svg"
@@ -30,7 +30,7 @@
                 <label
                     for="modal-about"
                     class="cursor-pointer text-white hover:text-accent transition-colors duration-200 mr-5 text-2xl">
-                    CV
+                    {{ $t('cv') }}
                 </label>
                 <label
                     for="modal-contact"

@@ -28,8 +28,12 @@
                             }}
                         </div>
                         <div class="text-xl text-primary">
-                            <span class="text-white">@</span
-                            >{{ $t('companyName') }}
+                            <span class="text-white">
+                                <!-- eslint-disable -->
+                                @
+                                <!-- eslint-enable -->
+                            </span>
+                            {{ $t('companyName') }}
                         </div>
                     </div>
                     <div

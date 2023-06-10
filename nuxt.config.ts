@@ -59,8 +59,9 @@ export default defineNuxtConfig({
     i18n: {
         lazy: true,
         langDir: 'lang',
-        defaultLocale: 'en',
         locales: [{ code: 'en', file: 'en.json' }],
+        defaultLocale: 'en',
+        vueI18n: './i18n.config.ts',
     },
     googleFonts: {
         families: {

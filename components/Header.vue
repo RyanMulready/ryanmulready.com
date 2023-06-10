@@ -10,16 +10,16 @@
             <div class="flex-grow pr-16 max-w-xl">
                 <h1
                     class="mb-2 font-weight-normal font-normal whitespace-nowrap text-2xl">
-                    Code Contributions
+                    {{ $t('codeContributions') }}
                 </h1>
                 <div class="flex items-center">
-                    <div class="pr-2">more</div>
+                    <div class="pr-2">{{ $t('more') }}</div>
                     <div
                         :class="{
                             light: isEven,
                         }"
                         class="flex-grow gradient-scale rounded-md mt-[.3rem]" />
-                    <div class="pl-2">less</div>
+                    <div class="pl-2">{{ $t('less') }}</div>
                 </div>
             </div>
             <div

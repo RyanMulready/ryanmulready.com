@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/**
+* Override Tailwind's default classes
+*/
+.modal-box {
+    padding: 2rem;
+}
