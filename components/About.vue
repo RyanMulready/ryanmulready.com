@@ -36,10 +36,10 @@
                     </span>
                 </h2>
                 <a
-                    href="https://via.placeholder.com/400"
+                    href="resume.pdf"
                     target="_blank">
                     <img
-                        src="https://via.placeholder.com/400"
+                        src="resume.webp"
                         class="w-full mt-3"
                         alt="resume" />
                 </a>
