@@ -20,7 +20,7 @@
                 <p>
                     {{ $t('ryanMulready') }}
                     <nuxt-img
-                        class="inline align-bottom"
+                        class="inline align-text-bottom"
                         src="icon.svg"
                         loading="lazy"
                         width="25px"
