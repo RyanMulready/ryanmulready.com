@@ -22,6 +22,7 @@
                     <nuxt-img
                         class="inline align-bottom"
                         src="icon.svg"
+                        loading="lazy"
                         width="25px"
                         height="25px" />
                 </p>

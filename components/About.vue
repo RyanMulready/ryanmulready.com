@@ -26,9 +26,9 @@
                     {{ $t('iAm') }}
                     <span
                         ref="jobTitle"
-                        class="job-title"
-                        >{{ currentJobTitle }}</span
-                    >
+                        class="job-title">
+                        {{ currentJobTitle }}
+                    </span>
                     <span class="cursor-blink">
                         <!-- eslint-disable -->
                         |
@@ -36,10 +36,10 @@
                     </span>
                 </h2>
                 <a
-                    href="resume.pdf"
+                    href="ryanmulready-cv.pdf"
                     target="_blank">
                     <img
-                        src="resume.webp"
+                        src="ryanmulready-cv.webp"
                         class="w-full mt-3"
                         alt="resume" />
                 </a>

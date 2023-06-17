@@ -101,9 +101,9 @@
                             </ErrorMessage>
                         </div>
 
-                        <div class="mb-6 text-center">
+                        <div class="text-right">
                             <button
-                                class="w-full px-4 py-2 rounded text-white bg-accent hover:bg-base-200 transition-colors"
+                                class="mt-3 px-4 py-2 rounded text-white bg-accent hover:bg-base-200 transition-colors"
                                 :disabled="submitting"
                                 type="submit">
                                 {{ $t('send') }}

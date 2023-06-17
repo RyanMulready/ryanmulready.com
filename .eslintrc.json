@@ -14,6 +14,11 @@
     "settings": {
         "vue-i18n": {
             "localeDir": "./lang/*.{json,json5,yaml,yml}"
+        },
+        "import/resolver": {
+            "alias": {
+                "map": [["~", "./"]]
+            }
         }
     },
     "rules": {

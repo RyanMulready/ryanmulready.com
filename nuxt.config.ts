@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt/config';
+import svgLoader from 'vite-svg-loader';
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -43,6 +44,13 @@ export default defineNuxtConfig({
         // https://github.com/FortAwesome/vue-fontawesome/issues/393
         transpile: ['@fortawesome/vue-fontawesome'],
     },
+    vite: {
+        plugins: [
+            svgLoader({
+                defaultImport: 'component',
+            }),
+        ],
+    },
     modules: [
         '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
@@ -69,5 +77,8 @@ export default defineNuxtConfig({
             Inconsolata: true,
             Poppins: true,
         },
+    },
+    image: {
+        dir: 'assets/images',
     },
 });

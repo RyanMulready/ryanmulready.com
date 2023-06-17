@@ -8,14 +8,7 @@
                 'cursor-not-allowed': !ready,
             }"
             @click="dismiss">
-            <nuxt-img
-                class="logo"
-                :class="{
-                    loading,
-                }"
-                src="icon.svg"
-                width="180px"
-                height="180px" />
+            <loading :loading="loading" />
             <div class="fixed bottom-0 left-0 w-full z-50 h-40 overflow-hidden">
                 <div class="container mx-auto flex h-full">
                     <div class="flex flex-col justify-center pl-5">
@@ -84,18 +77,3 @@ watch(
     },
 );
 </script>
-
-<style scoped lang="scss">
-.logo.loading {
-    animation: pulse 0.6s ease-in infinite alternate;
-}
-@keyframes pulse {
-    from {
-        transform: scale(0.96);
-    }
-
-    to {
-        transform: scale(1);
-    }
-}
-</style>
