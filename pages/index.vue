@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { gsap } from 'gsap';
 import { onMounted, ref, computed, watch } from 'vue';
 import { useGitHubStore } from '@/stores/github';
 import { useCalendarStore } from '@/stores/calendar';
@@ -76,7 +75,6 @@ const events = computed(() =>
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {
-    const loadingTimeline = gsap.timeline({ paused: true });
     // Loop over possible years and request data
     // Current year should be available first but isn't always
     await Promise.all(
@@ -84,13 +82,6 @@ onMounted(async () => {
             await ghStore.fetchContributions(year);
         }),
     );
-    const dayBlocks = document.querySelectorAll('.data-block');
-    gsap.to(dayBlocks, {
-        opacity: 1,
-        stagger: 0.0045,
-        duration: 1,
-    });
-    loadingTimeline.play();
     ready.value = true;
     await Promise.all(
         currentYears.value.map(async (year) => {
