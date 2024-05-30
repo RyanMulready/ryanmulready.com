@@ -37,7 +37,7 @@ export default defineNuxtConfig({
         SENDGRID_API_TOKEN: process.env.SENDGRID_API_TOKEN,
         public: {
             GITHUB_USERNAME: 'RyanMulready',
-            GOOGLE_CALENDAR_ID: 'ryan@energysage.com',
+            GOOGLE_CALENDAR_ID: 'ryan.mulready@l7informatics.com',
         },
     },
     build: {
@@ -54,11 +54,11 @@ export default defineNuxtConfig({
     modules: [
         '@nuxtjs/tailwindcss',
         '@pinia/nuxt',
-        '@nuxt/image-edge',
+        '@nuxt/image',
         '@nuxtjs/i18n',
-        '@nuxtjs/google-fonts',
-        '@kevinmarrec/nuxt-pwa',
         // '@nuxt/devtools',
+        '@nuxtjs/google-fonts',
+        '@vite-pwa/nuxt',
     ],
     plugins: [
         { src: '@/plugins/vercel', mode: 'client' },

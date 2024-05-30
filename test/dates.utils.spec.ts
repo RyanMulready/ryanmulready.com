@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { yearSchema, yearsPast } from '@/utils/dates';
 
 describe('getWeek', () => {

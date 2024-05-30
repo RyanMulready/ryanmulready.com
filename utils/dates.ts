@@ -1,5 +1,3 @@
-import { eventInterface } from '@/types';
-
 // Returns an array of years between two dates
 export const yearsPast = (startYear: Date, endYear: Date): number[] => {
     const start = startYear.getFullYear();

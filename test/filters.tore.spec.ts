@@ -1,6 +1,5 @@
-import { describe, it, beforeEach, expect } from 'vitest';
-import { useFiltersStore, filtersInterface } from '@/stores/filters';
-import { setup } from '@nuxt/test-utils-edge';
+import { useFiltersStore } from '@/stores/filters';
+import { setup } from '@nuxt/test-utils';
 import { setActivePinia, createPinia } from 'pinia';
 
 describe('useFiltersStore', async () => {

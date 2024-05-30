@@ -1,5 +1,3 @@
-import { describe, it, expect, vi } from 'vitest';
-
 import github from '@/utils/github';
 
 vi.mock('#imports', () => {

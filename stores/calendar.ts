@@ -1,5 +1,4 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { eventInterface, yearsInterface } from '@/types';
 
 export const useCalendarStore = defineStore('calStore', {
     state: () => ({

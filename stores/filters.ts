@@ -1,5 +1,4 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { filtersInterface } from '@/types';
 
 export const useFiltersStore = defineStore('filtersStore', {
     state: () => ({

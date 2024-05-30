@@ -91,13 +91,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType, computed, ref } from 'vue';
-import {
-    yearsInterface,
-    filtersInterface,
-    HTMLInputEvent,
-    eventInterface,
-} from '@/types';
+import { type PropType, computed, ref } from 'vue';
 import { commitsColorScale } from '@/utils/colors';
 import { meetingsSizeScale } from '@/utils/sizes';
 import { ordinalSuffixOf } from '@/utils/dates';

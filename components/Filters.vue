@@ -110,7 +110,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { PropType, computed } from 'vue';
+import { type PropType, computed } from 'vue';
 import { useFiltersStore } from '@/stores/filters';
 
 const props = defineProps({

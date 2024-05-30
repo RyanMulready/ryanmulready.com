@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest';
 import { commitsColorScale } from '@/utils/colors';
 
 describe('commitsColorScale', () => {

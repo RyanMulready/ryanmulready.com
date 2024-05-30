@@ -11,22 +11,30 @@
         "plugin:prettier/recommended",
         "plugin:@intlify/vue-i18n/recommended"
     ],
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "extraFileExtensions": [".vue"],
+        "sourceType": "module"
+    },
     "settings": {
         "vue-i18n": {
             "localeDir": "./lang/*.{json,json5,yaml,yml}"
         },
         "import/resolver": {
             "alias": {
-                "map": [["~", "./"]]
+                "map": [["~", "./"]],
+                "extensions": [".ts", ".js", ".jsx", ".tsx"]
             }
         }
     },
+    "plugins": ["@typescript-eslint"],
     "rules": {
         "prettier/prettier": ["error"],
         "import/no-unresolved": "off",
+        "no-undef": "off",
+        "no-unused-vars": "off",
         "vue/multi-word-component-names": "off",
         "import/prefer-default-export": "off",
-        "@typescript-eslint/no-unused-vars": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -37,7 +45,6 @@
                 "tsx": "never"
             }
         ],
-
         "import/no-extraneous-dependencies": [
             "error",
             {
@@ -46,8 +53,8 @@
         ]
     },
     "globals": {
-        "NodeJS": true,
-        "$fetch": true,
-        "$github": true
+        "NodeJS": "readonly",
+        "$fetch": "readonly",
+        "$github": "readonly"
     }
 }

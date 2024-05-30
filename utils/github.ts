@@ -1,4 +1,4 @@
-import { fetchOptInterface, GithubResponse } from '@/types';
+// eslint-disable-next-line import/no-cycle
 import { useRuntimeConfig } from '#imports';
 
 const url = 'https://api.github.com/graphql';

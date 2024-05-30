@@ -1,5 +1,3 @@
-import { eventInterface } from '@/types';
-import { describe, it, expect } from 'vitest';
 import { millisecondsToHours, meetingsSizeScale } from '@/utils/sizes';
 
 describe('millisecondsToHours', () => {

@@ -3,6 +3,6 @@
     "extends": "./.nuxt/tsconfig.json",
     // https://vitest.dev/config/
     "compilerOptions": {
-        "types": ["vitest/globals"]
+        "types": ["vitest/globals", "./types.d.ts"]
     }
 }

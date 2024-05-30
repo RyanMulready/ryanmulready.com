@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 import { google, calendar_v3 } from 'googleapis';
-import { GaxiosResponse } from 'gaxios';
+import type { GaxiosResponse } from 'gaxios';
 
 import { defineEventHandler, createError } from 'h3';
 import { useRuntimeConfig } from '#imports';
 import { yearSchema } from '@/utils/dates';
 
 export default defineEventHandler(async (event) => {
+    // https://github.com/googleapis/google-auth-library-ruby?tab=readme-ov-file#example-environment-variables
     const url = 'https://www.googleapis.com/auth/calendar.readonly';
     const config = useRuntimeConfig();
     const year = event.context.params?.year || new Date().getFullYear();

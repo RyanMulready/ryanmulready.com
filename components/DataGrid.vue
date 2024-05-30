@@ -57,7 +57,11 @@
                             :class="{
                                 visible: filters.meetings,
                             }"
-                            :data-hours="JSON.stringify(meetingsSizeScale(day as eventInterface))"
+                            :data-hours="
+                                JSON.stringify(
+                                    meetingsSizeScale(day as eventInterface),
+                                )
+                            "
                             :style="`scale:
                         ${meetingsSizeScale(day as eventInterface).size}`" />
                         <!-- HOVER ELEMENTS -->
@@ -112,13 +116,7 @@
     <!-- GRID END -->
 </template>
 <script lang="ts" setup>
-import { ref, PropType } from 'vue';
-import {
-    HTMLInputEvent,
-    yearsInterface,
-    eventInterface,
-    filtersInterface,
-} from '@/types';
+import { ref, type PropType } from 'vue';
 import { commitsColorScale } from '@/utils/colors';
 import { meetingsSizeScale } from '@/utils/sizes';
 import { ordinalSuffixOf } from '@/utils/dates';
@@ -164,7 +162,7 @@ const delayShowContent = (index: string) => {
 // Normalize week data
 // We can't ensure a week always has 7 data points due year start and end
 function normalizeWeek(yearIndex: number, week: eventInterface[]) {
-    return [...new Array(7)].map((empty, index) => {
+    return [...new Array(7)].map((_empty, index) => {
         const dayData = week?.find(
             (day: eventInterface) => day.weekDay === index,
         ) || {
@@ -232,7 +230,9 @@ const dayStyle = (day: eventInterface) => {
     }
     .week-block {
         .day-block {
-            transition: height 0.5s ease, background-color 0.3s linear;
+            transition:
+                height 0.5s ease,
+                background-color 0.3s linear;
             height: 1rem;
         }
         &.hovered {

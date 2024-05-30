@@ -1,9 +1,9 @@
-export type colorIntefrace = {
+type colorIntefrace = {
     bg: string;
     text: string;
 };
 
-export type eventInterface = {
+type eventInterface = {
     flatMap?: any;
     commits?: number;
     meetings?: number;
@@ -13,16 +13,16 @@ export type eventInterface = {
     date: string;
     weekDay: Nullable<number>;
 };
-export type yearsInterface = {
+type yearsInterface = {
     [key: string]: eventInterface;
 };
-export interface fetchOptInterface {
+interface fetchOptInterface {
     method: string;
     mode: string;
     headers: object;
 }
 
-export interface filtersInterface {
+interface filtersInterface {
     view: string;
     lastYear: number;
     meetings: boolean;
@@ -30,7 +30,7 @@ export interface filtersInterface {
     best: boolean;
 }
 
-export interface GithubResponse {
+interface GithubResponse {
     data?: {
         user?: {
             contributionsCollection?: {
@@ -45,22 +45,22 @@ export interface GithubResponse {
     statusCode?: number;
 }
 
-export interface HTMLInputEvent extends Event {
+interface HTMLInputEvent extends Event {
     target: HTMLInputElement;
 }
 
-export type contributionDay = {
+type contributionDay = {
     color: string;
     contributionCount: number;
     date: string;
     weekday: number;
 };
 
-export type contributionWeeks = {
+type contributionWeeks = {
     contributionDays: contributionDay[];
 };
 
-export interface contributionResponse {
+interface contributionResponse {
     data: {
         user: {
             contributionsCollection: {
@@ -73,7 +73,7 @@ export interface contributionResponse {
     };
 }
 
-export interface contributionsInterface {
+interface contributionsInterface {
     // Key is year as a string
     [key: string]: {
         totalContributions: number;
@@ -100,7 +100,7 @@ type repositoryNodes = {
     };
 };
 
-export interface languagesInterface {
+interface languagesInterface {
     data: {
         user: {
             repositories: {
@@ -108,10 +108,4 @@ export interface languagesInterface {
             };
         };
     };
-}
-
-declare global {
-    interface Date {
-        getWeek: () => number;
-    }
 }

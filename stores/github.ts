@@ -1,5 +1,4 @@
 import { acceptHMRUpdate, defineStore } from 'pinia';
-import { yearsInterface, eventInterface, languagesInterface } from '@/types';
 
 export const useGitHubStore = defineStore('ghStore', {
     state: () => ({

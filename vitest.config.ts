@@ -3,10 +3,7 @@ import path from 'node:path';
 
 export default defineConfig({
     test: {
-        environment: 'jsdom',
-        deps: {
-            inline: [/@nuxt\/test-utils-edge/],
-        },
+        environment: 'happy-dom',
     },
     // @ts-ignore
     resolve: {

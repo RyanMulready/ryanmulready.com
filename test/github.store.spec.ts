@@ -1,6 +1,5 @@
-import { describe, it, beforeEach, expect } from 'vitest';
 import { useGitHubStore } from '@/stores/github';
-import { setup, $fetch } from '@nuxt/test-utils-edge';
+import { setup, $fetch } from '@nuxt/test-utils';
 import { setActivePinia, createPinia } from 'pinia';
 
 // @ts-ignore

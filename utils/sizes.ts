@@ -1,5 +1,3 @@
-import { eventInterface } from '@/types';
-
 export function millisecondsToHours(milli: number | undefined) {
     if (!milli) {
         return {

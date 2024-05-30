@@ -1,5 +1,3 @@
-import { eventInterface } from '@/types';
-
 export function commitsColorScale(dayData: eventInterface, dark = false) {
     let colors = [];
     let text = '';
