@@ -69,9 +69,10 @@ watch(
     },
 );
 
-const events = computed(() =>
-    merge(ghStore.getContributions, calStore.getMeetings),
-);
+const events = computed(() => {
+    const data = merge({}, ghStore.getContributions, calStore.getMeetings);
+    return data;
+});
 
 // load page first then trigger fetch to fill data
 onMounted(async () => {
