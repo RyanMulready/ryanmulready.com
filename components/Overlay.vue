@@ -8,7 +8,7 @@
                 'cursor-not-allowed': !ready,
             }"
             @click="dismiss">
-            <loading :loading="loading" />
+            <Loading :loading="loading" />
             <div class="fixed bottom-0 left-0 w-full z-50 h-40 overflow-hidden">
                 <div class="container mx-auto flex h-full">
                     <div class="flex flex-col justify-center pl-5">

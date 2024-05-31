@@ -2,7 +2,7 @@
     <div class="icon">
         <Icon
             class="loading-svg"
-            :class="{ loading: loading }" />
+            :class="{ 'svg-loading': loading }" />
     </div>
 </template>
 
@@ -24,7 +24,7 @@ defineProps({
     width: 180px;
 }
 
-.loading {
+.svg-loading {
     stroke-dasharray: 4000;
     stroke-dashoffset: 4000;
     animation: draw-stroke 3s linear forwards infinite;

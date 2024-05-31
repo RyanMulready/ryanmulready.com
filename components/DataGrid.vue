@@ -107,10 +107,6 @@
                     <div />
                 </div>
             </template>
-            <template v-else>
-                <div
-                    class="loading-block loading m-auto text-primary text-center" />
-            </template>
         </div>
     </div>
     <!-- GRID END -->
@@ -246,9 +242,6 @@ const dayStyle = (day: eventInterface) => {
         top: 1.5rem;
         writing-mode: sideways-lr;
         text-orientation: mixed;
-    }
-    .loading-block {
-        grid-column: 1 / span 9;
     }
 
     .meeting-dot {
