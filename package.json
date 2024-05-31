@@ -66,7 +66,6 @@
         "gaxios": "^6.6.0",
         "googleapis": "^137.1.0",
         "h3": "^1.11.1",
-        "lodash.merge": "^4.6.2",
         "lodash.mergewith": "^4.6.2",
         "nuxt": "^3.11.2",
         "pinia": "^2.1.7",

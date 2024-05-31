@@ -4,7 +4,9 @@
 [![Deployed with Vercel](https://img.shields.io/badge/Deployed%20with-Vercel-blueviolet)](https://vercel.com)
 [![License: GNU](https://img.shields.io/badge/License-GNU-yellow.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-Welcome to the repository of my personal website, a unique snapshot of his professional life, captured through the lens of his GitHub contributions and daily meeting hours. This Nuxt.js powered website provides an intriguing exploration of Ryan's teamwork and individual productivity, showcasing his work habits, patterns, and the relationship between the hours spent in meetings and the commits made on GitHub.
+Welcome to the repository of my personal website, a unique snapshot of his professional life, captured through the lens of his contributions and daily meeting hours. This Nuxt.js powered website provides an intriguing exploration of Ryan's teamwork and individual productivity, showcasing his work habits, patterns, and the relationship between the hours spent in meetings and the commits made.
+
+Note: Meeting data is only relative to my current position(Calendar based). Bitbucket commits are generated at build time, while Github commits are generated at runtime. Don't use bitbucket... it's a pain.
 
 You can explore the website [here](https://ryanmulready.com).
 

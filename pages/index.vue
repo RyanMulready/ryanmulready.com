@@ -34,7 +34,7 @@ import { useBitbucketStore } from '@/stores/bitbucket';
 import { useCalendarStore } from '@/stores/calendar';
 import { useFiltersStore } from '@/stores/filters';
 import { yearsPast } from '@/utils/dates';
-import merge from 'lodash.merge';
+import mergeWith from 'lodash.mergewith';
 
 // init our pinia store
 const ghStore = useGitHubStore();
@@ -71,12 +71,25 @@ watch(
     },
 );
 
+const customMerge = (objValue: any, srcValue: any, key: string | undefined) => {
+    if (
+        key === 'commits' &&
+        typeof objValue === 'number' &&
+        typeof srcValue === 'number'
+    ) {
+        return objValue + srcValue;
+    }
+    // If not a number, let lodash handle the merge
+    return undefined;
+};
+
 const events = computed(() => {
-    const data = merge(
+    const data = mergeWith(
         {},
         ghStore.getContributions,
         bbStore.getContributions,
         calStore.getMeetings,
+        customMerge,
     );
     return data;
 });

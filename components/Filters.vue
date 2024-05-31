@@ -22,6 +22,8 @@
                 <p class="text-sm mb-7 indent">
                     {{ $t('dataP') }}
                     <br class="mb-3" />
+                    <span class="text-accent">{{ $t('dataP2') }}</span>
+                    <br class="mb-3" />
                     {{ $t('dataFooter') }}
                 </p>
 
