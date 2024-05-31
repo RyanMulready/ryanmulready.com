@@ -31,13 +31,15 @@ export default defineNuxtConfig({
     ],
 
     runtimeConfig: {
-        API_TOKEN_GITHUB: process.env.API_TOKEN_GITHUB,
+        GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
         GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
         GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL,
         SENDGRID_API_TOKEN: process.env.SENDGRID_API_TOKEN,
+        ATLASSIAN_USERNAME: process.env.ATLASSIAN_USERNAME,
+        ATLASSIAN_APP_PASSWORD: process.env.ATLASSIAN_APP_PASSWORD,
         public: {
-            GITHUB_USERNAME: 'RyanMulready',
-            GOOGLE_CALENDAR_ID: 'ryan.mulready@l7informatics.com',
+            GITHUB_USERNAME: process.env.GITHUB_USERNAME,
+            GOOGLE_CALENDAR_ID: process.env.GOOGLE_USER_EMAIL,
         },
     },
     build: {
@@ -56,7 +58,6 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         '@nuxt/image',
         '@nuxtjs/i18n',
-        // '@nuxt/devtools',
         '@nuxtjs/google-fonts',
         '@vite-pwa/nuxt',
     ],

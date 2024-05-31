@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue';
 import { useGitHubStore } from '@/stores/github';
+import { useBitbucketStore } from '@/stores/bitbucket';
 import { useCalendarStore } from '@/stores/calendar';
 import { useFiltersStore } from '@/stores/filters';
 import { yearsPast } from '@/utils/dates';
@@ -37,6 +38,7 @@ import merge from 'lodash.merge';
 
 // init our pinia store
 const ghStore = useGitHubStore();
+const bbStore = useBitbucketStore();
 const calStore = useCalendarStore();
 const filtersStore = useFiltersStore();
 const loading = ref(true);
@@ -70,7 +72,12 @@ watch(
 );
 
 const events = computed(() => {
-    const data = merge({}, ghStore.getContributions, calStore.getMeetings);
+    const data = merge(
+        {},
+        ghStore.getContributions,
+        bbStore.getContributions,
+        calStore.getMeetings,
+    );
     return data;
 });
 
@@ -81,6 +88,11 @@ onMounted(async () => {
     await Promise.all(
         currentYears.value.map(async (year) => {
             await ghStore.fetchContributions(year);
+        }),
+    );
+    await Promise.all(
+        currentYears.value.map(async (year) => {
+            await bbStore.fetchContributions(year);
         }),
     );
     ready.value = true;
