@@ -24,7 +24,7 @@
     "best": "Best",
     "dataHeader": "What is this data?",
     "dataP": "You're looking at a unique snapshot of my professional life, captured through the lens of my contributions and daily meeting hours. Each data point here tells a story, painting a picture of my work habits. Over time, you can spot patterns showing the relationship between the hours spent in meetings and the commits made. It's an intriguing exploration of teamwork and individual productivity.",
-    "dataP2": "Note: Meeting data is only relative to my current position only. Bitbucket commits are generated at build time, while Github commits are generated at runtime. Don't use bitbucket... it's a pain.",
+    "dataP2": "Note: Meeting data is relative to my current position only. Bitbucket commits are generated at build time, while Github commits are generated at runtime. Don't use bitbucket... it's a pain.",
     "dataFooter": "Enjoy your exploration!",
     "adjustHeader": "Here's what you can adjust:",
     "jobTitles": {
