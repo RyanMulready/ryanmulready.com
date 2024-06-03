@@ -24,11 +24,13 @@
         <About />
         <Contact />
         <Footer :visible="dismissed" />
+        <SpeedInsights />
     </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, computed, watch } from 'vue';
+import { SpeedInsights } from '@vercel/speed-insights/nuxt';
 import { useGitHubStore } from '@/stores/github';
 import { useBitbucketStore } from '@/stores/bitbucket';
 import { useCalendarStore } from '@/stores/calendar';

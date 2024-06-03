@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
             }
         }`,
             {
-                username: config.public.GITHUB_USERNAME,
+                username: config.public.GH_USERNAME,
                 fromString,
                 toString,
             },

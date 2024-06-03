@@ -30,7 +30,7 @@ export default defineEventHandler(async () => {
                 }
             }
         }`,
-            { username: config.public.GITHUB_USERNAME },
+            { username: config.public.GH_USERNAME },
         );
         return data;
     } catch (e) {

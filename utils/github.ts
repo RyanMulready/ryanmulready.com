@@ -11,7 +11,7 @@ const $fetch = async (
         method: 'POST',
         mode: 'cors',
         headers: {
-            Authorization: `Bearer ${config.GITHUB_API_TOKEN}`,
+            Authorization: `Bearer ${config.GH_API_TOKEN}`,
         },
     },
 ): Promise<GithubResponse> => {

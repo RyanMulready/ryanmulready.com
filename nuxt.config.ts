@@ -31,15 +31,15 @@ export default defineNuxtConfig({
     ],
 
     runtimeConfig: {
-        GITHUB_API_TOKEN: process.env.GITHUB_API_TOKEN,
+        GH_API_TOKEN: process.env.GH_API_TOKEN,
         GOOGLE_PRIVATE_KEY: process.env.GOOGLE_PRIVATE_KEY,
         GOOGLE_CLIENT_EMAIL: process.env.GOOGLE_CLIENT_EMAIL,
         SENDGRID_API_TOKEN: process.env.SENDGRID_API_TOKEN,
-        ATLASSIAN_USERNAME: process.env.ATLASSIAN_USERNAME,
         ATLASSIAN_APP_PASSWORD: process.env.ATLASSIAN_APP_PASSWORD,
         public: {
-            GITHUB_USERNAME: process.env.GITHUB_USERNAME,
-            GOOGLE_CALENDAR_ID: process.env.GOOGLE_USER_EMAIL,
+            ATLASSIAN_USERNAME: process.env.ATLASSIAN_USERNAME,
+            GH_USERNAME: process.env.GH_USERNAME,
+            GOOGLE_CALENDAR_ID: process.env.GOOGLE_CALENDAR_ID,
         },
     },
     build: {
