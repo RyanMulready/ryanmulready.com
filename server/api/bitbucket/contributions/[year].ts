@@ -1,20 +1,24 @@
 import { defineEventHandler, createError } from 'h3';
 import { yearSchema } from '@/utils/dates';
-import path from 'path';
-import fs from 'fs';
+// TODO: Production builds lose the JSON import, so we need to import the JSON files directly
+import year2024 from './2024.json';
+import year2023 from './2023.json';
 
-const loadJSON = (jsonPath: string) => {
-    const fileExists = fs.existsSync(new URL(jsonPath, import.meta.url));
-    if (!fileExists) {
-        return [];
+// git log --author="$(git config user.name)" --since="2024-01-01" --until="2024-12-31" --pretty=format:'{%n  "commit": "%H",%n  "date": "%ad"%n},' > 2024.json
+function loadJSON(year: string) {
+    switch (year) {
+        case '2024':
+            return year2024;
+        case '2023':
+            return year2023;
+        default:
+            return [];
     }
-    return JSON.parse(
-        fs.readFileSync(new URL(jsonPath, import.meta.url)).toString(),
-    );
-};
+}
 
 export default defineEventHandler(async (event) => {
-    const year = event.context.params?.year || new Date().getFullYear();
+    const year =
+        event.context.params?.year || new Date().getFullYear().toString();
     const today = new Date();
     const from = new Date(`01/01/${year}`);
 
@@ -25,9 +29,7 @@ export default defineEventHandler(async (event) => {
         );
     }
 
-    const bitbucketData = await loadJSON(
-        path.resolve(`server/api/bitbucket/contributions/${year}.json`),
-    );
+    const bitbucketData = await loadJSON(year);
 
     try {
         const events = yearSchema(to, from);
