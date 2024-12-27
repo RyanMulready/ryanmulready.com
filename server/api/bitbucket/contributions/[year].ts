@@ -1,12 +1,15 @@
 import { defineEventHandler, createError } from 'h3';
 import { yearSchema } from '@/utils/dates';
 // TODO: Production builds lose the JSON import, so we need to import the JSON files directly
+import year2025 from './2025.json';
 import year2024 from './2024.json';
 import year2023 from './2023.json';
 
 // git log --author="$(git config user.name)" --since="2024-01-01" --until="2024-12-31" --pretty=format:'{%n  "commit": "%H",%n  "date": "%ad"%n},' > 2024.json
 function loadJSON(year: string) {
     switch (year) {
+        case '2025':
+            return year2025;
         case '2024':
             return year2024;
         case '2023':
@@ -45,9 +48,9 @@ export default defineEventHandler(async (event) => {
                 (eventItem) => eventItem.date === eventDate,
             );
 
-            if (existingIndex !== undefined && weekIndex !== undefined) {
+            if (existingIndex >= 0 && weekIndex >= 0) {
                 const existingData = events[weekIndex][existingIndex];
-                const commits = (existingData.commits || 0) + 1;
+                const commits = (existingData.commits ?? 0) + 1;
                 const isBestCommit = commits > bestCommits;
 
                 events[weekIndex][existingIndex] = {

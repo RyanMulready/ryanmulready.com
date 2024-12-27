@@ -4,6 +4,7 @@ import path from 'node:path';
 export default defineConfig({
     test: {
         environment: 'happy-dom',
+        globals: true,
     },
     // @ts-ignore
     resolve: {
