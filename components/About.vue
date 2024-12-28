@@ -39,7 +39,7 @@
                     href="ryanmulready-cv.pdf"
                     target="_blank">
                     <nuxt-img
-                        src="ryanmulready-cv.webp"
+                        src="ryanmulready-cv.png"
                         lazy="true"
                         class="w-full mt-3"
                         alt="resume" />
